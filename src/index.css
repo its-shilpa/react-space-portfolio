@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-space-900: #05050f;
+  --color-space-800: #0a0a1a;
+  --color-space-700: #12122b;
+  --color-nebula-purple: #7c3aed;
+  --color-nebula-blue: #06b6d4;
+  --color-nebula-pink: #ec4899;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-space-900);
+  color: #e2e8f0;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
