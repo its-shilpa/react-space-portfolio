@@ -7,6 +7,7 @@ export default function StarField() {
     left: Math.random() * 100,
     delay: Math.random() * 4,
   }));
+  
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden bg-space-900">
