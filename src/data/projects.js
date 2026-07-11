@@ -1,24 +1,30 @@
+import spaceDashboardImg from '../assets/project_space_dashboard.png';
+import ecommerceImg from '../assets/project_ecommerce.png';
+import weatherImg from '../assets/project_weather.png';
+
 export const projects = [
   {
-    role: "Frontend Developer",
-    company: "iB Arts",
-    period: "Feb 2023 — Present",
-    points: [
-      "Led frontend architecture for enterprise-grade React applications serving 500k+ users.",
-      "Mentored a team of 4 developers and established component/testing standards.",
-      "Cut initial load time by 40% through code-splitting and lazy loading.",
-    ],
-    tags: ["React", "Vue.js", "JavaScript", "Wordpress Custom Theme Development", "WooCommerce", "Elementor", "Divi", "Tailwind CSS"],
+    title: "Nebula Analytics Dashboard",
+    description: "A futuristic data visualization dashboard featuring glassmorphism, interactive charts, and real-time stellar telemetry tracking.",
+    image: spaceDashboardImg,
+    tags: ["React", "Vite", "GSAP", "Tailwind CSS"],
+    liveLink: "#",
+    githubLink: "#",
   },
-   {
-    role: "Jr Frontend Developer",
-    company: "SB Infowaves",
-    period: "July 2023 — Jan 2026",
-    points: [
-      "Led frontend architecture for enterprise-grade React applications serving 500k+ users.",
-      "Mentored a team of 4 developers and established component/testing standards.",
-      "Cut initial load time by 40% through code-splitting and lazy loading.",
-    ],
-    tags: ["Wordpress Custom Theme Development", "WooCommerce","Payment Integration", "Plugin Development", "HTML", "CSS"],
+  {
+    title: "Celestial Storefront",
+    description: "A premium, dark-themed e-commerce store UI for premium gadgets and apparel, utilizing smooth animations and micro-interactions.",
+    image: ecommerceImg,
+    tags: ["React", "Tailwind CSS", "Framer Motion"],
+    liveLink: "#",
+    githubLink: "#",
+  },
+  {
+    title: "Cosmos Weather Radar",
+    description: "A clean, modern weather forecasting web application with interactive radar maps, vector weather icon animations, and responsive layout.",
+    image: weatherImg,
+    tags: ["React", "REST API", "Tailwind CSS"],
+    liveLink: "#",
+    githubLink: "#",
   },
 ];
