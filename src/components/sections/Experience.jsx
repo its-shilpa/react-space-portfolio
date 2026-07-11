@@ -10,16 +10,20 @@ export default function Experience() {
   const lineRef = useRef(null);
 
   useEffect(() => {
-    gsap.from(lineRef.current, {
-      scaleY: 0,
-      transformOrigin: 'top',
-      scrollTrigger: {
-        trigger: lineRef.current,
-        start: 'top 80%',
-        end: 'bottom 80%',
-        scrub: true,
-      },
+    const ctx = gsap.context(() => {
+      gsap.from(lineRef.current, {
+        scaleY: 0,
+        transformOrigin: 'top',
+        scrollTrigger: {
+          trigger: lineRef.current,
+          start: 'top 80%',
+          end: 'bottom 80%',
+          scrub: true,
+        },
+      });
     });
+
+    return () => ctx.revert();
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-space-950: #030308;
   --color-space-900: #05050f;
   --color-space-800: #0a0a1a;
   --color-space-700: #12122b;
@@ -20,4 +21,14 @@ body {
   color: #e2e8f0;
   font-family: var(--font-body);
   overflow-x: hidden;
+}
+
+/* Spinning animation for the profile image ring */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

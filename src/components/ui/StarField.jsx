@@ -146,7 +146,8 @@ export default function StarField() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-10 bg-[#05050f] pointer-events-none"
+      className="fixed inset-0 bg-transparent pointer-events-none"
+      style={{ zIndex: -10 }}
     />
   );
 }
