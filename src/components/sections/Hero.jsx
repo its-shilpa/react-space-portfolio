@@ -60,22 +60,22 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative z-10 min-h-screen flex items-center pt-20 pb-12 overflow-hidden">
+    <section id="home" className="relative z-10 min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       {/* Decorative floating orbs */}
       <div className="absolute top-[20%] left-[10%] w-72 h-72 rounded-full bg-nebula-purple/8 blur-[100px] animate-pulse pointer-events-none" />
       <div className="absolute bottom-[10%] right-[5%] w-96 h-96 rounded-full bg-nebula-blue/6 blur-[120px] animate-pulse pointer-events-none" style={{ animationDelay: '2s' }} />
 
-      <div className="max-w-6xl mx-auto w-full px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div className="portfolio-container grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center w-full">
         {/* Text content */}
-        <div ref={nameRef}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
+        <div ref={nameRef} className="flex flex-col justify-center text-left">
+          <div className="self-start inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <span className="text-xs text-slate-300 font-medium">Available for work</span>
           </div>
 
           <p className="text-nebula-blue font-medium text-lg tracking-wide">Hello, I'm</p>
 
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold mt-3 leading-tight">
+          <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold mt-3 leading-tight">
             <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               Shilpa
             </span>
@@ -133,32 +133,34 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Profile image */}
-        <div ref={imgRef} className="justify-self-center relative">
-          {/* Outer glow ring */}
-          <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-nebula-purple/30 via-nebula-blue/20 to-nebula-pink/30 blur-xl animate-pulse" />
+        {/* Profile image column */}
+        <div className="flex items-center justify-center w-full mt-8 lg:mt-0">
+          <div ref={imgRef} className="relative flex items-center justify-center">
+            {/* Outer glow ring */}
+            <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-nebula-purple/25 via-nebula-blue/15 to-nebula-pink/25 blur-2xl animate-pulse pointer-events-none" />
 
-          {/* Rotating border ring */}
-          <div className="relative w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80">
-            <div
-              className="absolute inset-0 rounded-full bg-gradient-to-tr from-nebula-purple via-nebula-blue to-nebula-pink p-[3px]"
-              style={{ animation: 'spin 8s linear infinite' }}
-            >
-              <div className="w-full h-full rounded-full bg-space-900" />
+            {/* Rotating border ring */}
+            <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-96 xl:h-96 aspect-square shrink-0">
+              <div
+                className="absolute inset-0 rounded-full bg-gradient-to-tr from-nebula-purple via-nebula-blue to-nebula-pink p-[3px]"
+                style={{ animation: 'spin 12s linear infinite' }}
+              >
+                <div className="w-full h-full rounded-full bg-space-900" />
+              </div>
+
+              {/* Actual image */}
+              <img
+                src={avatar}
+                alt="Shilpa Mukherjee"
+                className="absolute inset-[6px] w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full object-cover z-10"
+              />
             </div>
 
-            {/* Actual image */}
-            <img
-              src={avatar}
-              alt="Shilpa Mukherjee"
-              className="absolute inset-[6px] rounded-full object-cover z-10"
-            />
-          </div>
-
-          {/* Floating badge */}
-          <div className="absolute -bottom-2 -right-2 md:bottom-2 md:right-0 z-20 px-4 py-2 rounded-xl bg-space-800/90 border border-white/10 backdrop-blur-md shadow-lg">
-            <span className="text-xs text-nebula-blue font-bold">2+ YRS</span>
-            <p className="text-[10px] text-slate-400">Experience</p>
+            {/* Elegant Floating badge */}
+            <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 px-4 py-2.5 rounded-xl bg-space-800/90 border border-white/10 backdrop-blur-md shadow-lg shadow-black/40">
+              <span className="text-xs sm:text-sm text-nebula-blue font-bold tracking-wider">2+ YRS</span>
+              <p className="text-[10px] text-slate-300 font-medium">Experience</p>
+            </div>
           </div>
         </div>
       </div>

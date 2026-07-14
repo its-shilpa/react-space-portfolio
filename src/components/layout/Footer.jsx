@@ -12,7 +12,7 @@ const socials = [
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 py-12 mt-12">
-      <div className="max-w-6xl mx-auto px-6 grid sm:grid-cols-3 gap-10">
+      <div className="portfolio-container grid sm:grid-cols-3 gap-10">
         <div>
           <h3 className="font-display text-white font-bold text-lg">Shilpa Mukherjee</h3>
           <p className="text-slate-400 text-sm mt-2 leading-relaxed">
@@ -57,7 +57,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 border-t border-white/5 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div className="portfolio-container border-t border-white/5 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
         <p className="text-slate-500 text-xs">
           © {new Date().getFullYear()} Shilpa Mukherjee. All rights reserved.
         </p>

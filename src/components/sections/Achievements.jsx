@@ -20,7 +20,7 @@ export default function Achievements() {
 
   return (
     <section id="achievements" className="py-24 relative">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Accomplishments"
           title="Achievements & Honors"

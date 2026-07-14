@@ -33,7 +33,7 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="portfolio-container">
         <SectionHeading
           eyebrow="Get In Touch"
           title="Contact Me"

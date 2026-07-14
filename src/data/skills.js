@@ -1,25 +1,41 @@
 export const skillCategories = [
   {
-    title: "Frontend",
-    icon: "code",
+    title: "Frontend Development",
+    icon: "frontend",
     skills: [
-      { name: "HTML", level: 95, color: "#f97316" },
-      { name: "CSS", level: 90, color: "#3b82f6" },
-      { name: "JavaScript", level: 92, color: "#eab308" },
+      { name: "React / Next.js", level: 93, color: "#06b6d4" },
+      { name: "JavaScript (ES6+)", level: 92, color: "#eab308" },
       { name: "TypeScript", level: 85, color: "#3b82f6" },
-      { name: "React", level: 93, color: "#06b6d4" },
-      { name: "Next.js", level: 80, color: "#e2e8f0" },
-      { name: "Tailwind CSS", level: 90, color: "#06b6d4" },
-      { name: "Bootstrap", level: 82, color: "#a855f7" },
+      { name: "Tailwind CSS", level: 95, color: "#38bdf8" },
+      { name: "HTML5 & CSS3", level: 95, color: "#f97316" },
+      { name: "GSAP / Framer Motion", level: 80, color: "#0ae885" },
     ],
   },
   {
-    title: "Backend",
-    icon: "server",
+    title: "Backend & Systems",
+    icon: "backend",
     skills: [
-      { name: "Node.js", level: 78, color: "#22c55e" },
-      { name: "REST APIs", level: 85, color: "#3b82f6" },
+      { name: "Node.js & Express", level: 78, color: "#22c55e" },
+      { name: "REST APIs", level: 88, color: "#06b6d4" },
+      { name: "GraphQL", level: 70, color: "#e10098" },
     ],
   },
-  
+  {
+    title: "CMS & Databases",
+    icon: "cms",
+    skills: [
+      { name: "WordPress & WooCommerce", level: 85, color: "#21759b" },
+      { name: "MySQL / PostgreSQL", level: 78, color: "#336791" },
+      { name: "MongoDB", level: 75, color: "#47a248" },
+    ],
+  },
+  {
+    title: "Tools & DevOps",
+    icon: "tools",
+    skills: [
+      { name: "Git & GitHub Workflow", level: 90, color: "#f05032" },
+      { name: "Vite / Webpack", level: 85, color: "#646cff" },
+      { name: "Figma (UI/UX Design)", level: 80, color: "#f24e1e" },
+    ],
+  },
 ];

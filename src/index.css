@@ -32,3 +32,11 @@ body {
     transform: rotate(360deg);
   }
 }
+
+/* Global Section Container Width */
+.portfolio-container {
+  width: 85%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}

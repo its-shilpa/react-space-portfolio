@@ -14,7 +14,7 @@ export default function Projects() {
 
   return (
     <section id="projects" className="py-24">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Work"
           title="Featured Projects"

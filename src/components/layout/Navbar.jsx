@@ -33,7 +33,7 @@ export default function Navbar() {
           scrolled || isOpen ? 'bg-space-900/80 backdrop-blur-md border-b border-white/10' : 'bg-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <div className="portfolio-container flex items-center justify-between py-4">
           {/* Premium Logo */}
           <Link to="home" smooth duration={500} className="cursor-pointer flex items-center gap-2 group">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-nebula-purple to-nebula-blue flex items-center justify-center shadow-lg shadow-nebula-purple/20 group-hover:shadow-nebula-purple/40 group-hover:scale-110 transition-all duration-300">

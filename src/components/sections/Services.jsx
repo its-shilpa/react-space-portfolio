@@ -14,7 +14,7 @@ const iconMap = {
 export default function Services() {
   return (
     <section id="services" className="py-24">
-      <div className="max-w-6xl mx-auto px-6">
+      <div className="portfolio-container">
         <SectionHeading
           eyebrow="What I Offer"
           title="Services I Offer"

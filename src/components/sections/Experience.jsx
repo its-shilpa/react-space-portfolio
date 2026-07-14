@@ -28,14 +28,15 @@ export default function Experience() {
 
   return (
     <section id="experience" className="py-24">
-      <div className="max-w-3xl mx-auto px-6">
+      <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Journey"
           title="Work Experience"
           subtitle="A timeline of my professional career as a frontend developer, listing roles and technologies."
         />
         
-        <div ref={lineRef} className="relative border-l border-white/10 ml-3">
+        <div className="max-w-3xl mx-auto">
+          <div ref={lineRef} className="relative border-l border-white/10 ml-3">
           {experience.map((job, i) => (
             <div key={job.role} className="mb-12 pl-8 relative" data-aos={i % 2 === 0 ? 'fade-right' : 'fade-left'}>
               <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-nebula-blue ring-4 ring-space-900" />
@@ -53,6 +54,7 @@ export default function Experience() {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );
