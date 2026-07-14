@@ -18,7 +18,6 @@ export const skillCategories = [
     icon: "server",
     skills: [
       { name: "Node.js", level: 78, color: "#22c55e" },
-      { name: "Express.js", level: 75, color: "#e2e8f0" },
       { name: "REST APIs", level: 85, color: "#3b82f6" },
     ],
   },
