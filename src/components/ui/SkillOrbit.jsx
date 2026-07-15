@@ -2,9 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { orbitSkills, categoryMeta } from '../../data/orbitSkills';
 
 const RING_CONFIG = [
-  { radius: 24, size: 46, speed: 7 },
-  { radius: 41, size: 38, speed: -4.5 },
-  { radius: 58, size: 31, speed: 3 },
+  { radius: 26, size: 40, speed: 7 },
+  { radius: 38, size: 35, speed: -4.5 },
+  { radius: 50, size: 28, speed: 3 },
 ];
 
 export default function SkillOrbit() {
@@ -28,6 +28,52 @@ export default function SkillOrbit() {
   }, []);
 
   const ringAnglesRef = useRef(rings.map(() => Math.random() * 360));
+
+  const hubBackgrounds = [
+`
+conic-gradient(
+from 0deg,
+rgba(34,211,238,.18),
+rgba(59,130,246,.18),
+rgba(34,211,238,.18)
+)
+`,
+`
+conic-gradient(
+from 0deg,
+rgba(168,85,247,.18),
+rgba(236,72,153,.18),
+rgba(168,85,247,.18)
+)
+`,
+`
+conic-gradient(
+from 0deg,
+rgba(16,185,129,.18),
+rgba(34,197,94,.18),
+rgba(16,185,129,.18)
+)
+`,
+];
+
+const hubGlows = [
+  '0 0 45px rgba(34,211,238,.28)',
+  '0 0 45px rgba(139,92,246,.28)',
+  '0 0 45px rgba(59,130,246,.28)',
+  '0 0 45px rgba(16,185,129,.28)',
+  '0 0 45px rgba(245,158,11,.28)',
+  '0 0 45px rgba(236,72,153,.28)',
+];
+
+const [hubColorIndex, setHubColorIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setHubColorIndex((prev) => (prev + 1) % hubBackgrounds.length);
+  }, 3000);
+
+  return () => clearInterval(interval);
+}, []);
 
   useEffect(() => {
     let last = performance.now();
@@ -151,8 +197,9 @@ export default function SkillOrbit() {
             style={{
               width: 96,
               height: 96,
-              background: 'radial-gradient(circle at 35% 30%, rgba(34,211,238,0.22), rgba(10,14,26,0.92))',
-              boxShadow: '0 0 40px rgba(34,211,238,0.25), inset 0 0 18px rgba(255,255,255,0.05)',
+              background: hubBackgrounds[hubColorIndex],
+              transition: 'background 0.8s ease',
+              boxShadow: `${hubGlows[hubColorIndex]}, inset 0 0 20px rgba(255,255,255,.05)`,
               border: '1px solid rgba(255,255,255,0.15)',
             }}
           >
@@ -209,7 +256,7 @@ export default function SkillOrbit() {
         </div>
       </div>
 
-      <p className="mt-4 text-center text-xs text-white/30">Drag to spin the orbit</p>
+      <p className="mt-4 pt-6 text-center text-xs text-white/30">Drag to spin the orbit</p>
 
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
         {Object.entries(categoryMeta).map(([key, meta]) => (

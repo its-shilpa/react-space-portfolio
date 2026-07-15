@@ -34,7 +34,7 @@ export const orbitSkills = [
   { name: 'Node.js & Express', level: 78, color: '#22c55e', Icon: SiNodedotjs, category: 'backend' },
   { name: 'GraphQL', level: 70, color: '#e10098', Icon: SiGraphql, category: 'backend' },
   { name: 'WordPress & WooCommerce', level: 85, color: '#21759b', Icon: SiWordpress, category: 'cms' },
-  { name: 'MySQL / PostgreSQL', level: 78, color: '#336791', Icon: SiMysql, category: 'cms' },
+  { name: 'MySQL', level: 78, color: '#F29111', Icon: SiMysql, category: 'cms' },
   { name: 'MongoDB', level: 75, color: '#47a248', Icon: SiMongodb, category: 'cms' },
   { name: 'Git & GitHub Workflow', level: 90, color: '#f05032', Icon: SiGit, category: 'tools' },
   { name: 'Vite / Webpack', level: 85, color: '#646cff', Icon: SiVite, category: 'tools' },
