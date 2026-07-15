@@ -8,6 +8,9 @@ const RING_CONFIG = [
   { radius: 50, size: 28, speed: 3 },
 ];
 
+const RING_COLORS = ["#22d3ee", "#a855f7", "#10b981"];
+const TRAIL_LENGTH = 14;
+
 export default function SkillOrbit() {
   const stageRef = useRef(null);
   const iconRefs = useRef({});
@@ -15,7 +18,6 @@ export default function SkillOrbit() {
   const draggingRef = useRef(false);
   const lastPointerAngleRef = useRef(0);
   const hoveredRingRef = useRef(null);
-
   const [hovered, setHovered] = useState(null); // { ri, ii }
   const [activeCategory, setActiveCategory] = useState(null);
 
@@ -29,34 +31,16 @@ export default function SkillOrbit() {
   }, []);
 
   const ringAnglesRef = useRef(rings.map(() => Math.random() * 360));
+  const satelliteRefs = useRef({});
+  const trailRefs = useRef({});
+  // per-ring history of {x, y} positions, newest first
+  const trailHistoryRef = useRef(rings.map(() => []));
 
   const hubBackgrounds = [
-    `
-conic-gradient(
-from 0deg,
-rgba(34,211,238,.18),
-rgba(59,130,246,.18),
-rgba(34,211,238,.18)
-)
-`,
-    `
-conic-gradient(
-from 0deg,
-rgba(168,85,247,.18),
-rgba(236,72,153,.18),
-rgba(168,85,247,.18)
-)
-`,
-    `
-conic-gradient(
-from 0deg,
-rgba(16,185,129,.18),
-rgba(34,197,94,.18),
-rgba(16,185,129,.18)
-)
-`,
+    `conic-gradient(from 0deg, rgba(34,211,238,.18), rgba(59,130,246,.18), rgba(34,211,238,.18))`,
+    `conic-gradient(from 0deg, rgba(168,85,247,.18), rgba(236,72,153,.18), rgba(168,85,247,.18))`,
+    `conic-gradient(from 0deg, rgba(16,185,129,.18), rgba(34,197,94,.18), rgba(16,185,129,.18))`,
   ];
-
   const hubGlows = [
     "0 0 45px rgba(34,211,238,.28)",
     "0 0 45px rgba(139,92,246,.28)",
@@ -65,20 +49,16 @@ rgba(16,185,129,.18)
     "0 0 45px rgba(245,158,11,.28)",
     "0 0 45px rgba(236,72,153,.28)",
   ];
-
   const [hubColorIndex, setHubColorIndex] = useState(0);
-
   useEffect(() => {
     const interval = setInterval(() => {
       setHubColorIndex((prev) => (prev + 1) % hubBackgrounds.length);
     }, 3000);
-
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     let last = performance.now();
-
     function frame(t) {
       const dt = (t - last) / 1000;
       last = t;
@@ -87,6 +67,8 @@ rgba(16,185,129,.18)
         if (!draggingRef.current && hoveredRingRef.current !== ri) {
           ringAnglesRef.current[ri] += ring.speed * dt;
         }
+
+        // orbiting skill icons
         ring.items.forEach((item, ii) => {
           const baseAngle = (360 / ring.items.length) * ii + ri * 14;
           const angleDeg = baseAngle + ringAnglesRef.current[ri];
@@ -99,11 +81,42 @@ rgba(16,185,129,.18)
             el.style.top = `${y}%`;
           }
         });
+
+        // comet head that traces the ring itself
+        const headAngle = ringAnglesRef.current[ri];
+        const headRad = (headAngle * Math.PI) / 180;
+        const hx = 50 + ring.radius * Math.cos(headRad);
+        const hy = 50 + ring.radius * Math.sin(headRad);
+        const headEl = satelliteRefs.current[ri];
+        if (headEl) {
+          headEl.style.left = `${hx}%`;
+          headEl.style.top = `${hy}%`;
+        }
+
+        // update trail history (grows until it hits TRAIL_LENGTH, then just moves)
+        const hist = trailHistoryRef.current[ri];
+        hist.unshift({ x: hx, y: hy });
+        if (hist.length > TRAIL_LENGTH) hist.pop();
+
+        for (let ti = 0; ti < TRAIL_LENGTH; ti++) {
+          const el = trailRefs.current[`${ri}-${ti}`];
+          if (!el) continue;
+          const pos = hist[ti];
+          if (!pos) {
+            el.style.opacity = "0";
+            continue;
+          }
+          const progress = ti / TRAIL_LENGTH; // 0 = newest, 1 = oldest
+          el.style.left = `${pos.x}%`;
+          el.style.top = `${pos.y}%`;
+          el.style.opacity = String((1 - progress) * 0.55);
+          const scale = 1 - progress * 0.75;
+          el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+        }
       });
 
       rafRef.current = requestAnimationFrame(frame);
     }
-
     rafRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(rafRef.current);
   }, [rings]);
@@ -179,39 +192,76 @@ rgba(16,185,129,.18)
             }}
           />
 
-          {/* dashed orbit guides */}
-          {rings.map((ring, ri) => (
-            <div
-              key={ri}
-              className="absolute rounded-full border border-dashed border-white/10"
-              style={{
-                left: `${50 - ring.radius}%`,
-                top: `${50 - ring.radius}%`,
-                width: `${ring.radius * 2}%`,
-                height: `${ring.radius * 2}%`,
-              }}
-            />
-          ))}
+          {/* orbit guides + comet head + trail, per ring */}
+          {rings.map((ring, ri) => {
+            const color = RING_COLORS[ri % RING_COLORS.length];
+            return (
+              <div key={`ring-fx-${ri}`}>
+                {/* crisp dashed orbit path */}
+                <div
+                    className="absolute rounded-full pointer-events-none"
+                    style={{
+                        left: "50%",
+                        top: "50%",
+                        width: `${ring.radius * 2}%`,
+                        height: `${ring.radius * 2}%`,
+                        transform: "translate(-50%, -50%)",
+                        border: "1px dashed rgba(255,255,255,0.14)",
+                        boxSizing: "border-box",
+                    }}
+                    />
+
+                {/* trail dots (rendered behind the head) */}
+                {Array.from({ length: TRAIL_LENGTH }).map((_, ti) => (
+                  <div
+                    key={`trail-${ri}-${ti}`}
+                    ref={(el) => (trailRefs.current[`${ri}-${ti}`] = el)}
+                    className="absolute rounded-full pointer-events-none"
+                    style={{
+                      width: 7,
+                      height: 7,
+                      left: "50%",
+                      top: "50%",
+                      background: color,
+                      opacity: 0,
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 4,
+                    }}
+                  />
+                ))}
+
+                {/* comet head tracing the ring */}
+                <div
+                  ref={(el) => (satelliteRefs.current[ri] = el)}
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    width: 8,
+                    height: 8,
+                    left: "50%",
+                    top: "50%",
+                    background: color,
+                    boxShadow: `0 0 8px ${color}, 0 0 16px ${color}80`,
+                    transform: "translate(-50%, -50%)",
+                    zIndex: 5,
+                  }}
+                />
+              </div>
+            );
+          })}
 
           {/* center hub */}
           <div
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hub-wrapper"
-            style={{
-              width: 110,
-              height: 110,
-            }}
+            style={{ width: 110, height: 110 }}
           >
-            {/* Rotating Gradient */}
             <div
               className="absolute inset-0 rounded-full hub-gradient"
               style={{
                 background: hubBackgrounds[hubColorIndex],
-                boxShadow: `${hubGlows[hubColorIndex]}, inset 0 0 20px rgba(255,255,255,.05) `,
+                boxShadow: `${hubGlows[hubColorIndex]}, inset 0 0 20px rgba(255,255,255,.05)`,
                 border: "1px solid rgba(255,255,255,.08)",
               }}
             />
-
-            {/* Static Icon */}
             <div className="relative z-10 flex h-full w-full items-center justify-center">
               <span className="font-mono text-3xl font-bold text-cyan-300">
                 {"</>"}
@@ -226,7 +276,6 @@ rgba(16,185,129,.18)
               const isHovered = hovered?.ri === ri && hovered?.ii === ii;
               const dimmed = activeCategory && item.category !== activeCategory;
               const size = isHovered ? ring.size + 14 : ring.size;
-
               return (
                 <div
                   key={id}

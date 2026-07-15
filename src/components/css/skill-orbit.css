@@ -1,27 +1,4 @@
-@keyframes rotateGradient {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes hubPulse {
-    0%,100%{
-        transform: scale(1);
-    }
-
-    50%{
-        transform: scale(1.04);
-    }
-}
-
-.hub-gradient{
-    animation: rotateGradient 18s linear infinite;
-}
-
-.hub-wrapper{
-    animation: hubPulse 4s ease-in-out infinite;
+/* Trail dots */
+.orbit-line {
+  will-change: transform;
 }
