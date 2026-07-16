@@ -199,17 +199,17 @@ export default function SkillOrbit() {
               <div key={`ring-fx-${ri}`}>
                 {/* crisp dashed orbit path */}
                 <div
-                    className="absolute rounded-full pointer-events-none"
-                    style={{
-                        left: "50%",
-                        top: "50%",
-                        width: `${ring.radius * 2}%`,
-                        height: `${ring.radius * 2}%`,
-                        transform: "translate(-50%, -50%)",
-                        border: "1px dashed rgba(255,255,255,0.14)",
-                        boxSizing: "border-box",
-                    }}
-                    />
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                    width: `${ring.radius * 2}%`,
+                    height: `${ring.radius * 2}%`,
+                    transform: "translate(-50%, -50%)",
+                    border: "1px dashed rgba(255,255,255,0.14)",
+                    boxSizing: "border-box",
+                  }}
+                />
 
                 {/* trail dots (rendered behind the head) */}
                 {Array.from({ length: TRAIL_LENGTH }).map((_, ti) => (
@@ -274,8 +274,19 @@ export default function SkillOrbit() {
             ring.items.map((item, ii) => {
               const id = `${ri}-${ii}`;
               const isHovered = hovered?.ri === ri && hovered?.ii === ii;
+              const isActiveCategory =
+                activeCategory && item.category === activeCategory;
               const dimmed = activeCategory && item.category !== activeCategory;
               const size = isHovered ? ring.size + 14 : ring.size;
+
+              // brighter by default, and boosted further on hover / matching category
+              const borderAlpha = isHovered || isActiveCategory ? "ff" : "c0";
+              const glow = isHovered
+                ? `0 0 20px ${item.color}, 0 0 6px ${item.color}`
+                : isActiveCategory
+                  ? `0 0 16px ${item.color}, 0 0 4px ${item.color}cc`
+                  : `0 0 10px ${item.color}80`;
+
               return (
                 <div
                   key={id}
@@ -301,11 +312,10 @@ export default function SkillOrbit() {
                       width: size,
                       height: size,
                       background: "rgba(10,14,26,0.88)",
-                      border: `1.5px solid ${item.color}${isHovered ? "ff" : "90"}`,
-                      boxShadow: isHovered
-                        ? `0 0 18px ${item.color}, 0 0 4px ${item.color}`
-                        : `0 0 8px ${item.color}55`,
+                      border: `1.5px solid ${item.color}${borderAlpha}`,
+                      boxShadow: glow,
                       opacity: dimmed ? 0.2 : 1,
+                      transform: isActiveCategory ? "scale(1.08)" : "scale(1)",
                     }}
                   >
                     <item.Icon
@@ -313,6 +323,10 @@ export default function SkillOrbit() {
                         color: item.color,
                         width: ring.size * 0.45,
                         height: ring.size * 0.45,
+                        filter:
+                          isActiveCategory || isHovered
+                            ? "drop-shadow(0 0 4px currentColor)"
+                            : "none",
                       }}
                     />
                     {isHovered && (
