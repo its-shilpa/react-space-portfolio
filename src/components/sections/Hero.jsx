@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import avatar from '../../assets/MyPic.jpg';
+import avatarImg from '../../assets/My-Profile.png';
 
 const roles = [
   'Frontend Developer',
@@ -150,7 +151,7 @@ export default function Hero() {
 
               {/* Actual image */}
               <img
-                src={avatar}
+                src={avatarImg}
                 alt="Shilpa Mukherjee"
                 className="absolute inset-[6px] w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full object-cover z-10"
               />
