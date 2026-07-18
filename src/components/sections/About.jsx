@@ -3,7 +3,7 @@ import { FaBriefcase, FaCode, FaUsers, FaTrophy } from "react-icons/fa";
 import StatCard from "../ui/StatCard";
 import SectionHeading from "../ui/SectionHeading";
 
-const JOIN_DATE = new Date("2023-07-20T00:00:00");
+const JOIN_DATE = new Date("2023-09-20T00:00:00");
 
 function getExperienceDuration(from, to) {
   let years = to.getFullYear() - from.getFullYear();
