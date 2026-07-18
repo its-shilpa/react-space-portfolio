@@ -37,8 +37,8 @@ export default function Services() {
                   <h3 className="text-white font-display font-semibold text-lg mb-3">{s.title}</h3>
                   <ul className="space-y-2 text-sm text-slate-400">
                     {s.points.map((p) => (
-                      <li key={p} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-nebula-blue shrink-0" />
+                      <li key={p} className="flex items-start gap-2.5 pt-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-nebula-blue shrink-0 mt-[6px]" />
                         {p}
                       </li>
                     ))}

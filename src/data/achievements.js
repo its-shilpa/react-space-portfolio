@@ -9,6 +9,7 @@ export const achievements = [
     organization: "Frontend Masters / Tech Authority",
     date: "November 2025",
     image: certReactImg,
+    icon: "react",
   },
   {
     title: "First Place Winner - SpaceApps Hackathon",
@@ -16,6 +17,7 @@ export const achievements = [
     organization: "Global Space Solutions Group",
     date: "July 2025",
     image: certHackathonImg,
+    icon: "hackathon",
   },
   {
     title: "Certified UI/UX Design Specialist",
@@ -23,5 +25,6 @@ export const achievements = [
     organization: "Interaction Design Institute",
     date: "March 2024",
     image: certUiuxImg,
+    icon: "uiux",
   },
 ];

@@ -3,9 +3,9 @@ import { orbitSkills, categoryMeta } from "../../data/orbitSkills";
 import "../css/skill-orbit.css";
 
 const RING_CONFIG = [
-  { radius: 26, size: 40, speed: 7 },
-  { radius: 38, size: 35, speed: -4.5 },
-  { radius: 50, size: 28, speed: 3 },
+  { radius: 22, size: 40, speed: 7 },
+  { radius: 34, size: 35, speed: -4.5 },
+  { radius: 45, size: 28, speed: 3 },
 ];
 
 const RING_COLORS = ["#22d3ee", "#a855f7", "#10b981"];

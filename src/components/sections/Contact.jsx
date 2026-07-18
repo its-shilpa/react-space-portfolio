@@ -98,7 +98,7 @@ export default function Contact() {
                     value={form.name}
                     onChange={handleChange}
                     placeholder="Shilpa Mukherjee"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:border-nebula-blue focus:outline-none transition duration-300"
+                    className="w-full bg-white/5 border border-white/10 focus:border-nebula-blue focus:ring-1 focus:ring-nebula-blue/30 focus:bg-white/8 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:outline-none transition duration-300"
                     required
                   />
                 </div>
@@ -110,7 +110,7 @@ export default function Contact() {
                     value={form.email}
                     onChange={handleChange}
                     placeholder="shilpa@example.com"
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:border-nebula-blue focus:outline-none transition duration-300"
+                    className="w-full bg-white/5 border border-white/10 focus:border-nebula-blue focus:ring-1 focus:ring-nebula-blue/30 focus:bg-white/8 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:outline-none transition duration-300"
                     required
                   />
                 </div>
@@ -123,7 +123,7 @@ export default function Contact() {
                   value={form.subject}
                   onChange={handleChange}
                   placeholder="Portfolio Project Inquiry"
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:border-nebula-blue focus:outline-none transition duration-300"
+                  className="w-full bg-white/5 border border-white/10 focus:border-nebula-blue focus:ring-1 focus:ring-nebula-blue/30 focus:bg-white/8 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:outline-none transition duration-300"
                   required
                 />
               </div>
@@ -136,7 +136,7 @@ export default function Contact() {
                   onChange={handleChange}
                   placeholder="Tell me more about your requirements..."
                   rows={5}
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:border-nebula-blue focus:outline-none transition duration-300"
+                  className="w-full bg-white/5 border border-white/10 focus:border-nebula-blue focus:ring-1 focus:ring-nebula-blue/30 focus:bg-white/8 rounded-lg px-4 py-2.5 text-white placeholder-slate-500 text-sm focus:outline-none transition duration-300"
                   required
                 />
               </div>
@@ -144,7 +144,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-nebula-purple to-nebula-blue text-white font-medium text-sm hover:opacity-90 disabled:opacity-50 transition duration-300 cursor-pointer"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-nebula-purple to-nebula-blue text-white font-semibold text-sm hover:opacity-90 hover:shadow-[0_0_20px_rgba(6,182,212,0.45)] disabled:opacity-50 transition-all duration-300 cursor-pointer"
               >
                 {status === 'sending' ? 'Sending Message…' : status === 'sent' ? 'Message Sent ✓' : 'Send Message'}
               </button>
