@@ -4,6 +4,9 @@ import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import avatar from '../../assets/MyPic.jpg';
 import avatarImg from '../../assets/My-Profile.png';
+import awardImg from '../../assets/award-img.png';
+import topPerformer from '../../assets/top-performer-img.png';
+import topPerformerImg from '../../assets/top-performer-image.jpg';
 
 const roles = [
   'Frontend Developer',
@@ -11,6 +14,9 @@ const roles = [
   'UI/UX Enthusiast',
   'WordPress Expert',
 ];
+
+// 👉 Add as many images here as you like — they'll cycle automatically
+const profileImages = [avatarImg, awardImg, topPerformer, topPerformerImg];
 
 export default function Hero() {
   const nameRef = useRef(null);
@@ -23,11 +29,15 @@ export default function Hero() {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
+  const [activeImg, setActiveImg] = useState(0);
+  // Use an object keyed by index instead of a plain array —
+  // avoids any stale/duplicate entries from callback refs across renders
+  const imgLayerRefs = useRef({});
+
   // Typing effect
   useEffect(() => {
     const current = roles[roleIndex];
     const speed = isDeleting ? 40 : 80;
-
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         setDisplayText(current.substring(0, displayText.length + 1));
@@ -42,9 +52,35 @@ export default function Hero() {
         }
       }
     }, speed);
-
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex]);
+
+  // Auto-cycle profile images every 3s (skipped if only 1 image)
+  useEffect(() => {
+    if (profileImages.length < 2) return;
+    const interval = setInterval(() => {
+      setActiveImg((prev) => (prev + 1) % profileImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Crossfade + subtle zoom/blur whenever activeImg changes
+  useEffect(() => {
+    profileImages.forEach((_, i) => {
+      const layer = imgLayerRefs.current[i];
+      if (!layer) return;
+
+      if (i === activeImg) {
+        gsap.fromTo(
+          layer,
+          { opacity: 0, scale: 1.08, filter: 'blur(6px)' },
+          { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1, ease: 'power3.out' }
+        );
+      } else {
+        gsap.to(layer, { opacity: 0, scale: 1, duration: 0.8, ease: 'power2.inOut' });
+      }
+    });
+  }, [activeImg]);
 
   // GSAP entrance animations
   useEffect(() => {
@@ -56,7 +92,6 @@ export default function Hero() {
         .from(ctaRef.current, { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
         .from(scrollRef.current, { y: -10, opacity: 0, duration: 0.5 }, '-=0.2');
     });
-
     return () => ctx.revert();
   }, []);
 
@@ -73,9 +108,7 @@ export default function Hero() {
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
             <span className="text-xs text-slate-300 font-medium">Available for work</span>
           </div>
-
           <p className="text-nebula-blue font-medium text-lg tracking-wide">Hello, I'm</p>
-
           <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold mt-3 leading-tight">
             <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               Shilpa
@@ -85,7 +118,6 @@ export default function Hero() {
               Mukherjee
             </span>
           </h1>
-
           <div ref={subtitleRef} className="mt-4">
             <h2 className="text-xl md:text-2xl text-slate-300 font-display font-medium h-8">
               {displayText}
@@ -97,7 +129,6 @@ export default function Hero() {
               and modern JavaScript frameworks.
             </p>
           </div>
-
           <div ref={ctaRef} className="flex flex-wrap gap-4 mt-8">
             <Link
               to="projects"
@@ -113,7 +144,6 @@ export default function Hero() {
               Download Resume
             </button>
           </div>
-
           {/* Social icons */}
           <div className="flex gap-3 mt-8">
             {[
@@ -149,13 +179,40 @@ export default function Hero() {
                 <div className="w-full h-full rounded-full bg-space-900" />
               </div>
 
-              {/* Actual image */}
-              <img
-                src={avatarImg}
-                alt="Shilpa Mukherjee"
-                className="absolute inset-[6px] w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full object-cover z-10"
-              />
+              {/* Crossfading image stack */}
+              <div className="absolute inset-[6px] w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full overflow-hidden z-10">
+                {profileImages.map((src, i) => (
+                  <img
+                    key={i}
+                    ref={(el) => {
+                      imgLayerRefs.current[i] = el;
+                    }}
+                    src={src}
+                    alt={`Shilpa Mukherjee ${i + 1}`}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ opacity: i === 0 ? 1 : 0 }}
+                  />
+                ))}
+              </div>
             </div>
+
+            {/* Image indicator dots (also clickable) */}
+            {profileImages.length > 1 && (
+              <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                {profileImages.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImg(i)}
+                    aria-label={`Show image ${i + 1}`}
+                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                      i === activeImg
+                        ? 'w-6 bg-nebula-blue'
+                        : 'w-1.5 bg-white/20 hover:bg-white/40'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
 
             {/* Elegant Floating badge */}
             <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 px-4 py-2.5 rounded-xl bg-space-800/90 border border-white/10 backdrop-blur-md shadow-lg shadow-black/40">
