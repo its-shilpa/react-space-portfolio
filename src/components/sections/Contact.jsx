@@ -144,7 +144,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="w-full py-3 rounded-lg bg-gradient-to-r from-nebula-purple to-nebula-blue text-white font-semibold text-sm hover:opacity-90 hover:shadow-[0_0_20px_rgba(6,182,212,0.45)] disabled:opacity-50 transition-all duration-300 cursor-pointer"
+                className="w-full py-3 rounded-lg bg-gradient-to-r from-nebula-purple to-nebula-blue text-white font-semibold text-sm hover:opacity-90 hover:shadow-[0_0_20px_var(--nebula-blue)] disabled:opacity-50 transition-all duration-300 cursor-pointer"
               >
                 {status === 'sending' ? 'Sending Message…' : status === 'sent' ? 'Message Sent ✓' : 'Send Message'}
               </button>

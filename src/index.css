@@ -1,14 +1,32 @@
 @import "tailwindcss";
 
+:root {
+  --space-950: #030308;
+  --space-900: #05050f;
+  --space-800: #0a0a1a;
+  --space-700: #12122b;
+  --nebula-purple: #7c3aed;
+  --nebula-blue: #06b6d4;
+  --nebula-pink: #ec4899;
+  --theme-from: #7c3aed;
+  --theme-via: #06b6d4;
+  --theme-to: #ec4899;
+  --theme-muted: #94a3b8;
+}
+
 @theme {
   --breakpoint-xs: 475px;
-  --color-space-950: #030308;
-  --color-space-900: #05050f;
-  --color-space-800: #0a0a1a;
-  --color-space-700: #12122b;
-  --color-nebula-purple: #7c3aed;
-  --color-nebula-blue: #06b6d4;
-  --color-nebula-pink: #ec4899;
+  --color-space-950: var(--space-950);
+  --color-space-900: var(--space-900);
+  --color-space-800: var(--space-800);
+  --color-space-700: var(--space-700);
+  --color-nebula-purple: var(--nebula-purple);
+  --color-nebula-blue: var(--nebula-blue);
+  --color-nebula-pink: var(--nebula-pink);
+  --color-theme-from: var(--theme-from);
+  --color-theme-via: var(--theme-via);
+  --color-theme-to: var(--theme-to);
+  --color-theme-muted: var(--theme-muted);
   --font-display: "Space Grotesk", sans-serif;
   --font-body: "Inter", sans-serif;
 }
@@ -27,6 +45,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
 }
 
 /* Spinning animation for the profile image ring */

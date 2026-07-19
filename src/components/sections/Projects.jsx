@@ -45,7 +45,7 @@ export default function Projects() {
               key={p.title}
               data-aos="fade-up"
               data-aos-delay={idx * 100}
-              className="rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-nebula-purple/40 hover:shadow-[0_0_20px_rgba(124,58,237,0.15)] transition-all duration-500 flex flex-col justify-between group"
+              className="rounded-2xl overflow-hidden bg-white/5 border border-white/10 hover:border-nebula-purple/40 hover:shadow-[0_0_20px_var(--nebula-purple)] transition-all duration-500 flex flex-col justify-between group"
             >
               <div>
                 {/* Image Container */}

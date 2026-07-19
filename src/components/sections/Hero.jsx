@@ -126,7 +126,7 @@ export default function Hero() {
               {displayText}
               <span className="inline-block w-0.5 h-5 sm:h-6 bg-nebula-blue ml-1 animate-pulse" />
             </h2>
-            <p className="text-slate-400 mt-3 sm:mt-4 max-w-lg leading-relaxed text-sm md:text-base">
+            <p className="text-theme-muted mt-3 sm:mt-4 max-w-lg leading-relaxed text-sm md:text-base">
               A passionate Frontend Developer with 2+ years of experience crafting
               immersive, high-performance web applications using React, Tailwind CSS,
               and modern JavaScript frameworks.

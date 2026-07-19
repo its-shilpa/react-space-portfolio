@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-import StarField from './components/ui/StarField';
+import { ThemeProvider } from './hooks/ThemeContext';
+import AnimatedBackground from './components/ui/AnimatedBackground';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/sections/Hero';
 import Skills from './components/sections/Skills';
@@ -13,6 +14,7 @@ import Services from './components/sections/Services';
 import Achievements from './components/sections/Achievements';
 import Contact from './components/sections/Contact';
 import Footer from './components/layout/Footer';
+import ThemeSwitcher from './components/ui/ThemeSwitcher';
 
 export default function App() {
   useEffect(() => {
@@ -20,19 +22,22 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative overflow-x-hidden w-full">
-      <StarField />
-      <Navbar />
-      <Hero />
-      <Skills />
-      <About />
-      <Experience />
-      <Projects />
-      <Services />
-      <Achievements />
-      <Contact />
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <div className="relative overflow-x-hidden w-full">
+        <AnimatedBackground />
+        <Navbar />
+        <Hero />
+        <Skills />
+        <About />
+        <Experience />
+        <Projects />
+        <Services />
+        <Achievements />
+        <Contact />
+        <Footer />
+        <ThemeSwitcher />
+      </div>
+    </ThemeProvider>
   );
 }
 

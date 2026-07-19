@@ -39,7 +39,7 @@ export default function Experience() {
           <div ref={lineRef} className="relative border-l border-white/10 ml-3">
           {experience.map((job, i) => (
             <div key={job.role} className="group mb-12 pl-8 relative" data-aos={i % 2 === 0 ? 'fade-right' : 'fade-left'}>
-              <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-nebula-blue ring-4 ring-space-900 group-hover:scale-125 group-hover:bg-nebula-purple group-hover:shadow-[0_0_12px_rgba(124,58,237,0.8)] transition-all duration-300" />
+              <span className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-nebula-blue ring-4 ring-space-900 group-hover:scale-125 group-hover:bg-nebula-purple group-hover:shadow-[0_0_12px_var(--nebula-purple)] transition-all duration-300" />
               <span className="text-xs text-nebula-blue group-hover:text-nebula-purple transition-colors duration-300">{job.period}</span>
               <h3 className="text-white font-display font-semibold mt-1 group-hover:text-nebula-blue transition-colors duration-300">{job.role}</h3>
               <p className="text-slate-400 text-sm">{job.company}</p>
