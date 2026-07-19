@@ -13,7 +13,7 @@ export default function Projects() {
     : projects.filter((p) => p.tags.includes(active));
 
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="py-8 md:py-10 lg:py-12">
       <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Work"

@@ -11,7 +11,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 py-12 mt-12">
+    <footer className="border-t border-white/10 pt-[30px] md:pt-[40px] pb-12">
       <div className="portfolio-container grid sm:grid-cols-3 gap-10">
         <div>
           <h3 className="font-display text-white font-bold text-lg">Shilpa Mukherjee</h3>

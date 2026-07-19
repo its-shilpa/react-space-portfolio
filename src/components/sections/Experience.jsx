@@ -27,7 +27,7 @@ export default function Experience() {
   }, []);
 
   return (
-    <section id="experience" className="py-24">
+    <section id="experience" className="py-8 md:py-10 lg:py-12">
       <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Journey"

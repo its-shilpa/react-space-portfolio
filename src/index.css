@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --breakpoint-xs: 475px;
   --color-space-950: #030308;
   --color-space-900: #05050f;
   --color-space-800: #0a0a1a;
@@ -14,6 +15,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -21,6 +24,9 @@ body {
   color: #e2e8f0;
   font-family: var(--font-body);
   overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* Spinning animation for the profile image ring */

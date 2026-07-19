@@ -32,7 +32,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="pt-8 pb-12 md:pt-10 md:pb-20 lg:pt-12 lg:pb-20">
       <div className="portfolio-container">
         <SectionHeading
           eyebrow="Get In Touch"

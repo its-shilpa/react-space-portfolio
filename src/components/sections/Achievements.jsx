@@ -17,7 +17,7 @@ const getIcon = (iconName) => {
 
 export default function Achievements() {
   return (
-    <section id="achievements" className="py-24 relative overflow-hidden">
+    <section id="achievements" className="py-8 md:py-10 lg:py-12 relative overflow-hidden">
       {/* Decorative background nebula glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-nebula-purple/5 rounded-full blur-[120px] pointer-events-none" />
 

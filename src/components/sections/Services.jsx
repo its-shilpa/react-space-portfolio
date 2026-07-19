@@ -13,7 +13,7 @@ const iconMap = {
 
 export default function Services() {
   return (
-    <section id="services" className="py-24">
+    <section id="services" className="py-8 md:py-10 lg:py-12">
       <div className="portfolio-container">
         <SectionHeading
           eyebrow="What I Offer"

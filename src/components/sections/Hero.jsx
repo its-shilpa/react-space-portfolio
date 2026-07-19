@@ -95,7 +95,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative z-10 min-h-screen flex flex-col justify-center items-stretch lg:items-center pt-28 pb-20 sm:pt-24 sm:pb-16 overflow-hidden"
+      className="relative z-10 min-h-screen flex flex-col justify-center items-stretch lg:items-center pt-28 pb-[30px] md:pb-[40px] sm:pt-24 overflow-hidden"
     >
       {/* Decorative floating orbs */}
       <div className="absolute top-[20%] left-[10%] w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-full bg-nebula-purple/8 blur-[60px] sm:blur-[80px] md:blur-[100px] animate-pulse pointer-events-none" />
@@ -104,7 +104,7 @@ export default function Hero() {
         style={{ animationDelay: '2s' }}
       />
 
-      <div className="portfolio-container grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center w-full px-4 sm:px-6">
+      <div className="portfolio-container grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center">
         {/* Text content */}
         <div ref={nameRef} className="flex flex-col justify-center text-left order-2 lg:order-1">
           <div className="self-start inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-4 sm:mb-6">

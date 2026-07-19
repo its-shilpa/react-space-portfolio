@@ -74,7 +74,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="py-8 md:py-10 lg:py-12">
       <div className="portfolio-container">
         <SectionHeading
           eyebrow="My Story"
