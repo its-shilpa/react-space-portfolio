@@ -6,39 +6,7 @@ export default function AnimatedBackground() {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const scrollRef = useRef(0);
-  const themeRef = useRef(theme);
   const isTabVisible = useRef(true);
-  
-  // Track prefers-reduced-motion
-  const prefersReducedMotion = useRef(
-    typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false
-  );
-
-  // Keep theme ref updated so the animation loop can read the latest theme instantly
-  useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
-
-  useEffect(() => {
-    // Visibility change handler
-    const handleVisibilityChange = () => {
-      isTabVisible.current = !document.hidden;
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    // Reduced motion change listener
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const handleMotionChange = (e) => {
-      prefersReducedMotion.current = e.matches;
-      initParticles(themeRef.current);
-    };
-    motionQuery.addEventListener('change', handleMotionChange);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      motionQuery.removeEventListener('change', handleMotionChange);
-    };
-  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -58,6 +26,8 @@ export default function AnimatedBackground() {
     
     // Lightning state for Rain theme
     let lightningFlash = { active: false, alpha: 0, duration: 0 };
+
+    const prefersReducedMotion = { current: window.matchMedia('(prefers-reduced-motion: reduce)').matches };
 
     const initParticles = (activeTheme) => {
       particles = [];
@@ -300,7 +270,7 @@ export default function AnimatedBackground() {
     const handleResize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      initParticles(themeRef.current);
+      initParticles(theme);
     };
 
     const handleMouseMove = (e) => {
@@ -314,13 +284,27 @@ export default function AnimatedBackground() {
       scrollRef.current = window.scrollY;
     };
 
+    // Visibility change handler
+    const handleVisibilityChange = () => {
+      isTabVisible.current = !document.hidden;
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Reduced motion change listener
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = (e) => {
+      prefersReducedMotion.current = e.matches;
+      initParticles(theme);
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
+
     window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('scroll', handleScroll);
 
     // Initial positioning
     scrollRef.current = window.scrollY;
-    initParticles(themeRef.current);
+    initParticles(theme);
 
     // Main animation loop
     const animate = () => {
@@ -329,7 +313,7 @@ export default function AnimatedBackground() {
         return;
       }
 
-      const activeTheme = themeRef.current;
+      const activeTheme = theme;
       time += 0.01;
 
       // Mouse Parallax Lerp
@@ -997,12 +981,14 @@ export default function AnimatedBackground() {
     animate();
 
     return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      motionQuery.removeEventListener('change', handleMotionChange);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <>
