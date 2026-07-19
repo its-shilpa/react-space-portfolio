@@ -4,9 +4,9 @@ import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import avatar from '../../assets/MyPic.jpg';
 import avatarImg from '../../assets/My-Profile.png';
-import awardImg from '../../assets/award-img.png';
 import topPerformer from '../../assets/top-performer-img.png';
-import topPerformerImg from '../../assets/top-performer-image.jpg';
+import awardImg from '../../assets/award-img.png';
+import awardImage from '../../assets/award-image.png';
 
 const roles = [
   'Frontend Developer',
@@ -15,8 +15,7 @@ const roles = [
   'WordPress Expert',
 ];
 
-// 👉 Add as many images here as you like — they'll cycle automatically
-const profileImages = [avatarImg, awardImg, topPerformer, topPerformerImg];
+const profileImages = [avatarImg, awardImage, topPerformer];
 
 export default function Hero() {
   const nameRef = useRef(null);
@@ -30,8 +29,6 @@ export default function Hero() {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const [activeImg, setActiveImg] = useState(0);
-  // Use an object keyed by index instead of a plain array —
-  // avoids any stale/duplicate entries from callback refs across renders
   const imgLayerRefs = useRef({});
 
   // Typing effect
@@ -55,7 +52,7 @@ export default function Hero() {
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex]);
 
-  // Auto-cycle profile images every 3s (skipped if only 1 image)
+  // Auto-cycle profile images every 3s
   useEffect(() => {
     if (profileImages.length < 2) return;
     const interval = setInterval(() => {
@@ -96,20 +93,26 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative z-10 min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section
+      id="home"
+      className="relative z-10 min-h-screen flex flex-col justify-center items-stretch lg:items-center pt-28 pb-20 sm:pt-24 sm:pb-16 overflow-hidden"
+    >
       {/* Decorative floating orbs */}
-      <div className="absolute top-[20%] left-[10%] w-72 h-72 rounded-full bg-nebula-purple/8 blur-[100px] animate-pulse pointer-events-none" />
-      <div className="absolute bottom-[10%] right-[5%] w-96 h-96 rounded-full bg-nebula-blue/6 blur-[120px] animate-pulse pointer-events-none" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-[20%] left-[10%] w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 rounded-full bg-nebula-purple/8 blur-[60px] sm:blur-[80px] md:blur-[100px] animate-pulse pointer-events-none" />
+      <div
+        className="absolute bottom-[10%] right-[5%] w-52 h-52 sm:w-72 sm:h-72 md:w-96 md:h-96 rounded-full bg-nebula-blue/6 blur-[70px] sm:blur-[100px] md:blur-[120px] animate-pulse pointer-events-none"
+        style={{ animationDelay: '2s' }}
+      />
 
-      <div className="portfolio-container grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center w-full">
+      <div className="portfolio-container grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-center w-full px-4 sm:px-6">
         {/* Text content */}
-        <div ref={nameRef} className="flex flex-col justify-center text-left">
-          <div className="self-start inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-6">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-xs text-slate-300 font-medium">Available for work</span>
+        <div ref={nameRef} className="flex flex-col justify-center text-left order-2 lg:order-1">
+          <div className="self-start inline-flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-4 sm:mb-6">
+            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-[10px] sm:text-xs text-slate-300 font-medium">Available for work</span>
           </div>
-          <p className="text-nebula-blue font-medium text-lg tracking-wide">Hello, I'm</p>
-          <h1 className="font-display text-5xl sm:text-6xl xl:text-7xl font-bold mt-3 leading-tight">
+          <p className="text-nebula-blue font-medium text-base sm:text-lg tracking-wide">Hello, I'm</p>
+          <h1 className="font-display text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold mt-2 sm:mt-3 leading-tight">
             <span className="bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
               Shilpa
             </span>
@@ -118,34 +121,34 @@ export default function Hero() {
               Mukherjee
             </span>
           </h1>
-          <div ref={subtitleRef} className="mt-4">
-            <h2 className="text-xl md:text-2xl text-slate-300 font-display font-medium h-8">
+          <div ref={subtitleRef} className="mt-3 sm:mt-4">
+            <h2 className="text-lg sm:text-xl md:text-2xl text-slate-300 font-display font-medium h-7 sm:h-8">
               {displayText}
-              <span className="inline-block w-0.5 h-6 bg-nebula-blue ml-1 animate-pulse" />
+              <span className="inline-block w-0.5 h-5 sm:h-6 bg-nebula-blue ml-1 animate-pulse" />
             </h2>
-            <p className="text-slate-400 mt-4 max-w-lg leading-relaxed text-sm md:text-base">
+            <p className="text-slate-400 mt-3 sm:mt-4 max-w-lg leading-relaxed text-sm md:text-base">
               A passionate Frontend Developer with 2+ years of experience crafting
               immersive, high-performance web applications using React, Tailwind CSS,
               and modern JavaScript frameworks.
             </p>
           </div>
-          <div ref={ctaRef} className="flex flex-wrap gap-4 mt-8">
+          <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 mt-6 sm:mt-8">
             <Link
               to="projects"
               smooth
               duration={500}
               offset={-80}
-              className="group cursor-pointer px-6 py-3 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-sm font-semibold shadow-lg shadow-nebula-purple/25 hover:shadow-nebula-purple/40 hover:scale-105 transition-all duration-300"
+              className="flex-1 text-center px-6 py-3 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-sm font-semibold shadow-lg shadow-nebula-purple/25 hover:scale-105 transition-all duration-300"
             >
               View Projects
               <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
-            <button className="px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 hover:border-white/40 hover:scale-105 transition-all duration-300 backdrop-blur-sm">
+            <button className="flex-1 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 hover:scale-105 transition-all duration-300 backdrop-blur-sm">
               Download Resume
             </button>
           </div>
           {/* Social icons */}
-          <div className="flex gap-3 mt-8">
+          <div className="flex gap-3 mt-6 sm:mt-8">
             {[
               { icon: FaGithub, url: 'https://github.com', label: 'GitHub' },
               { icon: FaLinkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
@@ -155,32 +158,32 @@ export default function Hero() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-nebula-blue hover:border-nebula-blue/50 hover:bg-white/10 transition-all duration-300"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-nebula-blue hover:border-nebula-blue/50 hover:bg-white/10 transition-all duration-300"
                 title={label}
               >
-                <Icon className="text-lg" />
+                <Icon className="text-base sm:text-lg" />
               </a>
             ))}
           </div>
         </div>
 
         {/* Profile image column */}
-        <div className="flex items-center justify-center w-full mt-8 lg:mt-0">
+        <div className="flex items-center justify-center w-full order-1 lg:order-2">
           <div ref={imgRef} className="relative flex items-center justify-center">
             {/* Outer glow ring */}
-            <div className="absolute -inset-6 rounded-full bg-gradient-to-tr from-nebula-purple/25 via-nebula-blue/15 to-nebula-pink/25 blur-2xl animate-pulse pointer-events-none" />
+            <div className="absolute -inset-4 sm:-inset-6 rounded-full bg-gradient-to-tr from-nebula-purple/25 via-nebula-blue/15 to-nebula-pink/25 blur-xl sm:blur-2xl animate-pulse pointer-events-none" />
 
             {/* Rotating border ring */}
-            <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 xl:w-96 xl:h-96 aspect-square shrink-0">
+            <div className="relative w-40 h-40 xs:w-48 xs:h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-80 lg:h-80 xl:w-96 xl:h-96 aspect-square shrink-0">
               <div
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-nebula-purple via-nebula-blue to-nebula-pink p-[3px]"
+                className="absolute inset-0 rounded-full bg-gradient-to-tr from-nebula-purple via-nebula-blue to-nebula-pink p-[2px] sm:p-[3px]"
                 style={{ animation: 'spin 12s linear infinite' }}
               >
                 <div className="w-full h-full rounded-full bg-space-900" />
               </div>
 
               {/* Crossfading image stack */}
-              <div className="absolute inset-[6px] w-[calc(100%-12px)] h-[calc(100%-12px)] rounded-full overflow-hidden z-10">
+              <div className="absolute inset-[4px] sm:inset-[6px] w-[calc(100%-8px)] sm:w-[calc(100%-12px)] h-[calc(100%-8px)] sm:h-[calc(100%-12px)] rounded-full overflow-hidden z-10">
                 {profileImages.map((src, i) => (
                   <img
                     key={i}
@@ -196,18 +199,18 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Image indicator dots (also clickable) */}
+            {/* Image indicator dots */}
             {profileImages.length > 1 && (
-              <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              <div className="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-2 z-20">
                 {profileImages.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
                     aria-label={`Show image ${i + 1}`}
-                    className={`h-1.5 rounded-full transition-all duration-500 ${
+                    className={`h-1 sm:h-1.5 rounded-full transition-all duration-500 ${
                       i === activeImg
-                        ? 'w-6 bg-nebula-blue'
-                        : 'w-1.5 bg-white/20 hover:bg-white/40'
+                        ? 'w-5 sm:w-6 bg-nebula-blue'
+                        : 'w-1 sm:w-1.5 bg-white/20 hover:bg-white/40'
                     }`}
                   />
                 ))}
@@ -215,16 +218,19 @@ export default function Hero() {
             )}
 
             {/* Elegant Floating badge */}
-            <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 z-20 px-4 py-2.5 rounded-xl bg-space-800/90 border border-white/10 backdrop-blur-md shadow-lg shadow-black/40">
-              <span className="text-xs sm:text-sm text-nebula-blue font-bold tracking-wider">2+ YRS</span>
-              <p className="text-[10px] text-slate-300 font-medium">Experience</p>
+            <div className="absolute -bottom-1 -right-1 sm:bottom-2 sm:right-2 md:bottom-4 md:right-4 z-20 px-2.5 sm:px-4 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-space-800/90 border border-white/10 backdrop-blur-md shadow-lg shadow-black/40">
+              <span className="text-[10px] sm:text-xs md:text-sm text-nebula-blue font-bold tracking-wider">2+ YRS</span>
+              <p className="text-[8px] sm:text-[10px] text-slate-300 font-medium">Experience</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div ref={scrollRef} className="absolute bottom-8 left-1/2 -translate-x-1/2">
+      {/* Scroll indicator — hidden on very small screens to avoid crowding */}
+      <div
+        ref={scrollRef}
+        className="hidden sm:flex absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2"
+      >
         <Link
           to="skills"
           smooth
