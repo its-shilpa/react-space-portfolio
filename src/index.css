@@ -96,3 +96,24 @@ body {
 .card-flip-back {
   transform: rotateY(180deg);
 }
+
+/* Disable expensive backdrop blurs on mobile screens for smooth 60fps scrolling */
+@media (max-width: 768px) {
+  *, *::before, *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Optimize glassmorphic backgrounds on mobile to ensure perfect text readability without filter blur */
+  .backdrop-blur-xl, 
+  .backdrop-blur-2xl, 
+  .backdrop-blur-lg, 
+  .backdrop-blur-md, 
+  .backdrop-blur-sm, 
+  .bg-white\/5, 
+  .bg-space-950\/90, 
+  .bg-space-950\/80, 
+  .bg-space-900\/80 {
+    background-color: rgba(6, 10, 24, 0.94) !important;
+  }
+}

@@ -715,3 +715,91 @@
   --theme-border-glow: linear-gradient(90deg, #00ffff, #ff007f, #39ff14, #00ffff);
   --theme-img-filter: saturate(2.0) brightness(1.1) contrast(1.1);
 }
+
+/* Mobile touch and active panel overrides */
+@media (max-width: 768px) {
+  /* Reset hover trigger on mobile so it doesn't sticky-lock */
+  .service-card:hover {
+    transform: none !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7) !important;
+  }
+  .service-card:hover .service-card-bg {
+    transform: scale(1.02) !important;
+    filter: var(--theme-img-filter) blur(2.5px) !important;
+  }
+  .service-card:hover .service-card-default-view {
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+  .service-card:hover .service-card-icon-wrapper {
+    transform: none !important;
+    box-shadow: 0 0 20px var(--theme-glow), inset 0 0 10px rgba(255, 255, 255, 0.05) !important;
+  }
+  .service-card:hover .service-card-hover-panel {
+    transform: translateY(102%) !important;
+  }
+  .service-card:hover .panel-arrow {
+    opacity: 0 !important;
+    transform: translateX(-10px) !important;
+  }
+  .service-card:hover .panel-desc {
+    opacity: 0 !important;
+    transform: translateY(10px) !important;
+  }
+  .service-card:hover .stagger-item {
+    opacity: 0 !important;
+    transform: translateY(8px) !important;
+  }
+  .service-card:hover .panel-techs {
+    opacity: 0 !important;
+    transform: translateY(8px) !important;
+  }
+  .service-card:hover .service-card-border-glow {
+    opacity: 0.65 !important;
+  }
+
+  /* Active card class selectors (triggered on tap in mobile) */
+  .service-card.active {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 35px -10px var(--theme-glow), 
+                0 0 20px -5px rgba(255, 255, 255, 0.05), 
+                0 8px 25px -10px rgba(0, 0, 0, 0.85) !important;
+  }
+  .service-card.active .service-card-bg {
+    transform: scale(1.08) translateZ(0) !important;
+    filter: var(--theme-img-filter) blur(0) !important;
+  }
+  .service-card.active .service-card-default-view {
+    transform: translateY(-25px) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+  .service-card.active .service-card-icon-wrapper {
+    transform: scale(1.05) !important;
+    box-shadow: 0 0 30px var(--theme-glow), inset 0 0 15px rgba(255, 255, 255, 0.1) !important;
+  }
+  .service-card.active .service-card-hover-panel {
+    transform: translateY(0) !important;
+  }
+  .service-card.active .panel-arrow {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+  .service-card.active .panel-desc {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .service-card.active .stagger-item {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition-delay: var(--delay) !important;
+  }
+  .service-card.active .panel-techs {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  .service-card.active .service-card-border-glow {
+    opacity: 1 !important;
+  }
+}

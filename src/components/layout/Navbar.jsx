@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-scroll';
-import { HiSparkles } from 'react-icons/hi2';
+import { HiSparkles, HiBars3, HiXMark } from 'react-icons/hi2';
 
 const links = ["Home", "Skills", "About", "Experience", "Projects", "Services", "Achievements", "Contact"];
 
@@ -74,34 +74,25 @@ export default function Navbar() {
 
           {/* Mobile toggle button */}
           <button
-            className="lg:hidden text-white z-50 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all duration-300"
+            className="lg:hidden text-white z-50 w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all duration-300 cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Menu"
           >
-            <div className="flex flex-col gap-1.5 items-center justify-center w-5">
-              <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[4px]' : ''}`} />
-              <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-[2px] w-full bg-white rounded-full transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[4px]' : ''}`} />
-            </div>
+            {isOpen ? (
+              <HiXMark className="text-xl text-white transition-all duration-300" />
+            ) : (
+              <HiBars3 className="text-xl text-white transition-all duration-300" />
+            )}
           </button>
         </div>
       </nav>
 
       {/* Premium Full-Screen Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-space-900/98 backdrop-blur-2xl flex flex-col justify-center items-center gap-6 transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 z-45 bg-space-900/98 backdrop-blur-2xl flex flex-col justify-start items-center pt-28 pb-10 px-6 gap-8 transition-all duration-500 lg:hidden ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
       >
-        {/* Logo in mobile menu */}
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-nebula-purple to-nebula-blue flex items-center justify-center">
-            <HiSparkles className="text-white text-xl" />
-          </div>
-          <span className="font-display font-bold text-2xl bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-            Shilpa
-          </span>
-        </div>
 
         <ul className="flex flex-col gap-4 text-center text-slate-300">
           {links.map((link, idx) => (

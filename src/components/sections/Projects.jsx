@@ -224,15 +224,17 @@ export default function Projects() {
                       >
                         Live Demo <FaExternalLinkAlt className="text-[9px]" />
                       </a>
-                      <a
-                        href={p.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex-1 text-center text-[10px] sm:text-xs font-semibold px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-slate-200 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
-                      >
-                        <FaGithub /> GitHub
-                      </a>
+                      {p.githubLink && p.githubLink !== '#' && p.githubLink !== '' && (
+                        <a
+                          href={p.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-1 text-center text-[10px] sm:text-xs font-semibold px-3 py-2 rounded-xl bg-white/5 border border-white/15 text-slate-200 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer"
+                        >
+                          <FaGithub /> GitHub
+                        </a>
+                      )}
                     </div>
 
                     {/* Arrow Next indicator (visible on inactive cards) */}

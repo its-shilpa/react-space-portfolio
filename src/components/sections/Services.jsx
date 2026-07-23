@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaCode, FaReact, FaWordpress, FaLaptopCode, FaPaintBrush, FaServer, FaArrowRight } from 'react-icons/fa';
 import { services } from '../../data/services';
 import SectionHeading from '../ui/SectionHeading';
@@ -227,6 +228,7 @@ function CardParticles({ theme }) {
 
 export default function Services() {
   const { theme } = useTheme();
+  const [activeCard, setActiveCard] = useState(null);
 
   const handleMouseMove = (e) => {
     const card = e.currentTarget;
@@ -255,14 +257,20 @@ export default function Services() {
           {services.map((s, i) => {
             const Icon = iconMap[s.icon] || FaCode;
             const bgImage = bgMap[s.bgImage];
+            const isActive = activeCard === s.title;
             return (
               <div
                 key={s.title}
                 data-aos="fade-up"
                 data-aos-delay={i * 100}
-                className={`service-card theme-${theme}`}
+                className={`service-card theme-${theme} ${isActive ? 'active' : ''}`}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => {
+                  if (window.innerWidth < 768) {
+                    setActiveCard(isActive ? null : s.title);
+                  }
+                }}
               >
                 {/* Soft animated gradient border */}
                 <div className="service-card-border-glow"></div>
@@ -287,6 +295,9 @@ export default function Services() {
                     <Icon className="text-3xl" />
                   </div>
                   <h3 className="service-card-title">{s.title}</h3>
+                  <span className="text-[10px] text-slate-400 mt-3 font-semibold tracking-wider uppercase opacity-80 sm:hidden flex items-center gap-1 animate-pulse">
+                    Tap to expand
+                  </span>
                 </div>
 
                 {/* Hover Shutter Panel */}
