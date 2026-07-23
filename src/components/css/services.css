@@ -1,5 +1,9 @@
 /* services.css */
 
+.service-card-wrapper {
+  height: 100%;
+}
+
 .service-card {
   position: relative;
   border-radius: 24px;

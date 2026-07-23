@@ -263,74 +263,78 @@ export default function Services() {
                 key={s.title}
                 data-aos="fade-up"
                 data-aos-delay={i * 100}
-                className={`service-card theme-${theme} ${isActive ? 'active' : ''}`}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                onClick={() => {
-                  if (window.innerWidth < 768) {
-                    setActiveCard(isActive ? null : s.title);
-                  }
-                }}
+                className="service-card-wrapper"
               >
-                {/* Soft animated gradient border */}
-                <div className="service-card-border-glow"></div>
+                <div
+                  className={`service-card theme-${theme} ${isActive ? 'active' : ''}`}
+                  onMouseMove={handleMouseMove}
+                  onMouseLeave={handleMouseLeave}
+                  onClick={() => {
+                    if (window.innerWidth < 768) {
+                      setActiveCard(isActive ? null : s.title);
+                    }
+                  }}
+                >
+                  {/* Soft animated gradient border */}
+                  <div className="service-card-border-glow"></div>
 
-                {/* Full-card background image */}
-                <div className="service-card-bg-container">
-                  <img
-                    src={bgImage}
-                    className="service-card-bg"
-                    alt={s.title}
-                    loading="lazy"
-                  />
-                  <div className="service-card-overlay"></div>
-                </div>
-
-                {/* Environmental particles overlay */}
-                <CardParticles theme={theme} />
-
-                {/* Default centered view */}
-                <div className="service-card-default-view">
-                  <div className="service-card-icon-wrapper">
-                    <Icon className="text-3xl" />
-                  </div>
-                  <h3 className="service-card-title">{s.title}</h3>
-                  <span className="text-[10px] text-slate-400 mt-3 font-semibold tracking-wider uppercase opacity-80 sm:hidden flex items-center gap-1 animate-pulse">
-                    Tap to expand
-                  </span>
-                </div>
-
-                {/* Hover Shutter Panel */}
-                <div className="service-card-hover-panel">
-                  {/* Diagonal glass reflection sweep */}
-                  <div className="glass-reflection-sweep"></div>
-
-                  <div className="panel-header">
-                    <h4 className="panel-title">{s.title}</h4>
-                    <FaArrowRight className="panel-arrow" />
+                  {/* Full-card background image */}
+                  <div className="service-card-bg-container">
+                    <img
+                      src={bgImage}
+                      className="service-card-bg"
+                      alt={s.title}
+                      loading="lazy"
+                    />
+                    <div className="service-card-overlay"></div>
                   </div>
 
-                  <p className="panel-desc">{s.description}</p>
+                  {/* Environmental particles overlay */}
+                  <CardParticles theme={theme} />
 
-                  <ul className="panel-features">
-                    {s.points.map((p, idx) => (
-                      <li
-                        key={p}
-                        className="stagger-item"
-                        style={{ '--delay': `${idx * 80}ms` }}
-                      >
-                        <span className="stagger-dot" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
+                  {/* Default centered view */}
+                  <div className="service-card-default-view">
+                    <div className="service-card-icon-wrapper">
+                      <Icon className="text-3xl" />
+                    </div>
+                    <h3 className="service-card-title">{s.title}</h3>
+                    <span className="text-[10px] text-slate-400 mt-3 font-semibold tracking-wider uppercase opacity-80 sm:hidden flex items-center gap-1 animate-pulse">
+                      Tap to expand
+                    </span>
+                  </div>
 
-                  <div className="panel-techs">
-                    {s.technologies.map((t) => (
-                      <span key={t} className="tech-tag">
-                        {t}
-                      </span>
-                    ))}
+                  {/* Hover Shutter Panel */}
+                  <div className="service-card-hover-panel">
+                    {/* Diagonal glass reflection sweep */}
+                    <div className="glass-reflection-sweep"></div>
+
+                    <div className="panel-header">
+                      <h4 className="panel-title">{s.title}</h4>
+                      <FaArrowRight className="panel-arrow" />
+                    </div>
+
+                    <p className="panel-desc">{s.description}</p>
+
+                    <ul className="panel-features">
+                      {s.points.map((p, idx) => (
+                        <li
+                          key={p}
+                          className="stagger-item"
+                          style={{ '--delay': `${idx * 80}ms` }}
+                        >
+                          <span className="stagger-dot" />
+                          {p}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="panel-techs">
+                      {s.technologies.map((t) => (
+                        <span key={t} className="tech-tag">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
