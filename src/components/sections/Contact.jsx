@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter, FaInstagram } from 'react-icons/fa';
 import SectionHeading from '../ui/SectionHeading';
 
 export default function Contact() {
@@ -26,9 +26,9 @@ export default function Contact() {
   ];
 
   const socialLinks = [
-    { icon: FaGithub, url: "https://github.com", name: "GitHub" },
-    { icon: FaLinkedin, url: "https://linkedin.com", name: "LinkedIn" },
-    { icon: FaTwitter, url: "https://twitter.com", name: "Twitter" },
+    { icon: FaGithub, url: "https://github.com/its-shilpa/", name: "GitHub" },
+    { icon: FaLinkedin, url: "https://www.linkedin.com/in/shilpa-mukherjee/", name: "LinkedIn" },
+    { icon: FaInstagram, url: "https://www.instagram.com/snowy_shilpa/", name: "Instagram" },
   ];
 
   return (

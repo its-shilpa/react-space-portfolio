@@ -1,12 +1,12 @@
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 
 const quickLinks = ["Home", "Skills", "About", "Experience", "Projects", "Services", "Achievements", "Contact"];
 const socials = [
-  { icon: FaGithub, url: "https://github.com" },
-  { icon: FaLinkedin, url: "https://linkedin.com" },
-  { icon: FaTwitter, url: "https://twitter.com" },
-  { icon: FaInstagram, url: "https://instagram.com" },
+  { icon: FaGithub, url: "https://github.com/its-shilpa/" },
+  { icon: FaLinkedin, url: "https://www.linkedin.com/in/shilpa-mukherjee/" },
+  { icon: FaInstagram, url: "https://www.instagram.com/snowy_shilpa/" },
+  { icon: FaEnvelope, url: "mailto:shilpa.mukherjee625@gmail.com" },
 ];
 
 export default function Footer() {

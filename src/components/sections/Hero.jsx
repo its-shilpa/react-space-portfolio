@@ -150,8 +150,8 @@ export default function Hero() {
           {/* Social icons */}
           <div className="flex gap-3 mt-6 sm:mt-8">
             {[
-              { icon: FaGithub, url: 'https://github.com', label: 'GitHub' },
-              { icon: FaLinkedin, url: 'https://linkedin.com', label: 'LinkedIn' },
+              { icon: FaGithub, url: 'https://github.com/its-shilpa/', label: 'GitHub' },
+              { icon: FaLinkedin, url: 'https://www.linkedin.com/in/shilpa-mukherjee/', label: 'LinkedIn' },
             ].map(({ icon: Icon, url, label }) => (
               <a
                 key={label}
