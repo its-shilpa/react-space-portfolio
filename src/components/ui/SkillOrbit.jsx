@@ -373,6 +373,7 @@ export default function SkillOrbit() {
         Drag to spin the orbit
       </p>
 
+
       <div className="mt-4 sm:mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
         {Object.entries(categoryMeta).map(([key, meta]) => (
           <button
@@ -396,3 +397,4 @@ export default function SkillOrbit() {
     </div>
   );
 }
+
