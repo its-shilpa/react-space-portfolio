@@ -15,7 +15,7 @@ import techGiftsImg from '../assets/projects/tech-gifts-img.png';
 export const projects = [
   {
     title: "React js Music Player",
-    description: "A modern music player application built with React.js, featuring an interactive UI and seamless user experience. The app includes core functionalities like play/pause, track navigation, and dynamic state management.",
+    description: "A futuristic React.js music player featuring a sleek glassmorphic user interface, smooth audio visualizers, playlist controls, and seamless state-managed track lists.",
     image: musicAppImg,
     category: "JS Project",
     tags: ["React", "Vite", "GSAP", "Tailwind CSS"],
@@ -24,7 +24,7 @@ export const projects = [
   },
   {
     title: "Resturent Management",
-    description: "This is my first Vue.js project featuring both an admin panel and a user panel. Administrators can perform complete CRUD operations, and the application is fully responsive with a modern, user-friendly design.",
+    description: "A comprehensive restaurant management portal utilizing Vue.js, featuring CRUD-based menu creation, booking administration, and dynamic order tracking.",
     image: restoManageImg,
     category: "JS Project",
     tags: ["Vue.js", "Api", "Database", "CURD Operations"],
@@ -33,7 +33,7 @@ export const projects = [
   },
   {
     title: "Moretrav",
-    description: "Moretrav is a dynamic CMS website with beautiful design, search functionality, blogs and with all the admin customization.",
+    description: "A customized travel CMS platform built on WordPress, featuring custom taxonomies, dynamic blogging, and advanced search filters to explore global travel guides.",
     image: moretravImg,
     category: "WordPress Project",
     tags: ["HTML", "CSS", "WordPress", "ACF", "PHP", "CPT"],
@@ -41,7 +41,7 @@ export const projects = [
   },
   {
     title: "Mindscuba",
-    description: "Mindscuba is a dynamic CMS website with beautiful design and animation with all the admin customization.",
+    description: "A premium aquatic sports portal featuring an interactive design layout, sophisticated GSAP and AOS scroll animations, and custom ACF templates for content management.",
     image: mindscubaImg,
     category: "WordPress Project",
     tags: ["HTML", "CSS", "AOS", "GSAP", "ACF", "CPT", "Wordpress"],
@@ -49,7 +49,7 @@ export const projects = [
   },
   {
     title: "Devanand",
-    description: "WooCommerce store with secure payment & cart flow.",
+    description: "An optimized WooCommerce storefront built for technical services, featuring streamlined payment gateway integrations, custom product specifications, and instant checkout flows.",
     image: devanandImg,
     category: "WooCommerce Project",
     tags: ["WooCommerce", "WordPress", "Payment Gateway", "Cart Flow", "Search"],
@@ -57,7 +57,7 @@ export const projects = [
   },
   {
     title: "EDS Technologies",
-    description: "WooCommerce store with secure payment, bundle products, cart flow, filter, search for pets and pet products with language switcher.",
+    description: "A high-performance corporate WordPress site for technical services, featuring custom post types, dynamic ACF layout fields, and interactive categorization structures.",
     image: edstechnologyImg,
     category: "WordPress Project",
     tags: ["HTML", "CSS", "ACF", "CPT", "Category", "Global Search"],
@@ -65,15 +65,15 @@ export const projects = [
   },
   {
     title: "Yomzy",
-    description: "WooCommerce store with secure payment, bundle products, cart flow, filter, search for pets and pet products with language switcher.",
+    description: "A premium pet care e-commerce shop powered by WooCommerce, featuring interactive multi-language switchers, dynamic product bundle configurations, and advanced search filters.",
     image: yomzyImg,
     category: "WooCommerce Project",
     tags: ["WooCommerce", "Filter", "Payment Gateway", "Language Switcher"],
     liveLink: "https://yomzy.ae/",
   },
-   {
+  {
     title: "JD USA Pool Service",
-    description: "Luxury Pool Renovations comfort and style together",
+    description: "A high-end WordPress site for luxury pool renovations, featuring customized pool service cost estimators, custom jQuery calculations, and custom content grids.",
     image: jdUsaImg,
     category: "WordPress Project",
     tags: ["WordPress", "jQuery", "Js Calculation Custom Form", "CPT", "ACF"],
@@ -81,7 +81,7 @@ export const projects = [
   },
   {
     title: "JS Mini Projects",
-    description: "Small JavaScript projects that demonstrate various functionalities and concepts, providing practical examples for learning and experimentation.",
+    description: "A compilation of interactive JavaScript mini-utilities and browser-based games, demonstrating dynamic DOM events, algorithms, and modular layout styles.",
     image: jsMiniProjectImg,
     category: "JS Project",
     tags: ["JavaScript", "Html", "Css"],
@@ -90,7 +90,7 @@ export const projects = [
   },
   {
     title: "Tech Gifts",
-    description: "Small JavaScript projects that demonstrate various functionalities and concepts, providing practical examples for learning and experimentation.",
+    description: "A boutique WooCommerce store for technology gadgets and customized corporate gifts, featuring optimized checkout flows, secure payment gateways, and advanced search filters.",
     image: techGiftsImg,
     category: "WooCommerce Project",
     tags: ["WooCommerce", "Filter", "Search", "Payment Gateway", "Cart and Checkout Flow"],
