@@ -36,8 +36,9 @@ export default function AnimatedBackground() {
       time = 0;
       lightningFlash = { active: false, alpha: 0, duration: 0 };
 
+      const isMobileDevice = window.innerWidth < 768;
       // If user prefers reduced motion, we scale down counts to almost 0 or disable
-      const countMultiplier = prefersReducedMotion.current ? 0.05 : 1.0;
+      const countMultiplier = prefersReducedMotion.current ? 0.05 : (isMobileDevice ? 0.25 : 1.0);
 
       if (activeTheme === 'space' || activeTheme === 'nightsky') {
         const count = activeTheme === 'space' ? Math.round(120 * countMultiplier) : Math.round(80 * countMultiplier);
@@ -267,9 +268,17 @@ export default function AnimatedBackground() {
       }
     };
 
+    let prevWidth = window.innerWidth;
     const handleResize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      const newWidth = window.innerWidth;
+      const newHeight = window.innerHeight;
+      // Ignore vertical shifts less than 120px on mobile (triggered by browser chrome hiding/showing)
+      if (newWidth === prevWidth && Math.abs(newHeight - canvas.height) < 120) {
+        return;
+      }
+      prevWidth = newWidth;
+      width = canvas.width = newWidth;
+      height = canvas.height = newHeight;
       initParticles(theme);
     };
 
@@ -585,8 +594,8 @@ export default function AnimatedBackground() {
           p.x += p.vx;
 
           if (p.y > height) {
-            // Rain hits bottom: trigger a ripple/splash in extras
-            if (!prefersReducedMotion.current && Math.random() < 0.3 && extras.length < 35) {
+            // Rain hits bottom: trigger a ripple/splash in extras (skip on mobile for performance)
+            if (!prefersReducedMotion.current && window.innerWidth >= 768 && Math.random() < 0.3 && extras.length < 35) {
               extras.push({
                 x: p.x,
                 y: height - Math.random() * 15,
@@ -640,10 +649,14 @@ export default function AnimatedBackground() {
           const finalY = p.y - scrollRef.current * (0.02 + p.layer * 0.02);
 
           ctx.beginPath();
-          // Draw standard cloud shape with overlapping puffs
-          ctx.arc(p.x, finalY, p.radius, 0, Math.PI * 2);
-          ctx.arc(p.x + p.radius * 0.5, finalY - p.radius * 0.1, p.radius * 0.8, 0, Math.PI * 2);
-          ctx.arc(p.x - p.radius * 0.5, finalY - p.radius * 0.05, p.radius * 0.7, 0, Math.PI * 2);
+          if (window.innerWidth < 768) {
+            ctx.arc(p.x, finalY, p.radius * 1.25, 0, Math.PI * 2);
+          } else {
+            // Draw standard cloud shape with overlapping puffs
+            ctx.arc(p.x, finalY, p.radius, 0, Math.PI * 2);
+            ctx.arc(p.x + p.radius * 0.5, finalY - p.radius * 0.1, p.radius * 0.8, 0, Math.PI * 2);
+            ctx.arc(p.x - p.radius * 0.5, finalY - p.radius * 0.05, p.radius * 0.7, 0, Math.PI * 2);
+          }
           ctx.fill();
           ctx.restore();
         });
@@ -702,8 +715,8 @@ export default function AnimatedBackground() {
           });
         }
       } else if (activeTheme === 'ocean') {
-        // Ocean Light Rays (swaying volumetric lights)
-        if (!prefersReducedMotion.current) {
+        // Ocean Light Rays (swaying volumetric lights - skip on mobile)
+        if (!prefersReducedMotion.current && window.innerWidth >= 768) {
           ctx.save();
           const rayGrad = ctx.createLinearGradient(0, 0, 0, height);
           rayGrad.addColorStop(0, 'rgba(34, 211, 238, 0.06)');
@@ -726,16 +739,19 @@ export default function AnimatedBackground() {
           ctx.restore();
         }
 
-        // Draw Overlapping Waves at bottom
+        // Draw Overlapping Waves at bottom (simplified on mobile)
+        const isMobileDevice = window.innerWidth < 768;
         ctx.save();
         ctx.fillStyle = 'rgba(6, 42, 71, 0.15)';
-        for (let w = 0; w < 3; w++) {
+        const maxWaves = isMobileDevice ? 1 : 3;
+        const waveStep = isMobileDevice ? 40 : 20;
+        for (let w = 0; w < maxWaves; w++) {
           const waveHeight = 55 - w * 12;
           const waveOffset = w * Math.PI * 0.5;
           const speed = 1.0 + w * 0.3;
           ctx.beginPath();
           ctx.moveTo(0, height);
-          for (let x = 0; x <= width; x += 20) {
+          for (let x = 0; x <= width; x += waveStep) {
             const y = height - waveHeight + Math.sin(x * 0.004 + time * speed + waveOffset) * 12;
             ctx.lineTo(x, y);
           }
@@ -786,8 +802,8 @@ export default function AnimatedBackground() {
           ctx.restore();
         });
       } else if (activeTheme === 'forest') {
-        // Forest light beams (swaying beams from top left)
-        if (!prefersReducedMotion.current) {
+        // Forest light beams (swaying beams from top left - skip on mobile)
+        if (!prefersReducedMotion.current && window.innerWidth >= 768) {
           ctx.save();
           const beamGrad = ctx.createLinearGradient(0, 0, width * 0.6, height);
           beamGrad.addColorStop(0, 'rgba(132, 204, 22, 0.05)'); // lime green glow
