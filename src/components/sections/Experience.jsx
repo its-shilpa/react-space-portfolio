@@ -1,12 +1,28 @@
 import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FaRocket, FaTerminal } from 'react-icons/fa';
+import { 
+  FaRocket, FaTerminal, FaReact, FaVuejs, FaWordpress, 
+  FaHtml5, FaCss3Alt, FaCreditCard, FaCode, FaShoppingBag, FaJs 
+} from 'react-icons/fa';
 import { experience } from '../../data/experience';
 import SectionHeading from '../ui/SectionHeading';
 import '../css/experience.css';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const getTagIcon = (tag) => {
+  const t = tag.toLowerCase();
+  if (t.includes('react')) return { icon: FaReact, color: '#61dafb' };
+  if (t.includes('vue')) return { icon: FaVuejs, color: '#42b883' };
+  if (t.includes('javascript') || t === 'js' || t.includes('jquery')) return { icon: FaJs, color: '#f7df1e' };
+  if (t.includes('wordpress') || t.includes('divi') || t.includes('elementor')) return { icon: FaWordpress, color: '#21759b' };
+  if (t.includes('woocommerce')) return { icon: FaShoppingBag, color: '#96588a' };
+  if (t === 'html') return { icon: FaHtml5, color: '#e34f26' };
+  if (t === 'css' || t.includes('tailwind')) return { icon: FaCss3Alt, color: '#1572b6' };
+  if (t.includes('payment') || t.includes('credit')) return { icon: FaCreditCard, color: '#10b981' };
+  return { icon: FaCode, color: '#94a3b8' };
+};
 
 export default function Experience() {
   const containerRef = useRef(null);
@@ -211,15 +227,25 @@ export default function Experience() {
                     ))}
                   </ul>
 
-                  <div className="flex gap-1.5 mt-5 flex-wrap">
-                    {job.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="text-[10px] px-2.5 py-1 rounded-full bg-white/5 text-slate-300 border border-white/10 group-hover:border-theme-via/40 group-hover:text-white transition-colors duration-300"
-                      >
-                        {t}
-                      </span>
-                    ))}
+                  <div className="flex gap-2 mt-5 flex-wrap">
+                    {job.tags.map((t) => {
+                      const tagMeta = getTagIcon(t);
+                      const Icon = tagMeta.icon;
+                      const isReact = t.toLowerCase().includes('react');
+                      return (
+                        <span
+                          key={t}
+                          className={`experience-tech-badge ${isReact ? 'react' : ''}`}
+                          style={{
+                            '--badge-color': tagMeta.color,
+                            '--badge-glow-shadow': `${tagMeta.color}40`
+                          }}
+                        >
+                          <Icon className="experience-tech-icon" />
+                          <span>{t}</span>
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

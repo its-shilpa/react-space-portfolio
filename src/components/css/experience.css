@@ -153,3 +153,49 @@
     padding: 2.5px 8px;
   }
 }
+
+/* Premium Interactive Tech Stack Badges */
+.experience-tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  font-family: monospace;
+  font-size: 11px;
+  color: #cbd5e1;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.experience-tech-badge:hover {
+  color: #ffffff;
+  border-color: var(--badge-color) !important;
+  background: rgba(10, 15, 30, 0.7);
+  box-shadow: 0 0 12px var(--badge-glow-shadow);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.experience-tech-icon {
+  font-size: 13px;
+  color: var(--badge-color);
+  transition: transform 0.4s ease;
+}
+
+.experience-tech-badge:hover .experience-tech-icon {
+  transform: scale(1.15);
+}
+
+/* React spin animation on hover */
+.experience-tech-badge.react:hover .experience-tech-icon {
+  animation: badgeReactSpin 2s linear infinite;
+}
+
+@keyframes badgeReactSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
