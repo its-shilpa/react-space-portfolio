@@ -21,7 +21,7 @@ export default function Contact() {
   };
 
   const contactDetails = [
-    { icon: FaEnvelope, title: "Email Me", value: "shilpa.mukherjee@example.com", link: "mailto:shilpa.mukherjee@example.com" },
+    { icon: FaEnvelope, title: "Email Me", value: "shilpamukherjee625@gmail.com", link: "mailto:shilpamukherjee625@gmail.com" },
     { icon: FaMapMarkerAlt, title: "Location", value: "Kolkata, West Bengal, India", link: null },
   ];
 
