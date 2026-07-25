@@ -3,10 +3,10 @@ import { Link } from 'react-scroll';
 
 const quickLinks = ["Home", "Skills", "About", "Experience", "Projects", "Services", "Achievements", "Contact"];
 const socials = [
-  { icon: FaGithub, url: "https://github.com/its-shilpa/" },
-  { icon: FaLinkedin, url: "https://www.linkedin.com/in/shilpa-mukherjee/" },
-  { icon: FaInstagram, url: "https://www.instagram.com/snowy_shilpa/" },
-  { icon: FaEnvelope, url: "mailto:shilpa.mukherjee625@gmail.com" },
+  { icon: FaGithub, url: "https://github.com/its-shilpa/", name: "github" },
+  { icon: FaLinkedin, url: "https://www.linkedin.com/in/shilpa-mukherjee/", name: "linkedin" },
+  { icon: FaInstagram, url: "https://www.instagram.com/snowy_shilpa/", name: "instagram" },
+  { icon: FaEnvelope, url: "mailto:shilpa.mukherjee625@gmail.com", name: "envelope" },
 ];
 
 export default function Footer() {
@@ -42,13 +42,13 @@ export default function Footer() {
         <div>
           <h4 className="text-white text-sm font-semibold mb-3">Connect</h4>
           <div className="flex gap-4">
-            {socials.map(({ icon: Icon, url }) => (
+            {socials.map(({ icon: Icon, url, name }) => (
               <a
                 key={url}
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 hover:border-nebula-blue hover:text-nebula-blue flex items-center justify-center transition duration-300 text-lg"
+                className={`w-10 h-10 rounded-lg bg-white/5 border flex items-center justify-center transition duration-300 text-lg social-icon-btn ${name}`}
               >
                 <Icon />
               </a>

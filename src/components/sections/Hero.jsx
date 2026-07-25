@@ -158,7 +158,7 @@ export default function Hero() {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-nebula-blue hover:border-nebula-blue/50 hover:bg-white/10 transition-all duration-300"
+                className={`w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-white/5 border flex items-center justify-center transition-all duration-300 social-icon-btn ${label.toLowerCase()}`}
                 title={label}
               >
                 <Icon className="text-base sm:text-lg" />

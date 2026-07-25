@@ -68,15 +68,16 @@ body {
 
 /* Premium Card Flip Utilities */
 .card-flip-container {
-  perspective: 1200px;
+  perspective: 1500px;
 }
 
 .card-flip-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .card-flip-container:hover .card-flip-inner {
@@ -91,10 +92,75 @@ body {
   height: 100%;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.card-flip-front {
+  transform: rotateY(0deg);
+  z-index: 2;
 }
 
 .card-flip-back {
   transform: rotateY(180deg);
+  z-index: 1;
+}
+
+/* Brand Social Icons Colors & Glows */
+.social-icon-btn {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* GitHub */
+.social-icon-btn.github {
+  color: #c084fc !important; /* light purple */
+  border-color: rgba(192, 132, 252, 0.25) !important;
+}
+.social-icon-btn.github:hover {
+  color: #ffffff !important;
+  background: rgba(192, 132, 252, 0.15) !important;
+  border-color: #c084fc !important;
+  box-shadow: 0 0 15px rgba(192, 132, 252, 0.5) !important;
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* LinkedIn */
+.social-icon-btn.linkedin {
+  color: #60a5fa !important; /* light blue */
+  border-color: rgba(96, 165, 250, 0.25) !important;
+}
+.social-icon-btn.linkedin:hover {
+  color: #ffffff !important;
+  background: rgba(96, 165, 250, 0.15) !important;
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 15px rgba(96, 165, 250, 0.5) !important;
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Instagram */
+.social-icon-btn.instagram {
+  color: #f472b6 !important; /* pink */
+  border-color: rgba(244, 114, 182, 0.25) !important;
+}
+.social-icon-btn.instagram:hover {
+  color: #ffffff !important;
+  background: rgba(244, 114, 182, 0.15) !important;
+  border-color: #f472b6 !important;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.5) !important;
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Envelope/Email */
+.social-icon-btn.envelope {
+  color: #f87171 !important; /* light red */
+  border-color: rgba(248, 113, 113, 0.25) !important;
+}
+.social-icon-btn.envelope:hover {
+  color: #ffffff !important;
+  background: rgba(248, 113, 113, 0.15) !important;
+  border-color: #f87171 !important;
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.5) !important;
+  transform: translateY(-3px) scale(1.05);
 }
 
 /* Disable expensive backdrop blurs on mobile screens for smooth 60fps scrolling */
