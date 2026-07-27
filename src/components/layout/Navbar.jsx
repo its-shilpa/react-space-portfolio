@@ -36,11 +36,18 @@ export default function Navbar() {
         <div className="portfolio-container flex items-center justify-between py-4">
           {/* Premium Logo */}
           <Link to="home" smooth duration={500} className="cursor-pointer flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-nebula-purple to-nebula-blue flex items-center justify-center shadow-lg shadow-nebula-purple/20 group-hover:shadow-nebula-purple/40 group-hover:scale-110 transition-all duration-300">
-              <HiSparkles className="text-white text-lg" />
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-nebula-purple to-nebula-blue flex items-center justify-center shadow-lg shadow-nebula-purple/20 group-hover:shadow-nebula-purple/40 group-hover:scale-110 transition-all duration-300 animate-logo-glow">
+              <HiSparkles className="text-white text-lg animate-logo-sparkle" />
             </div>
             <div className="flex flex-col leading-none">
-              <span className="font-display font-bold text-lg bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent group-hover:from-nebula-blue group-hover:to-nebula-purple transition-all duration-300">
+              <span 
+                className="font-display font-extrabold text-lg bg-clip-text text-transparent animate-text-shimmer"
+                style={{
+                  backgroundImage: 'linear-gradient(to right, var(--theme-from), var(--theme-via), var(--theme-to), var(--theme-via), var(--theme-from))',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }}
+              >
                 Shilpa
               </span>
               <span className="text-[9px] text-slate-500 font-medium tracking-[0.2em] uppercase">

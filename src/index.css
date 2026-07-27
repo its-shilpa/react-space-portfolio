@@ -183,3 +183,48 @@ body {
     background-color: rgba(6, 10, 24, 0.94) !important;
   }
 }
+
+/* Custom Sparkle and Glow Animations for Logo branding */
+@keyframes logoSparkle {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+    filter: drop-shadow(0 0 8px #00ffff);
+  }
+}
+
+@keyframes logoPulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.25), 0 0 5px rgba(6, 182, 212, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.65), 0 0 10px rgba(6, 182, 212, 0.45);
+  }
+}
+
+.animate-logo-sparkle {
+  display: inline-block;
+  animation: logoSparkle 4.5s ease-in-out infinite;
+}
+
+.animate-logo-glow {
+  animation: logoPulseGlow 3.5s ease-in-out infinite;
+}
+
+/* Custom Text Gradient Shimmer Animation */
+@keyframes textGradientShimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-text-shimmer {
+  background-size: 300% auto !important;
+  animation: textGradientShimmer 6s ease-in-out infinite !important;
+}
