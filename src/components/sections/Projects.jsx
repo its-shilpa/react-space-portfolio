@@ -245,7 +245,7 @@ export default function Projects() {
                           : 'max-h-0 opacity-0 pointer-events-none'
                       }`}
                     >
-                      <span className="w-8 h-8 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-slate-400 group-hover:text-white hover:border-white/20 transition duration-300">
+                      <span className="w-8 h-8 rounded-full border border-white/10 bg-transparent flex items-center justify-center text-slate-400 group-hover:text-white hover:border-white/20 transition duration-300">
                         <FaArrowRight className="text-[10px]" />
                       </span>
                     </div>
@@ -287,14 +287,14 @@ export default function Projects() {
               <button
                 aria-label="Previous project"
                 onClick={prev}
-                className="flex absolute left-1 sm:left-0 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-nebula-blue hover:border-nebula-blue/40 backdrop-blur-md transition-all duration-300 cursor-pointer"
+                className="flex absolute left-1 sm:left-0 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-transparent border border-white/10 text-slate-300 hover:bg-white/5 hover:text-nebula-blue hover:border-nebula-blue/40 backdrop-blur-md transition-all duration-300 cursor-pointer"
               >
                 <FaChevronLeft className="text-xs" />
               </button>
               <button
                 aria-label="Next project"
                 onClick={next}
-                className="flex absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-nebula-blue hover:border-nebula-blue/40 backdrop-blur-md transition-all duration-300 cursor-pointer"
+                className="flex absolute right-1 sm:right-0 top-1/2 -translate-y-1/2 z-40 items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-transparent border border-white/10 text-slate-300 hover:bg-white/5 hover:text-nebula-blue hover:border-nebula-blue/40 backdrop-blur-md transition-all duration-300 cursor-pointer"
               >
                 <FaChevronRight className="text-xs" />
               </button>

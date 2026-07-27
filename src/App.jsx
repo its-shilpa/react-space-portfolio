@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import { ThemeProvider } from './hooks/ThemeContext';
+import { useDynamicFavicon } from './hooks/useDynamicFavicon';
 import AnimatedBackground from './components/ui/AnimatedBackground';
 import Navbar from './components/layout/Navbar';
 import Hero from './components/sections/Hero';
@@ -16,6 +17,11 @@ import Contact from './components/sections/Contact';
 import Footer from './components/layout/Footer';
 import ThemeSwitcher from './components/ui/ThemeSwitcher';
 
+function FaviconController() {
+  useDynamicFavicon();
+  return null;
+}
+
 export default function App() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 60 });
@@ -23,6 +29,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <FaviconController />
       <div className="relative overflow-x-hidden w-full">
         <AnimatedBackground />
         <Navbar />
