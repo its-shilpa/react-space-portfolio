@@ -1,201 +1,662 @@
 /* experience.css */
 
-.experience-card {
+/* 1. Main Dossier Board Layout */
+.experience-dossier-board {
   position: relative;
+  width: 100%;
   border-radius: 24px;
-  background: rgba(8, 15, 30, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  isolation: isolate;
+
+  /* Layered depth instead of a flat fill:
+     - two theme-tinted radial glows (top-left / bottom-right)
+     - a dark diagonal base gradient for richness */
+  background:
+    radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--theme-to) 8%, transparent), transparent 55%),
+    radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--theme-from) 5%, transparent), transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--space-900) 65%, transparent) 0%, color-mix(in srgb, var(--space-950) 80%, transparent) 100%);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-  transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8),
+              inset 0 1px 0 rgba(255, 255, 255, 0.04),
+              inset 0 0 30px rgba(255, 255, 255, 0.015);
   overflow: hidden;
   z-index: 10;
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
-.experience-card::before {
+/* Faint blueprint / schematic grid, faded toward the edges so it
+   doesn't look like a hard-edged tiled pattern */
+.experience-dossier-board::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 24px;
-  padding: 1.5px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 80%);
+  z-index: 0;
   pointer-events: none;
-  transition: background 0.5s ease;
 }
 
-.experience-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--nebula-blue);
-  box-shadow: 0 20px 40px -15px var(--nebula-blue), 
-              0 0 30px -5px rgba(255, 255, 255, 0.05);
-  background: rgba(8, 15, 30, 0.6);
+/* Soft grain so the glass panel doesn't look like a flat vector fill
+   under the blur */
+.experience-dossier-board::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  z-index: 0;
+  pointer-events: none;
 }
 
-.experience-card:hover::before {
-  background: linear-gradient(135deg, var(--theme-from), var(--theme-to));
+/* 2. Theme-Specific Borders & Shadow Glows on the Main Board */
+.experience-dossier-board.theme-space {
+  border-color: rgba(6, 182, 212, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.08);
+}
+.experience-dossier-board.theme-forest {
+  border-color: rgba(34, 197, 94, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(34, 197, 94, 0.08);
+}
+.experience-dossier-board.theme-sunset {
+  border-color: rgba(249, 115, 22, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(249, 115, 22, 0.08);
+}
+.experience-dossier-board.theme-ocean {
+  border-color: rgba(20, 184, 166, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(20, 184, 166, 0.08);
+}
+.experience-dossier-board.theme-rainy {
+  border-color: rgba(14, 165, 233, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(14, 165, 233, 0.08);
+}
+.experience-dossier-board.theme-cloudy {
+  border-color: rgba(148, 163, 184, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(148, 163, 184, 0.08);
+}
+.experience-dossier-board.theme-snowy {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.06);
+}
+.experience-dossier-board.theme-sakura {
+  border-color: rgba(236, 72, 153, 0.15);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 40px rgba(236, 72, 153, 0.08);
+}
+.experience-dossier-board.theme-cyberpunk {
+  border-color: rgba(217, 70, 239, 0.2);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 45px rgba(217, 70, 239, 0.1);
+}
+.experience-dossier-board.theme-neon {
+  border-color: rgba(0, 255, 255, 0.25);
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.8), 0 0 45px rgba(0, 255, 255, 0.12);
 }
 
-/* Header style with a circular tech badge */
-.experience-icon-orb {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+/* Spotlight overlay */
+.experience-spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle 280px at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.035), transparent 80%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 3. Futuristic Company Badge */
+.futuristic-company-badge {
+  position: relative;
+  width: 76px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.4s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-
-.experience-card:hover .experience-icon-orb {
+.badge-orbit-ring {
+  position: absolute;
+  inset: -8px;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  animation: badgeOrbitRotation 12s linear infinite;
+  transform-style: preserve-3d;
+}
+.badge-orbit-node {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--theme-to);
+  box-shadow: 0 0 8px var(--theme-to);
+  transform: translate(-50%, -50%);
+}
+@keyframes badgeOrbitRotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.badge-icon-core {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4),
+              inset 0 0 10px rgba(255, 255, 255, 0.02);
+  transition: all 0.5s ease;
+  z-index: 2;
+}
+.badge-icon-core::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.15) 70%, transparent);
+  transform: skewX(-30deg);
+  transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.futuristic-company-badge:hover .badge-icon-core::after {
+  left: 150%;
+}
+.futuristic-company-badge:hover .badge-icon-core {
   border-color: var(--theme-to);
-  color: var(--theme-to);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1), inset 0 0 8px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--theme-to) 20%, transparent), inset 0 0 12px rgba(255, 255, 255, 0.05);
+  transform: scale(1.05);
+}
+.futuristic-company-badge:hover .badge-orbit-ring {
+  animation-duration: 5s;
 }
 
-/* Status Indicator */
-.experience-status-tag {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 3px 10px;
+/* 4. Active pulse beacon */
+.active-pulse-beacon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.beacon-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--theme-to);
+  box-shadow: 0 0 10px var(--theme-to);
+  position: relative;
+}
+.beacon-dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--theme-to);
+  animation: beaconPulse 2s infinite ease-out;
+  opacity: 0;
+}
+@keyframes beaconPulse {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* 5. Custom Sidebar List Items */
+.dossier-sidebar-item {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  overflow: hidden;
+}
+.sidebar-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--theme-to), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.dossier-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+.dossier-sidebar-item.active {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: color-mix(in srgb, var(--theme-to) 30%, transparent);
+  box-shadow: inset 0 0 15px color-mix(in srgb, var(--theme-to) 6%, transparent);
+}
+.dossier-sidebar-item.active .sidebar-scanline {
+  opacity: 1;
+  animation: sidebarScanLoop 3s linear infinite;
+}
+@keyframes sidebarScanLoop {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* 6. Mission Progress Timeline Module */
+.timeline-module-rail {
+  width: 100%;
+  height: 4px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+.timeline-module-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--theme-from), var(--theme-to));
+  border-radius: 999px;
+  box-shadow: 0 0 10px var(--theme-to);
+}
+
+/* 7. Responsibility Node checklist items */
+.objectives-bullet-glow {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 1.5px solid color-mix(in srgb, var(--theme-to) 25%, transparent);
+  background: color-mix(in srgb, var(--theme-to) 6%, transparent);
+  color: var(--theme-to);
+  font-size: 10px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px color-mix(in srgb, var(--theme-to) 12.5%, transparent);
   transition: all 0.3s ease;
 }
-
-.experience-status-tag.active {
-  color: var(--nebula-blue);
-  background: rgba(6, 182, 212, 0.1);
-  border-color: rgba(6, 182, 212, 0.3);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
-  animation: pulseActiveStatus 2.5s infinite ease-in-out;
+.objective-item-row:hover .objectives-bullet-glow {
+  transform: scale(1.15);
+  border-color: var(--theme-to);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--theme-to) 27%, transparent);
+  background: color-mix(in srgb, var(--theme-to) 12.5%, transparent);
+}
+.objective-left-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5px;
+  border-radius: 999px;
+  background: var(--theme-to);
+  opacity: 0;
+  transform: scaleY(0.1);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.objective-item-row:hover .objective-left-accent {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
-@keyframes pulseActiveStatus {
-  0%, 100% {
-    opacity: 0.9;
-    box-shadow: 0 0 8px rgba(6, 182, 212, 0.15);
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 14px rgba(6, 182, 212, 0.35);
-  }
+/* 8. Tech Category Sub-Glass Panels */
+.tech-category-panel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 16px 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
+}
+.tech-category-panel:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-.experience-status-tag.completed {
-  color: var(--nebula-purple);
-  background: rgba(124, 58, 237, 0.1);
-  border-color: rgba(124, 58, 237, 0.25);
-}
-
-/* S-Curve Timeline Node Animations */
-@keyframes nodePulse {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.35;
-  }
-  50% {
-    transform: scale(1.2);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 0.35;
-  }
-}
-
-@keyframes nodeRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.experience-node-pulse {
-  transform-origin: center;
-  animation: nodePulse 3s infinite ease-in-out;
-}
-
-.experience-node-rotate {
-  transform-origin: center;
-  animation: nodeRotate 12s linear infinite;
-}
-
-.experience-node-group:hover .experience-node-core {
-  r: 8px;
-  fill: var(--theme-via) !important;
-  filter: drop-shadow(0 0 12px var(--theme-via)) !important;
-  transition: all 0.3s ease;
-}
-
-/* Responsive Overrides */
-@media (max-width: 768px) {
-  /* Disable hover effects that might feel sticky on tap */
-  .experience-card:hover {
-    transform: none;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-  }
-  
-  .experience-status-tag {
-    font-size: 8px;
-    padding: 2.5px 8px;
-  }
-}
-
-/* Premium Interactive Tech Stack Badges */
-.experience-tech-badge {
+/* 9. Technology Inventory holographic badge */
+.tech-dossier-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px;
-  border-radius: 9999px;
+  padding: 5px 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.06);
   font-family: monospace;
   font-size: 11px;
   color: #cbd5e1;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   cursor: pointer;
-  z-index: 10;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
-
-.experience-tech-badge:hover {
+.tech-dossier-pill:hover {
   color: #ffffff;
-  border-color: var(--badge-color) !important;
-  background: rgba(10, 15, 30, 0.7);
-  box-shadow: 0 0 12px var(--badge-glow-shadow);
-  transform: translateY(-2px) scale(1.04);
+  border-color: var(--pill-color) !important;
+  background: rgba(10, 15, 30, 0.85);
+  box-shadow: 0 0 12px var(--pill-color-shadow);
+  transform: translateY(-2px) scale(1.05);
 }
-
-.experience-tech-icon {
+.tech-dossier-icon {
   font-size: 13px;
-  color: var(--badge-color);
+  color: var(--pill-color);
   transition: transform 0.4s ease;
 }
-
-.experience-tech-badge:hover .experience-tech-icon {
-  transform: scale(1.15);
+.tech-dossier-pill:hover .tech-dossier-icon {
+  transform: scale(1.2);
+}
+.tech-dossier-pill.react:hover .tech-dossier-icon {
+  animation: reactBadgeSpin 2s linear infinite;
+}
+@keyframes reactBadgeSpin {
+  to { transform: rotate(360deg); }
 }
 
-/* React spin animation on hover */
-.experience-tech-badge.react:hover .experience-tech-icon {
-  animation: badgeReactSpin 2s linear infinite;
+/* 10. Futuristic Statistics Widgets */
+.stat-widget-glass {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1.2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 14px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.stat-widget-glass:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--theme-to) 31%, transparent);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4),
+              0 0 15px color-mix(in srgb, var(--theme-to) 8%, transparent);
+}
+.stat-widget-icon {
+  font-size: 16px;
+  color: var(--theme-to);
+  margin-bottom: 6px;
+  transition: transform 0.5s ease;
+}
+.stat-widget-glass:hover .stat-widget-icon {
+  transform: rotate(360deg);
 }
 
-@keyframes badgeReactSpin {
-  to {
-    transform: rotate(360deg);
+/* 11. CTA Cockpit Buttons */
+.cta-cockpit-primary {
+  background: linear-gradient(135deg, var(--theme-from) 0%, var(--theme-to) 100%);
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--theme-to) 25%, transparent);
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-cockpit-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2) 30%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.2) 70%, transparent);
+  transform: skewX(-30deg);
+  transition: left 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.cta-cockpit-primary:hover::after {
+  left: 150%;
+}
+.cta-cockpit-primary:hover {
+  transform: translateY(-2.5px);
+  box-shadow: 0 8px 25px color-mix(in srgb, var(--theme-to) 45%, transparent);
+  filter: brightness(1.08);
+}
+.cta-cockpit-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #cbd5e1;
+  padding: 12px 28px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.cta-cockpit-secondary:hover {
+  border-color: #ffffff;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-2.5px);
+}
+
+/* 12. Theme-Handcrafted Interactive Background Grids & Elements */
+.theme-background-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Space Theme Background */
+.space-nebula-cloud {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--theme-to) 7%, transparent), transparent 70%);
+  filter: blur(80px);
+}
+
+/* Twinkling star particle animations */
+.twinkle-star {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0.25;
+  animation: starTwinklePulse 3s infinite ease-in-out;
+}
+@keyframes starTwinklePulse {
+  0%, 100% { opacity: 0.15; transform: scale(0.85); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+
+/* Forest Theme Background */
+.forest-leaf-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+  animation: leafFloat 8s linear infinite;
+}
+@keyframes leafFloat {
+  0% { transform: translateY(120%) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-20%) translateX(30px) rotate(180deg); opacity: 0; }
+}
+
+/* Sunset Theme Background */
+.sunset-ember-particle {
+  position: absolute;
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: #f97316;
+  box-shadow: 0 0 6px #f97316;
+  animation: emberRiseLoop 7s linear infinite;
+}
+@keyframes emberRiseLoop {
+  0% { transform: translateY(110%) translateX(0); opacity: 0.7; }
+  100% { transform: translateY(-10%) translateX(-25px); opacity: 0; }
+}
+
+/* Ocean Theme Background */
+.ocean-bubble-particle {
+  position: absolute;
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  border-radius: 50%;
+  background: transparent;
+  animation: bubbleRiseUp 8s linear infinite;
+}
+@keyframes bubbleRiseUp {
+  0% { transform: translateY(110%) translateX(0); opacity: 0.1; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(-10%) translateX(15px); opacity: 0.02; }
+}
+
+/* Rainy Theme Background */
+.rain-splash-line {
+  position: absolute;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(to bottom, transparent, rgba(14, 165, 233, 0.38));
+  animation: rainStreakFall 1.5s linear infinite;
+}
+@keyframes rainStreakFall {
+  0% { transform: translateY(-30px) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(350px) translateX(-20px); opacity: 0; }
+}
+
+/* Snowy Theme Background */
+.snow-flake-particle {
+  position: absolute;
+  width: 3.5px;
+  height: 3.5px;
+  background: #ffffff;
+  border-radius: 50%;
+  opacity: 0.65;
+  animation: snowDriftDown 9s linear infinite;
+}
+@keyframes snowDriftDown {
+  0% { transform: translateY(-10px) translateX(0); }
+  100% { transform: translateY(350px) translateX(30px); }
+}
+
+/* Sakura Theme Background */
+.sakura-petal-particle {
+  position: absolute;
+  width: 6px;
+  height: 8px;
+  background: #ec4899;
+  border-radius: 50% 0 50% 50%;
+  opacity: 0.55;
+  animation: sakuraDriftDown 7s linear infinite;
+}
+@keyframes sakuraDriftDown {
+  0% { transform: translateY(-10%) translateX(0) rotate(0deg); opacity: 0; }
+  15% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(110%) translateX(50px) rotate(360deg); opacity: 0; }
+}
+
+/* Cyberpunk / Neon Background grid lines */
+.neon-scanline-beam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 255, 255, 0.05);
+  animation: scanlineScroll 6s linear infinite;
+}
+@keyframes scanlineScroll {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+/* Mobile tab slider styles */
+.mobile-tab-scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+.mobile-tab-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+.mobile-tab-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.mobile-tab-item.active {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: color-mix(in srgb, var(--theme-to) 31%, transparent);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--theme-to) 15%, transparent), inset 0 0 8px color-mix(in srgb, var(--theme-to) 6%, transparent);
+}
+
+/* 13. Mobile Overrides */
+@media (max-width: 768px) {
+  .experience-dossier-board {
+    border-radius: 16px;
+    padding: 16px !important;
+  }
+
+  .futuristic-company-badge {
+    width: 70px;
+    height: 70px;
+  }
+
+  .badge-icon-core {
+    width: 50px;
+    height: 50px;
+  }
+
+  .badge-orbit-ring {
+    inset: -6px;
+  }
+
+  .tech-category-panel {
+    padding: 12px 14px;
+    border-radius: 16px;
+  }
+
+  .stat-widget-glass {
+    border-radius: 14px;
+    padding: 10px;
+  }
+
+  .cta-cockpit-primary,
+  .cta-cockpit-secondary {
+    padding: 10px 20px;
+    font-size: 11.5px;
+    width: 100%;
+    justify-content: center;
   }
 }
