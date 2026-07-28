@@ -1,6 +1,3 @@
-import spaceDashboardImg from '../assets/project_space_dashboard.png';
-import ecommerceImg from '../assets/project_ecommerce.png';
-import weatherImg from '../assets/project_weather.png';
 import musicAppImg from '../assets/projects/music-app.png';
 import restoManageImg from '../assets/projects/resturent-management.png';
 import moretravImg from '../assets/projects/moretrav-img.png';

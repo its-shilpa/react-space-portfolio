@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
-import avatar from '../../assets/MyPic.jpg';
 import avatarImg from '../../assets/My-Profile.png';
 import topPerformer from '../../assets/top-performer-img.png';
 import awardImg from '../../assets/award-img.png';
