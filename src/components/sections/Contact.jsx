@@ -13,11 +13,32 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    // Simulate real send logic
-    await new Promise((res) => setTimeout(res, 1200));
-    setStatus('sent');
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setStatus('idle'), 3000);
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/shilpamukherjee625@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          Name: form.name,
+          Email: form.email,
+          Subject: form.subject,
+          Message: form.message
+        })
+      });
+
+      if (response.ok) {
+        setStatus('sent');
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus('error');
+    }
+    setTimeout(() => setStatus('idle'), 4000);
   };
 
   const contactDetails = [
@@ -146,7 +167,7 @@ export default function Contact() {
                 disabled={status === 'sending'}
                 className="w-full py-3 rounded-lg bg-gradient-to-r from-nebula-purple to-nebula-blue text-white font-semibold text-sm hover:opacity-90 hover:shadow-[0_0_20px_var(--nebula-blue)] disabled:opacity-50 transition-all duration-300 cursor-pointer"
               >
-                {status === 'sending' ? 'Sending Message…' : status === 'sent' ? 'Message Sent ✓' : 'Send Message'}
+                {status === 'sending' ? 'Sending Message…' : status === 'sent' ? 'Message Sent ✓' : status === 'error' ? 'Failed to Send ✗' : 'Send Message'}
               </button>
             </form>
           </div>
