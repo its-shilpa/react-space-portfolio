@@ -76,7 +76,7 @@ export default function Navbar() {
           </ul>
 
             <a
-              href="../../assets/resume/My-Resume.pdf"
+              href="/resume/My-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -124,9 +124,15 @@ export default function Navbar() {
           ))}
         </ul>
 
+         <a
+            href="/resume/My-Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
         <button className="px-8 py-3 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-sm font-semibold mt-4 shadow-lg shadow-nebula-purple/25 hover:scale-105 transition-all duration-300">
           Download Resume
         </button>
+        </a>
       </div>
     </>
   );

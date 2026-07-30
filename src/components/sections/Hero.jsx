@@ -142,9 +142,14 @@ export default function Hero() {
               View Projects
               <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
+            <a
+              href="/resume/My-Resume.pdf"
+               download
+            >
             <button className="flex-1 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 hover:scale-105 transition-all duration-300 backdrop-blur-sm">
               Download Resume
             </button>
+            </a>
           </div>
           {/* Social icons */}
           <div className="flex gap-3 mt-6 sm:mt-8">

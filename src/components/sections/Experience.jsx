@@ -558,7 +558,7 @@ export default function Experience() {
                         <span>View Projects</span>
                         <FaArrowRight className="text-[10px]" />
                       </a>
-                      <a href={activeJob.cta.resumeLink} className="cta-cockpit-secondary">
+                      <a href="/resume/My-Resume.pdf" className="cta-cockpit-secondary" download>
                         <FaDownload className="text-xs" />
                         <span>Download Resume</span>
                       </a>
