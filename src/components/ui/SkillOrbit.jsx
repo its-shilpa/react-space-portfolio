@@ -35,9 +35,9 @@ export default function SkillOrbit() {
   const [hovered, setHovered] = useState(null); // { ri, ii }
   const [activeCategory, setActiveCategory] = useState(null);
 
-  // 👉 Track the actual rendered width of the stage so we can scale
-  // every fixed-pixel value (hub, icons, dots, borders) responsively.
-  const [stageWidth, setStageWidth] = useState(BASE_STAGE_WIDTH);
+  // 👉 Track both width and height of the stage so we can translate
+  // icons along an ellipse if viewports cause fractional distortion.
+  const [stageSize, setStageSize] = useState({ width: BASE_STAGE_WIDTH, height: BASE_STAGE_WIDTH });
 
   useEffect(() => {
     const el = stageRef.current;
@@ -46,12 +46,18 @@ export default function SkillOrbit() {
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
         const width = entry.contentRect.width;
-        if (width > 0) setStageWidth(width);
+        const height = entry.contentRect.height;
+        if (width > 0 && height > 0) {
+          setStageSize({ width, height });
+        }
       }
     });
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+
+  const stageWidth = stageSize.width;
+  const stageHeight = stageSize.height;
 
   // Clamp the minimum scale so things never become unreadably tiny
   // on very small phones (e.g. 320px wide).
@@ -90,14 +96,15 @@ export default function SkillOrbit() {
           ringAnglesRef.current[ri] += ring.speed * dt;
         }
         
-        const ringRadiusPx = stageWidth * (ring.radius / 100);
+        const ringRadiusXPx = stageWidth * (ring.radius / 100);
+        const ringRadiusYPx = stageHeight * (ring.radius / 100);
 
         ring.items.forEach((item, ii) => {
           const baseAngle = (360 / ring.items.length) * ii + ri * 14;
           const angleDeg = baseAngle + ringAnglesRef.current[ri];
           const rad = (angleDeg * Math.PI) / 180;
-          const xPx = ringRadiusPx * Math.cos(rad);
-          const yPx = ringRadiusPx * Math.sin(rad);
+          const xPx = ringRadiusXPx * Math.cos(rad);
+          const yPx = ringRadiusYPx * Math.sin(rad);
           const el = iconRefs.current[`${ri}-${ii}`];
           if (el) {
             el.style.transform = `translate3d(calc(-50% + ${xPx}px), calc(-50% + ${yPx}px), 0)`;
@@ -109,8 +116,8 @@ export default function SkillOrbit() {
         const hx = 50 + ring.radius * Math.cos(headRad);
         const hy = 50 + ring.radius * Math.sin(headRad);
         
-        const hxPx = ringRadiusPx * Math.cos(headRad);
-        const hyPx = ringRadiusPx * Math.sin(headRad);
+        const hxPx = ringRadiusXPx * Math.cos(headRad);
+        const hyPx = ringRadiusYPx * Math.sin(headRad);
         
         const headEl = satelliteRefs.current[ri];
         if (headEl) {
@@ -131,7 +138,7 @@ export default function SkillOrbit() {
           }
           const progress = ti / TRAIL_LENGTH;
           const posXPx = stageWidth * ((pos.x - 50) / 100);
-          const posYPx = stageWidth * ((pos.y - 50) / 100);
+          const posYPx = stageHeight * ((pos.y - 50) / 100);
           el.style.opacity = String((1 - progress) * 0.55);
           const dotScale = 1 - progress * 0.75;
           el.style.transform = `translate3d(calc(-50% + ${posXPx}px), calc(-50% + ${posYPx}px), 0) scale(${dotScale})`;
@@ -141,7 +148,7 @@ export default function SkillOrbit() {
     }
     rafRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [rings, stageWidth]);
+  }, [rings, stageWidth, stageHeight]);
 
   function getAngle(e, rect) {
     const cx = rect.left + rect.width / 2;
@@ -188,7 +195,7 @@ export default function SkillOrbit() {
   const borderWidth = Math.max(1, 1.5 * scale);
 
   return (
-    <div className="mx-auto w-full max-w-[280px] sm:max-w-[380px] md:max-w-[460px] lg:max-w-[560px]">
+    <div className="mx-auto w-full max-w-[280px] xs:max-w-[340px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[560px]">
       <div
         ref={stageRef}
         onPointerDown={onPointerDown}

@@ -135,7 +135,7 @@ export default function Projects() {
                   key={p.title}
                   style={style}
                   onClick={() => !isActive && goTo(i)}
-                  className={`absolute left-1/2 top-1/2 w-[82vw] max-w-[280px] sm:max-w-[310px] md:max-w-[340px] lg:max-w-[380px] flex flex-col ${
+                  className={`absolute left-1/2 top-1/2 w-[82vw] max-w-[280px] sm:max-w-[310px] md:max-w-[340px] lg:max-w-[380px] h-[390px] sm:h-[430px] md:h-[470px] lg:h-[510px] flex flex-col ${
                     isActive ? 'cursor-default' : 'cursor-pointer'
                   } transition-all duration-700 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] rounded-2xl overflow-hidden border backdrop-blur-xl [transform-style:preserve-3d] ${
                     isActive
@@ -210,9 +210,9 @@ export default function Projects() {
 
                     {/* Action buttons - unfolds and fades in for active card */}
                     <div
-                      className={`flex items-center gap-3 transition-all duration-500 origin-top overflow-hidden ${
+                      className={`flex items-center gap-3 transition-all duration-500 origin-top overflow-hidden mt-auto ${
                         isActive
-                          ? 'mt-4 pt-1 max-h-[60px] opacity-100'
+                          ? 'pt-1 max-h-[60px] opacity-100'
                           : 'max-h-0 opacity-0 pointer-events-none mt-0'
                       }`}
                     >

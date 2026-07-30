@@ -41,7 +41,7 @@ function TypingSubtitle() {
   }, [displayText, isDeleting, roleIndex]);
 
   return (
-    <h2 className="text-lg sm:text-xl md:text-2xl text-slate-300 font-display font-medium h-7 sm:h-8">
+    <h2 className="text-base xs:text-lg sm:text-xl md:text-2xl text-slate-300 font-display font-medium min-h-[28px] sm:min-h-[32px] whitespace-nowrap overflow-hidden">
       {displayText}
       <span className="inline-block w-0.5 h-5 sm:h-6 bg-nebula-blue ml-1 animate-pulse" />
     </h2>
@@ -141,18 +141,17 @@ export default function Hero() {
               smooth
               duration={500}
               offset={-80}
-              className="flex-1 text-center px-6 py-3 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-sm font-semibold shadow-lg shadow-nebula-purple/25 hover:scale-105 transition-all duration-300"
+              className="flex-1 flex items-center justify-center text-center px-6 py-3 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-sm font-semibold shadow-lg shadow-nebula-purple/25 hover:scale-105 transition-all duration-300 cursor-pointer"
             >
               View Projects
               <span className="inline-block ml-1 group-hover:translate-x-1 transition-transform">→</span>
             </Link>
             <a
               href="/resume/My-Resume.pdf"
-               download
+              download
+              className="flex-1 flex items-center justify-center text-center px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 hover:scale-105 transition-all duration-300 backdrop-blur-sm"
             >
-            <button className="flex-1 px-6 py-3 rounded-full border border-white/20 text-white text-sm font-medium hover:bg-white/5 hover:scale-105 transition-all duration-300 backdrop-blur-sm">
               Download Resume
-            </button>
             </a>
           </div>
           {/* Social icons */}

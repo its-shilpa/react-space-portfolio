@@ -80,7 +80,8 @@ body {
   will-change: transform;
 }
 
-.card-flip-container:hover .card-flip-inner {
+.card-flip-container:hover .card-flip-inner,
+.card-flip-inner.flipped {
   transform: rotateY(180deg);
 }
 

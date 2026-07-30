@@ -654,7 +654,7 @@
 
   .stat-widget-glass {
     border-radius: 14px;
-    padding: 10px;
+    padding: 8px 6px !important;
   }
 
   .cta-cockpit-primary,

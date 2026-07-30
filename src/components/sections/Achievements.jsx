@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaExternalLinkAlt, FaAward, FaReact, FaTrophy, FaPalette } from 'react-icons/fa';
 import { achievements } from '../../data/achievements';
 import SectionHeading from '../ui/SectionHeading';
@@ -16,6 +17,8 @@ const getIcon = (iconName) => {
 };
 
 export default function Achievements() {
+  const [flippedIdx, setFlippedIdx] = useState(null);
+
   return (
     <section id="achievements" className="py-8 md:py-10 lg:py-12 relative overflow-hidden">
       {/* Decorative background nebula glow */}
@@ -34,10 +37,15 @@ export default function Achievements() {
               key={idx}
               data-aos="fade-up"
               data-aos-delay={idx * 100}
+              onClick={() => {
+                if (window.innerWidth < 1024) {
+                  setFlippedIdx(flippedIdx === idx ? null : idx);
+                }
+              }}
               className="card-flip-container group w-full h-[400px] cursor-pointer"
             >
               {/* Card Inner Wrapper */}
-              <div className="card-flip-inner">
+              <div className={`card-flip-inner ${flippedIdx === idx ? 'flipped' : ''}`}>
                 
                 {/* Front Side */}
                 <div className="card-flip-front rounded-2xl p-[1px] bg-gradient-to-br from-white/10 to-white/5 group-hover:from-nebula-purple/50 group-hover:to-nebula-blue/50 transition-all duration-500 shadow-xl">
@@ -104,6 +112,7 @@ export default function Achievements() {
                       href={ach.image}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                       className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-space-900/90 border border-white/10 flex items-center justify-center text-slate-300 hover:text-nebula-blue hover:border-nebula-blue/50 transition-all duration-300 shadow-lg shadow-space-950/50"
                       title="Open Full View"
                     >
