@@ -45,8 +45,8 @@ export default function SkillOrbit() {
 
     const ro = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        const width = entry.contentRect.width;
-        const height = entry.contentRect.height;
+        const width = entry.target.clientWidth;
+        const height = entry.target.clientHeight;
         if (width > 0 && height > 0) {
           setStageSize({ width, height });
         }
@@ -91,13 +91,19 @@ export default function SkillOrbit() {
     function frame(t) {
       const dt = (t - last) / 1000;
       last = t;
+
+      // 👉 Fetch layout client dimensions directly from the DOM node.
+      // clientWidth/clientHeight are completely unaffected by CSS 3D rotation transforms.
+      const currentWidth = stageRef.current ? stageRef.current.clientWidth : stageWidth;
+      const currentHeight = stageRef.current ? stageRef.current.clientHeight : stageHeight;
+
       rings.forEach((ring, ri) => {
         if (!draggingRef.current && hoveredRingRef.current !== ri) {
           ringAnglesRef.current[ri] += ring.speed * dt;
         }
         
-        const ringRadiusXPx = stageWidth * (ring.radius / 100);
-        const ringRadiusYPx = stageHeight * (ring.radius / 100);
+        const ringRadiusXPx = currentWidth * (ring.radius / 100);
+        const ringRadiusYPx = currentHeight * (ring.radius / 100);
 
         ring.items.forEach((item, ii) => {
           const baseAngle = (360 / ring.items.length) * ii + ri * 14;
@@ -137,8 +143,8 @@ export default function SkillOrbit() {
             continue;
           }
           const progress = ti / TRAIL_LENGTH;
-          const posXPx = stageWidth * ((pos.x - 50) / 100);
-          const posYPx = stageHeight * ((pos.y - 50) / 100);
+          const posXPx = currentWidth * ((pos.x - 50) / 100);
+          const posYPx = currentHeight * ((pos.y - 50) / 100);
           el.style.opacity = String((1 - progress) * 0.55);
           const dotScale = 1 - progress * 0.75;
           el.style.transform = `translate3d(calc(-50% + ${posXPx}px), calc(-50% + ${posYPx}px), 0) scale(${dotScale})`;
@@ -318,10 +324,11 @@ export default function SkillOrbit() {
                 <div
                   key={id}
                   ref={(el) => (iconRefs.current[id] = el)}
-                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  className="absolute"
                   style={{
                     left: "50%",
                     top: "50%",
+                    transform: "translate(-50%, -50%)",
                     zIndex: isHovered ? 50 : 20 - ri,
                   }}
                   onMouseEnter={() => {
