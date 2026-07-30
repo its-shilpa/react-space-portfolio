@@ -572,7 +572,6 @@ export default function Experience() {
                         <span>Download Resume</span>
                       </a>
                     </motion.div>
-
                   </motion.div>
                 </AnimatePresence>
               </div>
