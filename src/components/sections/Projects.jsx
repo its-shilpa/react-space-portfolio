@@ -162,6 +162,7 @@ export default function Projects() {
                       alt={p.title}
                       className="w-full h-full object-cover"
                       draggable={false}
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-space-950/95 via-space-950/20 to-transparent" />
                   </div>

@@ -4,7 +4,6 @@ import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import avatarImg from '../../assets/My-Profile.png';
 import topPerformer from '../../assets/top-performer-img.png';
-import awardImg from '../../assets/award-img.png';
 import awardImage from '../../assets/award-image.png';
 
 const roles = [
@@ -16,21 +15,11 @@ const roles = [
 
 const profileImages = [avatarImg, awardImage, topPerformer];
 
-export default function Hero() {
-  const nameRef = useRef(null);
-  const imgRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const ctaRef = useRef(null);
-  const scrollRef = useRef(null);
-
+function TypingSubtitle() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const [activeImg, setActiveImg] = useState(0);
-  const imgLayerRefs = useRef({});
-
-  // Typing effect
   useEffect(() => {
     const current = roles[roleIndex];
     const speed = isDeleting ? 40 : 80;
@@ -50,6 +39,24 @@ export default function Hero() {
     }, speed);
     return () => clearTimeout(timeout);
   }, [displayText, isDeleting, roleIndex]);
+
+  return (
+    <h2 className="text-lg sm:text-xl md:text-2xl text-slate-300 font-display font-medium h-7 sm:h-8">
+      {displayText}
+      <span className="inline-block w-0.5 h-5 sm:h-6 bg-nebula-blue ml-1 animate-pulse" />
+    </h2>
+  );
+}
+
+export default function Hero() {
+  const nameRef = useRef(null);
+  const imgRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const ctaRef = useRef(null);
+  const scrollRef = useRef(null);
+
+  const [activeImg, setActiveImg] = useState(0);
+  const imgLayerRefs = useRef({});
 
   // Auto-cycle profile images every 3s
   useEffect(() => {
@@ -121,10 +128,7 @@ export default function Hero() {
             </span>
           </h1>
           <div ref={subtitleRef} className="mt-3 sm:mt-4">
-            <h2 className="text-lg sm:text-xl md:text-2xl text-slate-300 font-display font-medium h-7 sm:h-8">
-              {displayText}
-              <span className="inline-block w-0.5 h-5 sm:h-6 bg-nebula-blue ml-1 animate-pulse" />
-            </h2>
+            <TypingSubtitle />
             <p className="text-theme-muted mt-3 sm:mt-4 max-w-lg leading-relaxed text-sm md:text-base">
               A passionate Frontend Developer with 2+ years of experience crafting
               immersive, high-performance web applications using React, Tailwind CSS,
@@ -198,6 +202,7 @@ export default function Hero() {
                     alt={`Shilpa Mukherjee ${i + 1}`}
                     className="absolute inset-0 w-full h-full object-cover"
                     style={{ opacity: i === 0 ? 1 : 0 }}
+                    fetchPriority={i === 0 ? "high" : undefined}
                   />
                 ))}
               </div>

@@ -70,7 +70,7 @@ function ThemeBackground({ theme }) {
       delay: `${Math.random() * 4}s`,
       duration: `${5 + Math.random() * 7}s`
     }));
-  }, [theme]);
+  }, []);
 
   if (theme === 'space' || theme === 'nightsky' || theme === 'aurora') {
     return (
@@ -237,6 +237,7 @@ export default function Experience() {
 
   // 3D Card Tilt Configuration
   const cardRef = useRef(null);
+  const spotlightRef = useRef(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -259,13 +260,21 @@ export default function Experience() {
     mouseX.set(x);
     mouseY.set(y);
 
-    card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-    card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    const spotlight = spotlightRef.current;
+    if (spotlight) {
+      const sx = e.clientX - rect.left;
+      const sy = e.clientY - rect.top;
+      spotlight.style.transform = `translate3d(calc(-50% + ${sx}px), calc(-50% + ${sy}px), 0)`;
+    }
   };
 
   const handleMouseLeave = () => {
     mouseX.set(0);
     mouseY.set(0);
+    const spotlight = spotlightRef.current;
+    if (spotlight) {
+      spotlight.style.transform = 'translate3d(-50%, -50%, 0)';
+    }
   };
 
   return (
@@ -291,7 +300,7 @@ export default function Experience() {
             className={`experience-dossier-board theme-${theme}`}
           >
             {/* Spotlight Overlay & Theme-aware particle grids */}
-            <div className="experience-spotlight" />
+            <div ref={spotlightRef} className="experience-spotlight" />
             <ThemeBackground theme={theme} />
 
             {/* Inner Content Grid */}

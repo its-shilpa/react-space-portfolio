@@ -230,21 +230,6 @@ export default function Services() {
   const { theme } = useTheme();
   const [activeCard, setActiveCard] = useState(null);
 
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.setProperty('--mouse-x', x.toFixed(3));
-    card.style.setProperty('--mouse-y', y.toFixed(3));
-  };
-
-  const handleMouseLeave = (e) => {
-    const card = e.currentTarget;
-    card.style.setProperty('--mouse-x', '0');
-    card.style.setProperty('--mouse-y', '0');
-  };
-
   return (
     <section id="services" className="py-8 md:py-10 lg:py-12">
       <div className="portfolio-container">
@@ -267,8 +252,6 @@ export default function Services() {
               >
                 <div
                   className={`service-card theme-${theme} ${isActive ? 'active' : ''}`}
-                  onMouseMove={handleMouseMove}
-                  onMouseLeave={handleMouseLeave}
                   onClick={() => {
                     if (window.innerWidth < 768) {
                       setActiveCard(isActive ? null : s.title);

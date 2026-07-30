@@ -95,6 +95,7 @@ export default function Achievements() {
                         src={ach.image}
                         alt={ach.title}
                         className="w-full h-full object-contain transition-transform duration-500 hover:scale-[1.02]"
+                        loading="lazy"
                       />
                     </div>
 

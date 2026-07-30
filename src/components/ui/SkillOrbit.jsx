@@ -11,6 +11,20 @@ const RING_COLORS = ["#22d3ee", "#a855f7", "#10b981"];
 const TRAIL_LENGTH = 14;
 const BASE_STAGE_WIDTH = 560; // the width all fixed px values below were designed for
 
+const hubBackgrounds = [
+  `conic-gradient(from 0deg, rgba(34,211,238,.18), rgba(59,130,246,.18), rgba(34,211,238,.18))`,
+  `conic-gradient(from 0deg, rgba(168,85,247,.18), rgba(236,72,153,.18), rgba(168,85,247,.18))`,
+  `conic-gradient(from 0deg, rgba(16,185,129,.18), rgba(34,197,94,.18), rgba(16,185,129,.18))`,
+];
+const hubGlows = [
+  "0 0 45px rgba(34,211,238,.28)",
+  "0 0 45px rgba(139,92,246,.28)",
+  "0 0 45px rgba(59,130,246,.28)",
+  "0 0 45px rgba(16,185,129,.28)",
+  "0 0 45px rgba(245,158,11,.28)",
+  "0 0 45px rgba(236,72,153,.28)",
+];
+
 export default function SkillOrbit() {
   const stageRef = useRef(null);
   const iconRefs = useRef({});
@@ -57,19 +71,6 @@ export default function SkillOrbit() {
   const trailRefs = useRef({});
   const trailHistoryRef = useRef(rings.map(() => []));
 
-  const hubBackgrounds = [
-    `conic-gradient(from 0deg, rgba(34,211,238,.18), rgba(59,130,246,.18), rgba(34,211,238,.18))`,
-    `conic-gradient(from 0deg, rgba(168,85,247,.18), rgba(236,72,153,.18), rgba(168,85,247,.18))`,
-    `conic-gradient(from 0deg, rgba(16,185,129,.18), rgba(34,197,94,.18), rgba(16,185,129,.18))`,
-  ];
-  const hubGlows = [
-    "0 0 45px rgba(34,211,238,.28)",
-    "0 0 45px rgba(139,92,246,.28)",
-    "0 0 45px rgba(59,130,246,.28)",
-    "0 0 45px rgba(16,185,129,.28)",
-    "0 0 45px rgba(245,158,11,.28)",
-    "0 0 45px rgba(236,72,153,.28)",
-  ];
   const [hubColorIndex, setHubColorIndex] = useState(0);
 
   useEffect(() => {
@@ -88,30 +89,38 @@ export default function SkillOrbit() {
         if (!draggingRef.current && hoveredRingRef.current !== ri) {
           ringAnglesRef.current[ri] += ring.speed * dt;
         }
+        
+        const ringRadiusPx = stageWidth * (ring.radius / 100);
+
         ring.items.forEach((item, ii) => {
           const baseAngle = (360 / ring.items.length) * ii + ri * 14;
           const angleDeg = baseAngle + ringAnglesRef.current[ri];
           const rad = (angleDeg * Math.PI) / 180;
-          const x = 50 + ring.radius * Math.cos(rad);
-          const y = 50 + ring.radius * Math.sin(rad);
+          const xPx = ringRadiusPx * Math.cos(rad);
+          const yPx = ringRadiusPx * Math.sin(rad);
           const el = iconRefs.current[`${ri}-${ii}`];
           if (el) {
-            el.style.left = `${x}%`;
-            el.style.top = `${y}%`;
+            el.style.transform = `translate3d(calc(-50% + ${xPx}px), calc(-50% + ${yPx}px), 0)`;
           }
         });
+
         const headAngle = ringAnglesRef.current[ri];
         const headRad = (headAngle * Math.PI) / 180;
         const hx = 50 + ring.radius * Math.cos(headRad);
         const hy = 50 + ring.radius * Math.sin(headRad);
+        
+        const hxPx = ringRadiusPx * Math.cos(headRad);
+        const hyPx = ringRadiusPx * Math.sin(headRad);
+        
         const headEl = satelliteRefs.current[ri];
         if (headEl) {
-          headEl.style.left = `${hx}%`;
-          headEl.style.top = `${hy}%`;
+          headEl.style.transform = `translate3d(calc(-50% + ${hxPx}px), calc(-50% + ${hyPx}px), 0)`;
         }
+
         const hist = trailHistoryRef.current[ri];
         hist.unshift({ x: hx, y: hy });
         if (hist.length > TRAIL_LENGTH) hist.pop();
+
         for (let ti = 0; ti < TRAIL_LENGTH; ti++) {
           const el = trailRefs.current[`${ri}-${ti}`];
           if (!el) continue;
@@ -121,18 +130,18 @@ export default function SkillOrbit() {
             continue;
           }
           const progress = ti / TRAIL_LENGTH;
-          el.style.left = `${pos.x}%`;
-          el.style.top = `${pos.y}%`;
+          const posXPx = stageWidth * ((pos.x - 50) / 100);
+          const posYPx = stageWidth * ((pos.y - 50) / 100);
           el.style.opacity = String((1 - progress) * 0.55);
           const dotScale = 1 - progress * 0.75;
-          el.style.transform = `translate(-50%, -50%) scale(${dotScale})`;
+          el.style.transform = `translate3d(calc(-50% + ${posXPx}px), calc(-50% + ${posYPx}px), 0) scale(${dotScale})`;
         }
       });
       rafRef.current = requestAnimationFrame(frame);
     }
     rafRef.current = requestAnimationFrame(frame);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [rings]);
+  }, [rings, stageWidth]);
 
   function getAngle(e, rect) {
     const cx = rect.left + rect.width / 2;

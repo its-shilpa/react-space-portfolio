@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaTwitter, FaInstagram, FaEnvelope } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
 import { Link } from 'react-scroll';
 import { HiSparkles } from 'react-icons/hi2';
 

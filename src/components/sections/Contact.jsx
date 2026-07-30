@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import SectionHeading from '../ui/SectionHeading';
 
 export default function Contact() {

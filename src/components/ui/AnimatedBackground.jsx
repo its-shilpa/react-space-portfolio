@@ -307,9 +307,9 @@ export default function AnimatedBackground() {
     };
     motionQuery.addEventListener('change', handleMotionChange);
 
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Initial positioning
     scrollRef.current = window.scrollY;
@@ -980,7 +980,8 @@ export default function AnimatedBackground() {
 
           // Horizontal drift speed per band
           const wavePhase = time * 0.5 + band * Math.PI * 0.4;
-          for (let x = 0; x <= width; x += 40) {
+          const auroraStep = window.innerWidth < 768 ? 80 : 40;
+          for (let x = 0; x <= width; x += auroraStep) {
             const y = startY + Math.sin(x * 0.0025 + wavePhase) * 55 + Math.cos(x * 0.001 - wavePhase * 0.6) * 25;
             ctx.lineTo(x, y - scrollRef.current * 0.03);
           }
@@ -999,9 +1000,9 @@ export default function AnimatedBackground() {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       motionQuery.removeEventListener('change', handleMotionChange);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize, { passive: true });
+      window.removeEventListener('mousemove', handleMouseMove, { passive: true });
+      window.removeEventListener('scroll', handleScroll, { passive: true });
       cancelAnimationFrame(animationFrameId);
     };
   }, [theme]);
