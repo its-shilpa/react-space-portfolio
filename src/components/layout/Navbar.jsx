@@ -74,11 +74,16 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          
 
+            <a
+              href="../../assets/resume/My-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
           <button className="hidden lg:block px-5 py-2 rounded-full bg-gradient-to-r from-nebula-purple to-nebula-blue text-white text-xs font-semibold hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-md shadow-nebula-purple/20">
             My Resume
           </button>
+          </a>
 
           {/* Mobile toggle button */}
           <button
