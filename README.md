@@ -1,5 +1,5 @@
 # React + Vite Portfolio Project 
-New Details 
+New Details for the project 
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
