@@ -11,11 +11,11 @@ import techGiftsImg from '../assets/projects/tech-gifts-img.png';
 
 export const projects = [
   {
-    title: "React js Music Player",
-    description: "A futuristic React.js music player featuring a sleek glassmorphic user interface, smooth audio visualizers, playlist controls, and seamless state-managed track lists.",
+    title: "AI Powered React js Music Player",
+    description: "A futuristic **React.js music player** with a sleek glassmorphic UI, smooth visualizations, and **Gemini AI-powered personalized playlists based on your mood or activity.",
     image: musicAppImg,
     category: "JS Project",
-    tags: ["React", "Vite", "GSAP", "Tailwind CSS"],
+    tags: ["React", "Vite", "GSAP", "Tailwind CSS", "AI","Gemini"],
     liveLink: "https://reactjs-musicapp.netlify.app/",
     githubLink: "https://github.com/its-shilpa/Music_Player",
   },
