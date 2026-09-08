@@ -12,7 +12,7 @@ import techGiftsImg from '../assets/projects/tech-gifts-img.png';
 export const projects = [
   {
     title: "AI Powered React js Music Player",
-    description: "A futuristic **React.js music player** with a sleek glassmorphic UI, smooth visualizations, and **Gemini AI-powered personalized playlists based on your mood or activity.",
+    description: "A futuristic React.js music player with a sleek glassmorphic UI, smooth visualizations, and **Gemini AI-powered personalized playlists based on your mood or activity.",
     image: musicAppImg,
     category: "JS Project",
     tags: ["React", "Vite", "GSAP", "Tailwind CSS", "AI","Gemini"],
