@@ -6,12 +6,12 @@ import { useTheme } from '../../hooks/ThemeContext';
 import '../css/services.css';
 
 // Import background images
-import frontendDevBg from '../../assets/services/frontend_dev.png';
-import reactDevBg from '../../assets/services/react_dev.png';
-import wordpressDevBg from '../../assets/services/wordpress_dev.png';
-import optimizationBg from '../../assets/services/optimization.png';
-import uiDevBg from '../../assets/services/ui_dev.png';
-import fullStackBg from '../../assets/services/full_stack.png';
+import frontendDevBg from '../../assets/services/frontend_dev.webp';
+import reactDevBg from '../../assets/services/react_dev.webp';
+import wordpressDevBg from '../../assets/services/wordpress_dev.webp';
+import optimizationBg from '../../assets/services/optimization.webp';
+import uiDevBg from '../../assets/services/ui_dev.webp';
+import fullStackBg from '../../assets/services/full_stack.webp';
 
 const iconMap = {
   code: FaCode,
