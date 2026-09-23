@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { FaGithub, FaLinkedin, FaArrowDown } from 'react-icons/fa';
 import { Link } from 'react-scroll';
-import avatarImg from '../../assets/My-Profile.png';
-import topPerformer from '../../assets/top-performer-img.png';
-import awardImage from '../../assets/award-image.png';
+import avatarImg from '../../assets/My-Profile.webp';
+import ibartsimg from '../../assets/ib-arts-img.webp';
+import topPerformer from '../../assets/top-performer-img.webp';
+import awardImage from '../../assets/award-image.webp';
 
 const roles = [
   'Frontend Developer',
@@ -13,7 +14,7 @@ const roles = [
   'WordPress Expert',
 ];
 
-const profileImages = [avatarImg, awardImage, topPerformer];
+const profileImages = [avatarImg, ibartsimg, awardImage, topPerformer];
 
 function TypingSubtitle() {
   const [roleIndex, setRoleIndex] = useState(0);

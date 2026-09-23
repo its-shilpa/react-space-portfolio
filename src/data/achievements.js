@@ -1,4 +1,4 @@
-import certTopPerformerImg from "../assets/top-performer-certificate.png";
+import certTopPerformerImg from "../assets/top-performer-certificate.webp";
 import certBrightBeginnerImg from "../assets/bright-beginner.jpeg";
 import certTwoYearsImg from "../assets/one-year-completed.jpeg";
 
