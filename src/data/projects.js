@@ -6,9 +6,9 @@ import devanandImg from '../assets/projects/devanand-img.png';
 import yomzyImg from '../assets/projects/yomzy-img.png';
 import edstechnologyImg from '../assets/projects/edstechnology-img.png';
 import jdUsaImg from '../assets/projects/jd-usa-img.png';
-import jsMiniProjectImg from '../assets/projects/js-mini-project-img.png';
+import jsMiniProjectImg from '../assets/projects/js-mini-project-img.webp';
 import techGiftsImg from '../assets/projects/tech-gifts-img.png';
-import mediaSearchImg from '../assets/projects/media-search-application.png';
+import mediaSearchImg from '../assets/projects/media-search-application.webp';
 
 export const projects = [
   {
