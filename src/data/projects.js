@@ -1,13 +1,13 @@
-import musicAppImg from '../assets/projects/music-app.png';
-import restoManageImg from '../assets/projects/resturent-management.png';
-import moretravImg from '../assets/projects/moretrav-img.png';
-import mindscubaImg from '../assets/projects/mindscuba-img.png';
-import devanandImg from '../assets/projects/devanand-img.png';
-import yomzyImg from '../assets/projects/yomzy-img.png';
-import edstechnologyImg from '../assets/projects/edstechnology-img.png';
-import jdUsaImg from '../assets/projects/jd-usa-img.png';
+import musicAppImg from '../assets/projects/music-app.webp';
+import restoManageImg from '../assets/projects/resturent-management.webp';
+import moretravImg from '../assets/projects/moretrav-img.webp';
+import mindscubaImg from '../assets/projects/mindscuba-img.webp';
+import devanandImg from '../assets/projects/devanand-img.webp';
+import yomzyImg from '../assets/projects/yomzy-img.webp';
+import edstechnologyImg from '../assets/projects/edstechnology-img.webp';
+import jdUsaImg from '../assets/projects/jd-usa-img.webp';
 import jsMiniProjectImg from '../assets/projects/js-mini-project-img.webp';
-import techGiftsImg from '../assets/projects/tech-gifts-img.png';
+import techGiftsImg from '../assets/projects/tech-gifts-img.webp';
 import mediaSearchImg from '../assets/projects/media-search-application.webp';
 
 export const projects = [
