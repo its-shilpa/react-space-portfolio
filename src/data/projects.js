@@ -93,4 +93,13 @@ export const projects = [
     tags: ["WooCommerce", "Filter", "Search", "Payment Gateway", "Cart and Checkout Flow"],
     liveLink: "https://techgifts.biz/",
   },
+  {
+    title: "MediaSearch",
+    description: "A modern React media discovery platform for searching, exploring, downloading, and saving high-quality photos, videos, and GIFs with infinite scrolling, smart filters, and cached search results.",
+    image: mediaSearchImg,
+    category: "JS Project",
+    tags: ["React", "Redux", "Vite", "Unsplash API", "Pexels API", "Giphy API"],
+    liveLink: "https://media-search-studio.vercel.app/",
+    githubLink: "https://github.com/its-shilpa/media-search-studio",
+  },
 ];
