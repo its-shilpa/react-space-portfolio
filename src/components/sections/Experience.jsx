@@ -233,10 +233,10 @@ function CardContent({ job, idx, theme, isLatest }) {
   return (
     <>
       <ThemeBackground theme={theme} />
-      <div className="relative z-10 p-5 sm:p-6 md:p-7 space-y-4 sm:space-y-5 overflow-y-auto hide-scrollbar max-h-[85vh] md:max-h-none md:overflow-visible overscroll-contain">
+      <div className="relative z-10 p-3.5 xs:p-4 sm:p-6 md:p-7 space-y-3 sm:space-y-4 md:space-y-5 overflow-visible">
         {/* Card Header */}
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-5 border-b border-white/10">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 sm:gap-4 pb-3 sm:pb-5 border-b border-white/10">
+          <div className="flex items-center gap-3 sm:gap-4">
             <div className="futuristic-company-badge">
               <div
                 className="badge-orbit-ring"
@@ -247,12 +247,12 @@ function CardContent({ job, idx, theme, isLatest }) {
               <div className="badge-icon-core text-white">
                 {job.badgeIcon === 'rocket' ? (
                   <FaRocket
-                    className="text-xl text-theme-to"
+                    className="text-lg sm:text-xl text-theme-to"
                     style={{ color: 'var(--theme-to)', filter: 'drop-shadow(0 0 6px var(--theme-to))' }}
                   />
                 ) : (
                   <FaTerminal
-                    className="text-xl text-theme-from"
+                    className="text-lg sm:text-xl text-theme-from"
                     style={{ color: 'var(--theme-from)', filter: 'drop-shadow(0 0 6px var(--theme-from))' }}
                   />
                 )}
@@ -260,26 +260,26 @@ function CardContent({ job, idx, theme, isLatest }) {
             </div>
 
             <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+              <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+                <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">
                   MISSION // 0{idx + 1}
                 </span>
                 {isLatest && (
-                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <span className="text-[8px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     CURRENT ROLE
                   </span>
                 )}
               </div>
-              <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+              <h3 className="font-display text-lg xs:text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
                 {job.role}
               </h3>
-              <p className="text-sm font-semibold text-slate-300 mt-0.5 flex items-center gap-2">
+              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-0.5 flex items-center gap-2">
                 <span className="bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent font-bold">
                   {job.company}
                 </span>
                 <span className="text-slate-600">•</span>
-                <span className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
-                  <FaCalendarAlt className="text-[10px] text-slate-500" />
+                <span className="text-[11px] sm:text-xs text-slate-400 font-mono flex items-center gap-1">
+                  <FaCalendarAlt className="text-[9px] text-slate-500" />
                   {job.period}
                 </span>
               </p>
@@ -294,14 +294,14 @@ function CardContent({ job, idx, theme, isLatest }) {
                     className="beacon-dot"
                     style={{ backgroundColor: 'var(--theme-to)', boxShadow: '0 0 10px var(--theme-to)' }}
                   />
-                  <span className="text-[11px] font-mono font-bold tracking-wider" style={{ color: 'var(--theme-to)' }}>
+                  <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider" style={{ color: 'var(--theme-to)' }}>
                     MISSION ACTIVE
                   </span>
                 </>
               ) : (
                 <>
                   <div className="beacon-dot" style={{ backgroundColor: 'var(--theme-muted)' }} />
-                  <span className="text-[11px] font-mono font-bold tracking-wider text-slate-400">
+                  <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-slate-400">
                     ACCOMPLISHED
                   </span>
                 </>
@@ -311,7 +311,7 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Mission Summary Callout */}
-        <div className="relative pl-4 sm:pl-5 py-1.5">
+        <div className="relative pl-3 sm:pl-5 py-0.5 sm:py-1.5">
           <div
             className="objective-left-accent"
             style={{ background: 'linear-gradient(to bottom, var(--theme-from), var(--theme-to))' }}
@@ -322,15 +322,15 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Key Mission Objectives */}
-        <div className="space-y-2.5">
-          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+        <div className="space-y-1.5 sm:space-y-2.5">
+          <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
             // Core Responsibilities & Impact
           </span>
-          <div className="grid sm:grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2.5">
             {job.points.map((point, pIdx) => (
               <div
                 key={pIdx}
-                className="objective-item-row flex items-start gap-3 p-2.5 sm:p-3 rounded-xl bg-white/[0.02] border border-white/5 relative overflow-hidden"
+                className="objective-item-row flex items-start gap-2.5 p-2 sm:p-2.5 md:p-3 rounded-xl bg-white/[0.02] border border-white/5 relative overflow-hidden"
               >
                 <div
                   className="objectives-bullet-glow mt-0.5 shrink-0"
@@ -342,7 +342,7 @@ function CardContent({ job, idx, theme, isLatest }) {
                 >
                   ✓
                 </div>
-                <span className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                <span className="text-slate-300 text-[11px] sm:text-xs md:text-sm leading-relaxed">
                   {point}
                 </span>
               </div>
@@ -351,17 +351,17 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Technology Inventory */}
-        <div className="space-y-2.5">
-          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+        <div className="space-y-1.5 sm:space-y-2.5">
+          <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
             // Technology Deck
           </span>
-          <div className="grid sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 xs:grid-cols-3 gap-1.5 sm:gap-2.5">
             {Object.entries(job.techCategories).map(([categoryName, tags]) => (
               <div key={categoryName} className="tech-category-panel">
-                <h5 className="text-[11px] font-mono font-bold text-slate-300 tracking-wider mb-2 border-b border-white/5 pb-1 uppercase">
+                <h5 className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-300 tracking-wider mb-1.5 border-b border-white/5 pb-1 uppercase">
                   {categoryName}
                 </h5>
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1 sm:gap-1.5">
                   {tags.map((t) => {
                     const tagMeta = getTagIcon(t);
                     const Icon = tagMeta.icon;
@@ -386,11 +386,11 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Metrics & KPIs */}
-        <div className="space-y-2.5">
-          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+        <div className="space-y-1.5 sm:space-y-2.5">
+          <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
             // Validated Mission Metrics
           </span>
-          <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-3">
             {job.stats.map((s, sIdx) => {
               const Icon = getStatIcon(s.label);
               return (
@@ -398,10 +398,10 @@ function CardContent({ job, idx, theme, isLatest }) {
                   <div className="flex justify-center">
                     <Icon className="stat-widget-icon" style={{ color: 'var(--theme-to)' }} />
                   </div>
-                  <h4 className="text-white font-display font-extrabold text-base sm:text-xl md:text-2xl mt-0.5 tracking-tight">
+                  <h4 className="text-white font-display font-extrabold text-sm xs:text-base sm:text-xl md:text-2xl mt-0.5 tracking-tight">
                     <StatCounter value={s.value} />
                   </h4>
-                  <p className="text-[9px] sm:text-[10px] text-slate-400 font-mono tracking-wider uppercase mt-0.5">
+                  <p className="text-[8px] sm:text-[9px] md:text-[10px] text-slate-400 font-mono tracking-wider uppercase mt-0.5">
                     {s.label}
                   </p>
                 </div>
@@ -411,8 +411,8 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Card Action Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5">
-          <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 sm:pt-3 border-t border-white/5">
+          <div className="flex flex-wrap gap-2.5 sm:gap-3 w-full sm:w-auto">
             <a href={job.cta.projectsLink} className="cta-cockpit-primary">
               <span>View Projects</span>
               <FaArrowRight className="text-[10px]" />
@@ -422,7 +422,7 @@ function CardContent({ job, idx, theme, isLatest }) {
               <span>Download Resume</span>
             </a>
           </div>
-          <span className="text-[10px] font-mono text-slate-500 hidden sm:inline-block">
+          <span className="text-[9px] sm:text-[10px] font-mono text-slate-500 hidden sm:inline-block">
             VERIFIED MISSION DOSSIER • SECURE
           </span>
         </div>
@@ -447,6 +447,8 @@ export default function Experience() {
     if (!card0 || !card1 || !pinEl) return;
 
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+
       // Set initial positions
       gsap.set(card0, {
         transformOrigin: 'center top',
@@ -459,8 +461,8 @@ export default function Experience() {
       // Card 1 starts translated down below Card 0, tilted in 3D
       gsap.set(card1, {
         transformOrigin: 'center top',
-        yPercent: 120,
-        rotateX: 10,
+        yPercent: isMobile ? 102 : 120,
+        rotateX: isMobile ? 4 : 10,
         scale: 0.96,
         opacity: 1,
         filter: 'brightness(0.9) blur(0px)',
@@ -470,13 +472,14 @@ export default function Experience() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: pinEl,
-          start: 'top 10%',
-          end: '+=1300', // 1300px smooth scroll distance
+          start: isMobile ? 'top 75px' : 'top 10%',
+          end: isMobile ? '+=650' : '+=1200',
           pin: true,
           pinSpacing: true,
           scrub: 0.5,
           anticipatePin: 1,
           fastScrollEnd: true,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             const activeIdx = self.progress > 0.45 ? 1 : 0;
             setActiveTab(activeIdx);
@@ -484,12 +487,12 @@ export default function Experience() {
         },
       });
 
-      // Card 0: scales down to 0.94, tilts up slightly (-30px), dims with 3D depth and shadow
+      // Card 0: scales down to 0.94, tilts up slightly, dims with 3D depth and shadow
       tl.to(
         card0,
         {
-          scale: 0.94,
-          y: -30,
+          scale: isMobile ? 0.96 : 0.94,
+          y: isMobile ? -14 : -30,
           filter: 'brightness(0.62) blur(1.2px)',
           boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
           ease: 'power2.inOut',
@@ -525,11 +528,15 @@ export default function Experience() {
     if (tl && tl.scrollTrigger) {
       const start = tl.scrollTrigger.start;
       const end = tl.scrollTrigger.end;
-      const targetScroll = index === 0 ? start + 10 : end - 10;
-      window.scrollTo({
-        top: targetScroll,
-        behavior: 'smooth',
-      });
+      const targetScroll = index === 0 ? start + 5 : end - 5;
+      if (window.lenis) {
+        window.lenis.scrollTo(targetScroll);
+      } else {
+        window.scrollTo({
+          top: targetScroll,
+          behavior: 'smooth',
+        });
+      }
     }
   };
 

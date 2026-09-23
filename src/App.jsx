@@ -33,15 +33,17 @@ function FaviconController() {
 export default function App() {
   useEffect(() => {
     AOS.init({ duration: 800, once: true, offset: 60 });
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
-    // Initialize Lenis smooth momentum scrolling
+    // Initialize Lenis smooth momentum scrolling (desktop wheel only, native touch preserved)
     const lenis = new Lenis({
       duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.8,
+      syncTouch: false,
     });
 
+    window.lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
     const tickerCb = (time) => {
@@ -49,7 +51,6 @@ export default function App() {
     };
 
     gsap.ticker.add(tickerCb);
-    gsap.ticker.lagSmoothing(0);
 
     // Refresh ScrollTrigger once DOM is mounted
     const timer = setTimeout(() => {
@@ -67,6 +68,7 @@ export default function App() {
       window.removeEventListener('resize', onResize);
       gsap.ticker.remove(tickerCb);
       lenis.destroy();
+      delete window.lenis;
     };
   }, []);
 
