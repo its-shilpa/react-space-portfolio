@@ -31,7 +31,7 @@
               inset 0 0 25px rgba(255, 255, 255, 0.02);
   overflow: hidden;
   transform-origin: center top;
-  will-change: transform, filter;
+  will-change: transform, opacity;
   touch-action: pan-y;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
@@ -460,6 +460,8 @@
   .experience-stack-card {
     border-radius: 16px;
     touch-action: pan-y;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
   .futuristic-company-badge {
     width: 46px;

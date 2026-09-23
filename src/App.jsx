@@ -35,22 +35,30 @@ export default function App() {
     AOS.init({ duration: 800, once: true, offset: 60 });
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    // Initialize Lenis smooth momentum scrolling (desktop wheel only, native touch preserved)
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      syncTouch: false,
-    });
+    // Only run Lenis on fine-pointer (mouse/trackpad) devices to provide wheel momentum.
+    // Touch devices already possess native 120Hz hardware momentum scrolling.
+    const isFinePointer = typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches;
 
-    window.lenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
+    let lenis = null;
+    let tickerCb = null;
 
-    const tickerCb = (time) => {
-      lenis.raf(time * 1000);
-    };
+    if (isFinePointer) {
+      lenis = new Lenis({
+        duration: 1.1,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        syncTouch: false,
+      });
 
-    gsap.ticker.add(tickerCb);
+      window.lenis = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
+
+      tickerCb = (time) => {
+        lenis.raf(time * 1000);
+      };
+
+      gsap.ticker.add(tickerCb);
+    }
 
     // Refresh ScrollTrigger once DOM is mounted
     const timer = setTimeout(() => {
@@ -58,7 +66,7 @@ export default function App() {
     }, 250);
 
     const onResize = () => {
-      lenis.resize();
+      if (lenis) lenis.resize();
       ScrollTrigger.refresh();
     };
     window.addEventListener('resize', onResize);
@@ -66,9 +74,11 @@ export default function App() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener('resize', onResize);
-      gsap.ticker.remove(tickerCb);
-      lenis.destroy();
-      delete window.lenis;
+      if (tickerCb) gsap.ticker.remove(tickerCb);
+      if (lenis) {
+        lenis.destroy();
+        delete window.lenis;
+      }
     };
   }, []);
 

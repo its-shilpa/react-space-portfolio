@@ -446,37 +446,102 @@ export default function Experience() {
     const pinEl = pinWrapperRef.current;
     if (!card0 || !card1 || !pinEl) return;
 
-    const ctx = gsap.context(() => {
-      const isMobile = window.innerWidth < 768;
+    const mm = gsap.matchMedia();
 
-      // Set initial positions
+    // Mobile (< 768px)
+    mm.add('(max-width: 767px)', () => {
       gsap.set(card0, {
         transformOrigin: 'center top',
         y: 0,
         scale: 1,
         opacity: 1,
-        filter: 'brightness(1) blur(0px)',
+        willChange: 'transform, opacity',
       });
 
-      // Card 1 starts translated down below Card 0, tilted in 3D
       gsap.set(card1, {
         transformOrigin: 'center top',
-        yPercent: isMobile ? 102 : 120,
-        rotateX: isMobile ? 4 : 10,
+        yPercent: 102,
+        rotateX: 4,
         scale: 0.96,
         opacity: 1,
-        filter: 'brightness(0.9) blur(0px)',
+        willChange: 'transform, opacity',
       });
 
-      // Pinned stacking scrub timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: pinEl,
-          start: isMobile ? 'top 75px' : 'top 10%',
-          end: isMobile ? '+=650' : '+=1200',
+          start: 'top 75px',
+          end: '+=500',
           pin: true,
           pinSpacing: true,
-          scrub: 0.5,
+          scrub: true,
+          anticipatePin: 0,
+          fastScrollEnd: true,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const activeIdx = self.progress > 0.45 ? 1 : 0;
+            setActiveTab(activeIdx);
+          },
+        },
+      });
+
+      tl.to(
+        card0,
+        {
+          scale: 0.95,
+          y: -14,
+          opacity: 0.55,
+          boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      tl.to(
+        card1,
+        {
+          yPercent: 0,
+          rotateX: 0,
+          scale: 1,
+          opacity: 1,
+          boxShadow: '0 30px 85px rgba(0, 0, 0, 0.9)',
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      tlRef.current = tl;
+    });
+
+    // Desktop (>= 768px)
+    mm.add('(min-width: 768px)', () => {
+      gsap.set(card0, {
+        transformOrigin: 'center top',
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        willChange: 'transform, opacity',
+      });
+
+      gsap.set(card1, {
+        transformOrigin: 'center top',
+        yPercent: 120,
+        rotateX: 10,
+        scale: 0.96,
+        opacity: 1,
+        willChange: 'transform, opacity',
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinEl,
+          start: 'top 10%',
+          end: '+=1100',
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.4,
           anticipatePin: 1,
           fastScrollEnd: true,
           invalidateOnRefresh: true,
@@ -487,39 +552,37 @@ export default function Experience() {
         },
       });
 
-      // Card 0: scales down to 0.94, tilts up slightly, dims with 3D depth and shadow
       tl.to(
         card0,
         {
-          scale: isMobile ? 0.96 : 0.94,
-          y: isMobile ? -14 : -30,
-          filter: 'brightness(0.62) blur(1.2px)',
+          scale: 0.94,
+          y: -28,
+          opacity: 0.55,
           boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
-          ease: 'power2.inOut',
+          ease: 'none',
           duration: 1,
         },
         0
       );
 
-      // Card 1: slides up over Card 0, straightens rotateX to 0, scales to 1.0, full brightness
       tl.to(
         card1,
         {
           yPercent: 0,
           rotateX: 0,
           scale: 1,
-          filter: 'brightness(1) blur(0px)',
+          opacity: 1,
           boxShadow: '0 30px 85px rgba(0, 0, 0, 0.9)',
-          ease: 'power2.inOut',
+          ease: 'none',
           duration: 1,
         },
         0
       );
 
       tlRef.current = tl;
-    }, sectionRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   const goToCard = (index) => {
@@ -595,6 +658,7 @@ export default function Experience() {
             <article
               ref={card0Ref}
               className={`experience-stack-card theme-${theme} relative z-10 w-full`}
+              style={{ pointerEvents: activeTab === 0 ? 'auto' : 'none' }}
             >
               <CardContent job={experience[0]} idx={0} theme={theme} isLatest={true} />
             </article>
@@ -603,6 +667,7 @@ export default function Experience() {
             <article
               ref={card1Ref}
               className={`experience-stack-card theme-${theme} absolute top-0 left-0 w-full z-20`}
+              style={{ pointerEvents: activeTab === 1 ? 'auto' : 'none' }}
             >
               <CardContent job={experience[1]} idx={1} theme={theme} isLatest={false} />
             </article>
