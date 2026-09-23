@@ -12,6 +12,9 @@
   --theme-via: #06b6d4;
   --theme-to: #ec4899;
   --theme-muted: #94a3b8;
+  --section-gap-mobile: 25px;
+  --section-gap-tab: 35px;
+  --section-gap-desktop: 50px;
 }
 
 @theme {
@@ -32,20 +35,88 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Standardized section spacing across breakpoints:
+   50px on desktop (50+50 = 100px between sections),
+   35px on tablet (35+35 = 70px between sections),
+   25px on mobile (25+25 = 50px between sections) */
+.portfolio-section {
+  padding-top: var(--section-gap-mobile);
+  padding-bottom: var(--section-gap-mobile);
+}
+
+@media (min-width: 768px) {
+  .portfolio-section {
+    padding-top: var(--section-gap-tab);
+    padding-bottom: var(--section-gap-tab);
+  }
+}
+
+@media (min-width: 1024px) {
+  .portfolio-section {
+    padding-top: var(--section-gap-desktop);
+    padding-bottom: var(--section-gap-desktop);
+  }
 }
 
 body {
   background-color: var(--color-space-900);
   color: #e2e8f0;
   font-family: var(--font-body);
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   margin: 0;
   padding: 0;
   transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Universal scrollbar hiding utilities */
+.hide-scrollbar,
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.hide-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Custom sleek scrollbar for main window */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--space-950);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--theme-to) 50%, white 25%);
 }
 
 /* Spinning animation for the profile image ring */

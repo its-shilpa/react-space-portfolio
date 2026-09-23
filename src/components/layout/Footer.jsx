@@ -12,7 +12,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/10 pt-[30px] md:pt-[40px] pb-12">
+    <footer className="border-t border-white/10 pt-[25px] md:pt-[35px] lg:pt-[50px] pb-10 sm:pb-12">
       <div className="portfolio-container grid sm:grid-cols-3 gap-10">
         <div>
           {/* Premium Footer Logo */}

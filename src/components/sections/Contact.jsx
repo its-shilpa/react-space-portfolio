@@ -1,10 +1,64 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaEnvelope, FaMapMarkerAlt, FaLinkedin, FaGithub, FaInstagram } from 'react-icons/fa';
 import SectionHeading from '../ui/SectionHeading';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState('idle'); // idle | sending | sent
+  const sectionRef = useRef(null);
+  const leftColRef = useRef(null);
+  const rightColRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      if (leftColRef.current) {
+        gsap.fromTo(
+          leftColRef.current.children,
+          { opacity: 0, x: -35 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.9,
+            stagger: 0.12,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: leftColRef.current,
+              start: 'top 85%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+
+      if (rightColRef.current) {
+        gsap.fromTo(
+          rightColRef.current,
+          { opacity: 0, y: 70, scale: 0.92 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.95,
+            ease: 'back.out(1.2)',
+            scrollTrigger: {
+              trigger: rightColRef.current,
+              start: 'top 85%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -53,8 +107,11 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="pt-8 pb-12 md:pt-10 md:pb-20 lg:pt-12 lg:pb-20">
-      <div className="portfolio-container">
+    <section id="contact" ref={sectionRef} className="portfolio-section relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 right-10 w-96 h-96 rounded-full bg-nebula-purple/5 blur-[130px] pointer-events-none" />
+
+      <div className="portfolio-container relative z-10">
         <SectionHeading
           eyebrow="Get In Touch"
           title="Contact Me"
@@ -63,7 +120,7 @@ export default function Contact() {
 
         <div className="grid md:grid-cols-5 gap-10 items-start">
           {/* Left Column: Contact details */}
-          <div className="md:col-span-2 space-y-6" data-aos="fade-right">
+          <div ref={leftColRef} className="md:col-span-2 space-y-6">
             <h3 className="text-xl font-display font-semibold text-white">Let's build something out of this world</h3>
             <p className="text-slate-400 text-sm leading-relaxed">
               I am open to freelance work, full-time roles, and open-source collaborations. Drop me a line, and I will get back to you within 24 hours.
@@ -109,7 +166,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Message form */}
-          <div className="md:col-span-3 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md" data-aos="fade-left">
+          <div ref={rightColRef} className="md:col-span-3 bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 backdrop-blur-md">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>

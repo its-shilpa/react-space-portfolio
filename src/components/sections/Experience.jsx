@@ -1,15 +1,18 @@
 import { useState, useRef, useMemo, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform, useSpring, animate } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   FaRocket, FaTerminal, FaReact, FaVuejs, FaWordpress, 
   FaHtml5, FaCss3Alt, FaCreditCard, FaCode, FaShoppingBag, 
   FaJs, FaGlobe, FaCogs, FaAward, FaUsers, FaBriefcase,
-  FaDownload, FaArrowRight
+  FaDownload, FaArrowRight, FaCalendarAlt
 } from 'react-icons/fa';
 import { experience } from '../../data/experience';
 import SectionHeading from '../ui/SectionHeading';
 import { useTheme } from '../../hooks/ThemeContext';
 import '../css/experience.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Helper to map technologies to logos/colors
 const getTagIcon = (tag) => {
@@ -38,46 +41,59 @@ const getStatIcon = (label) => {
 // Animated Stat Counter Component
 function StatCounter({ value }) {
   const [current, setCurrent] = useState(0);
-  
+  const elementRef = useRef(null);
+
   useEffect(() => {
     const numericValue = parseInt(value, 10);
     if (isNaN(numericValue)) {
       setCurrent(value);
       return;
     }
-    
-    const controls = animate(0, numericValue, {
-      duration: 1.5,
-      ease: "easeOut",
-      onUpdate: (latest) => setCurrent(Math.round(latest))
+
+    const trigger = ScrollTrigger.create({
+      trigger: elementRef.current,
+      start: 'top 90%',
+      onEnter: () => {
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: numericValue,
+          duration: 1.4,
+          ease: 'power2.out',
+          onUpdate: () => setCurrent(Math.round(obj.val)),
+        });
+      },
+      once: true,
     });
-    
-    return () => controls.stop();
+
+    return () => trigger.kill();
   }, [value]);
-  
+
   const suffix = value.includes('+') ? '+' : value.includes('%') ? '%' : '';
-  return <span>{current}{suffix}</span>;
+  return <span ref={elementRef}>{current}{suffix}</span>;
 }
 
-// Handcrafted Particle Background component
+// Particle Background component
 function ThemeBackground({ theme }) {
   const particles = useMemo(() => {
-    return Array.from({ length: 16 }).map((_, i) => ({
+    return Array.from({ length: 12 }).map((_, i) => ({
       id: i,
       left: `${4 + Math.random() * 92}%`,
       top: `${4 + Math.random() * 92}%`,
-      size: `${2 + Math.random() * 5}px`,
+      size: `${2 + Math.random() * 4}px`,
       delay: `${Math.random() * 4}s`,
-      duration: `${5 + Math.random() * 7}s`
+      duration: `${5 + Math.random() * 6}s`,
     }));
   }, []);
 
   if (theme === 'space' || theme === 'nightsky' || theme === 'aurora') {
     return (
       <div className="theme-background-wrapper">
-        <div className="space-nebula-cloud top-[-80px] left-[-80px]" />
-        <div className="space-nebula-cloud bottom-[-80px] right-[-80px]" style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--theme-from) 6%, transparent), transparent 70%)' }} />
-        {particles.map(p => (
+        <div className="space-nebula-cloud top-[-60px] left-[-60px]" />
+        <div
+          className="space-nebula-cloud bottom-[-60px] right-[-60px]"
+          style={{ background: 'radial-gradient(circle, color-mix(in srgb, var(--theme-from) 7%, transparent), transparent 70%)' }}
+        />
+        {particles.map((p) => (
           <div
             key={p.id}
             className="twinkle-star"
@@ -87,7 +103,7 @@ function ThemeBackground({ theme }) {
               width: p.size,
               height: p.size,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -98,14 +114,14 @@ function ThemeBackground({ theme }) {
   if (theme === 'forest') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="forest-leaf-particle"
             style={{
               left: p.left,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -116,14 +132,14 @@ function ThemeBackground({ theme }) {
   if (theme === 'sunset' || theme === 'desert') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="sunset-ember-particle"
             style={{
               left: p.left,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -134,7 +150,7 @@ function ThemeBackground({ theme }) {
   if (theme === 'ocean') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="ocean-bubble-particle"
@@ -143,7 +159,7 @@ function ThemeBackground({ theme }) {
               width: p.size,
               height: p.size,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -154,14 +170,14 @@ function ThemeBackground({ theme }) {
   if (theme === 'rainy') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="rain-splash-line"
             style={{
               left: p.left,
               animationDelay: p.delay,
-              animationDuration: `${1 + Math.random() * 0.8}s`
+              animationDuration: `${1 + Math.random() * 0.8}s`,
             }}
           />
         ))}
@@ -172,14 +188,14 @@ function ThemeBackground({ theme }) {
   if (theme === 'snowy') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="snow-flake-particle"
             style={{
               left: p.left,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -190,14 +206,14 @@ function ThemeBackground({ theme }) {
   if (theme === 'sakura') {
     return (
       <div className="theme-background-wrapper">
-        {particles.map(p => (
+        {particles.map((p) => (
           <div
             key={p.id}
             className="sakura-petal-particle"
             style={{
               left: p.left,
               animationDelay: p.delay,
-              animationDuration: p.duration
+              animationDuration: p.duration,
             }}
           />
         ))}
@@ -205,7 +221,6 @@ function ThemeBackground({ theme }) {
     );
   }
 
-  // default / cyberpunk / neon
   return (
     <div className="theme-background-wrapper">
       <div className="neon-scanline-beam" />
@@ -213,372 +228,378 @@ function ThemeBackground({ theme }) {
   );
 }
 
-// Framer Motion staggered transition variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.1
-    }
-  }
-};
+// Sub-component for individual card content
+function CardContent({ job, idx, theme, isLatest }) {
+  return (
+    <>
+      <ThemeBackground theme={theme} />
+      <div className="relative z-10 p-5 sm:p-6 md:p-7 space-y-4 sm:space-y-5 overflow-y-auto hide-scrollbar max-h-[85vh] md:max-h-none md:overflow-visible overscroll-contain">
+        {/* Card Header */}
+        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-5 border-b border-white/10">
+          <div className="flex items-center gap-4">
+            <div className="futuristic-company-badge">
+              <div
+                className="badge-orbit-ring"
+                style={{ borderColor: 'color-mix(in srgb, var(--theme-to) 25%, transparent)' }}
+              >
+                <div className="badge-orbit-node" />
+              </div>
+              <div className="badge-icon-core text-white">
+                {job.badgeIcon === 'rocket' ? (
+                  <FaRocket
+                    className="text-xl text-theme-to"
+                    style={{ color: 'var(--theme-to)', filter: 'drop-shadow(0 0 6px var(--theme-to))' }}
+                  />
+                ) : (
+                  <FaTerminal
+                    className="text-xl text-theme-from"
+                    style={{ color: 'var(--theme-from)', filter: 'drop-shadow(0 0 6px var(--theme-from))' }}
+                  />
+                )}
+              </div>
+            </div>
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 15 },
-  show: { opacity: 1, y: 0, transition: { type: "spring", damping: 25, stiffness: 120 } }
-};
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+                  MISSION // 0{idx + 1}
+                </span>
+                {isLatest && (
+                  <span className="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    CURRENT ROLE
+                  </span>
+                )}
+              </div>
+              <h3 className="font-display text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+                {job.role}
+              </h3>
+              <p className="text-sm font-semibold text-slate-300 mt-0.5 flex items-center gap-2">
+                <span className="bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent font-bold">
+                  {job.company}
+                </span>
+                <span className="text-slate-600">•</span>
+                <span className="text-xs text-slate-400 font-mono flex items-center gap-1.5">
+                  <FaCalendarAlt className="text-[10px] text-slate-500" />
+                  {job.period}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div className="self-start sm:self-center">
+            <div className="active-pulse-beacon">
+              {job.status === 'ACTIVE' ? (
+                <>
+                  <div
+                    className="beacon-dot"
+                    style={{ backgroundColor: 'var(--theme-to)', boxShadow: '0 0 10px var(--theme-to)' }}
+                  />
+                  <span className="text-[11px] font-mono font-bold tracking-wider" style={{ color: 'var(--theme-to)' }}>
+                    MISSION ACTIVE
+                  </span>
+                </>
+              ) : (
+                <>
+                  <div className="beacon-dot" style={{ backgroundColor: 'var(--theme-muted)' }} />
+                  <span className="text-[11px] font-mono font-bold tracking-wider text-slate-400">
+                    ACCOMPLISHED
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Mission Summary Callout */}
+        <div className="relative pl-4 sm:pl-5 py-1.5">
+          <div
+            className="objective-left-accent"
+            style={{ background: 'linear-gradient(to bottom, var(--theme-from), var(--theme-to))' }}
+          />
+          <p className="text-slate-300 text-xs sm:text-sm md:text-base leading-relaxed italic">
+            "{job.summary}"
+          </p>
+        </div>
+
+        {/* Key Mission Objectives */}
+        <div className="space-y-2.5">
+          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+            // Core Responsibilities & Impact
+          </span>
+          <div className="grid sm:grid-cols-2 gap-2.5">
+            {job.points.map((point, pIdx) => (
+              <div
+                key={pIdx}
+                className="objective-item-row flex items-start gap-3 p-2.5 sm:p-3 rounded-xl bg-white/[0.02] border border-white/5 relative overflow-hidden"
+              >
+                <div
+                  className="objectives-bullet-glow mt-0.5 shrink-0"
+                  style={{
+                    color: 'var(--theme-to)',
+                    borderColor: 'color-mix(in srgb, var(--theme-to) 25%, transparent)',
+                    backgroundColor: 'color-mix(in srgb, var(--theme-to) 8%, transparent)',
+                  }}
+                >
+                  ✓
+                </div>
+                <span className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                  {point}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Technology Inventory */}
+        <div className="space-y-2.5">
+          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+            // Technology Deck
+          </span>
+          <div className="grid sm:grid-cols-3 gap-2.5">
+            {Object.entries(job.techCategories).map(([categoryName, tags]) => (
+              <div key={categoryName} className="tech-category-panel">
+                <h5 className="text-[11px] font-mono font-bold text-slate-300 tracking-wider mb-2 border-b border-white/5 pb-1 uppercase">
+                  {categoryName}
+                </h5>
+                <div className="flex flex-wrap gap-1.5">
+                  {tags.map((t) => {
+                    const tagMeta = getTagIcon(t);
+                    const Icon = tagMeta.icon;
+                    return (
+                      <div
+                        key={t}
+                        className="tech-dossier-pill"
+                        style={{
+                          '--pill-color': tagMeta.color,
+                          '--pill-color-shadow': `${tagMeta.color}35`,
+                        }}
+                      >
+                        <Icon className="tech-dossier-icon" />
+                        <span>{t}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Metrics & KPIs */}
+        <div className="space-y-2.5">
+          <span className="text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
+            // Validated Mission Metrics
+          </span>
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+            {job.stats.map((s, sIdx) => {
+              const Icon = getStatIcon(s.label);
+              return (
+                <div key={sIdx} className="stat-widget-glass">
+                  <div className="flex justify-center">
+                    <Icon className="stat-widget-icon" style={{ color: 'var(--theme-to)' }} />
+                  </div>
+                  <h4 className="text-white font-display font-extrabold text-base sm:text-xl md:text-2xl mt-0.5 tracking-tight">
+                    <StatCounter value={s.value} />
+                  </h4>
+                  <p className="text-[9px] sm:text-[10px] text-slate-400 font-mono tracking-wider uppercase mt-0.5">
+                    {s.label}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Card Action Controls */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5">
+          <div className="flex flex-wrap gap-3">
+            <a href={job.cta.projectsLink} className="cta-cockpit-primary">
+              <span>View Projects</span>
+              <FaArrowRight className="text-[10px]" />
+            </a>
+            <a href="/resume/My-Resume.pdf" className="cta-cockpit-secondary" download>
+              <FaDownload className="text-xs" />
+              <span>Download Resume</span>
+            </a>
+          </div>
+          <span className="text-[10px] font-mono text-slate-500 hidden sm:inline-block">
+            VERIFIED MISSION DOSSIER • SECURE
+          </span>
+        </div>
+      </div>
+    </>
+  );
+}
 
 export default function Experience() {
   const { theme } = useTheme();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const activeJob = experience[activeIndex];
+  const [activeTab, setActiveTab] = useState(0);
+  const sectionRef = useRef(null);
+  const pinWrapperRef = useRef(null);
+  const card0Ref = useRef(null);
+  const card1Ref = useRef(null);
+  const tlRef = useRef(null);
 
-  // 3D Card Tilt Configuration
-  const cardRef = useRef(null);
-  const spotlightRef = useRef(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  useEffect(() => {
+    const card0 = card0Ref.current;
+    const card1 = card1Ref.current;
+    const pinEl = pinWrapperRef.current;
+    if (!card0 || !card1 || !pinEl) return;
 
-  const springX = useSpring(mouseX, { damping: 30, stiffness: 140 });
-  const springY = useSpring(mouseY, { damping: 30, stiffness: 140 });
+    const ctx = gsap.context(() => {
+      // Set initial positions
+      gsap.set(card0, {
+        transformOrigin: 'center top',
+        y: 0,
+        scale: 1,
+        opacity: 1,
+        filter: 'brightness(1) blur(0px)',
+      });
 
-  const rotateX = useTransform(springY, [-300, 300], [5, -5]);
-  const rotateY = useTransform(springX, [-300, 300], [-5, 5]);
+      // Card 1 starts translated down below Card 0, tilted in 3D
+      gsap.set(card1, {
+        transformOrigin: 'center top',
+        yPercent: 120,
+        rotateX: 10,
+        scale: 0.96,
+        opacity: 1,
+        filter: 'brightness(0.9) blur(0px)',
+      });
 
-  const handleMouseMove = (e) => {
-    const card = cardRef.current;
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    
-    const x = e.clientX - rect.left - width / 2;
-    const y = e.clientY - rect.top - height / 2;
+      // Pinned stacking scrub timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: pinEl,
+          start: 'top 10%',
+          end: '+=1300', // 1300px smooth scroll distance
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.5,
+          anticipatePin: 1,
+          fastScrollEnd: true,
+          onUpdate: (self) => {
+            const activeIdx = self.progress > 0.45 ? 1 : 0;
+            setActiveTab(activeIdx);
+          },
+        },
+      });
 
-    mouseX.set(x);
-    mouseY.set(y);
+      // Card 0: scales down to 0.94, tilts up slightly (-30px), dims with 3D depth and shadow
+      tl.to(
+        card0,
+        {
+          scale: 0.94,
+          y: -30,
+          filter: 'brightness(0.62) blur(1.2px)',
+          boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
+          ease: 'power2.inOut',
+          duration: 1,
+        },
+        0
+      );
 
-    const spotlight = spotlightRef.current;
-    if (spotlight) {
-      const sx = e.clientX - rect.left;
-      const sy = e.clientY - rect.top;
-      spotlight.style.transform = `translate3d(calc(-50% + ${sx}px), calc(-50% + ${sy}px), 0)`;
-    }
-  };
+      // Card 1: slides up over Card 0, straightens rotateX to 0, scales to 1.0, full brightness
+      tl.to(
+        card1,
+        {
+          yPercent: 0,
+          rotateX: 0,
+          scale: 1,
+          filter: 'brightness(1) blur(0px)',
+          boxShadow: '0 30px 85px rgba(0, 0, 0, 0.9)',
+          ease: 'power2.inOut',
+          duration: 1,
+        },
+        0
+      );
 
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-    const spotlight = spotlightRef.current;
-    if (spotlight) {
-      spotlight.style.transform = 'translate3d(-50%, -50%, 0)';
+      tlRef.current = tl;
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const goToCard = (index) => {
+    setActiveTab(index);
+    const tl = tlRef.current;
+    if (tl && tl.scrollTrigger) {
+      const start = tl.scrollTrigger.start;
+      const end = tl.scrollTrigger.end;
+      const targetScroll = index === 0 ? start + 10 : end - 10;
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
     }
   };
 
   return (
-    <section id="experience" className="py-10 md:py-16 relative overflow-hidden">
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] bg-theme-to/5 rounded-full blur-[130px] pointer-events-none z-0" />
-      
+    <section id="experience" ref={sectionRef} className="portfolio-section relative">
+      {/* Background ambient nebula glow */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] h-[85vw] max-w-[650px] max-h-[650px] bg-theme-to/5 rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute bottom-1/4 right-1/4 w-[60vw] h-[60vw] max-w-[450px] max-h-[450px] bg-theme-from/5 rounded-full blur-[130px] pointer-events-none z-0" />
+
       <div className="portfolio-container relative z-10">
         <SectionHeading
-          eyebrow="My Journey"
+          eyebrow="Career Timeline"
           title="Work Experience"
-          subtitle="An interactive control dossier detailing my career missions, stats, and technologies."
+          subtitle="Explore my professional missions in a true 3D stacked deck. Scroll down to watch the cards stack over each other."
         />
 
-        <div className="w-full mt-10">
-          
-          {/* Main 3D Dossier Board */}
-          <motion.div
-            ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ rotateX, rotateY }}
-            className={`experience-dossier-board theme-${theme}`}
-          >
-            {/* Spotlight Overlay & Theme-aware particle grids */}
-            <div ref={spotlightRef} className="experience-spotlight" />
-            <ThemeBackground theme={theme} />
-
-            {/* Inner Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 p-4 md:p-7 relative z-10">
-              
-              {/* Mobile Horizontal Switcher Tabs (Hidden on desktop) */}
-              <div className="lg:hidden col-span-1 w-full">
-                <div className="mobile-tab-scroll">
-                  {experience.map((job, idx) => {
-                    const isActive = activeIndex === idx;
-                    return (
-                      <div
-                        key={job.company}
-                        onClick={() => setActiveIndex(idx)}
-                        className={`mobile-tab-item ${isActive ? 'active' : ''}`}
-                        style={{
-                          borderColor: isActive ? 'color-mix(in srgb, var(--theme-to) 31%, transparent)' : 'rgba(255,255,255,0.06)',
-                          boxShadow: isActive ? '0 0 12px color-mix(in srgb, var(--theme-to) 15%, transparent)' : ''
-                        }}
-                      >
-                        <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[10px] shrink-0">
-                          {job.badgeIcon === 'rocket' ? (
-                            <FaRocket style={{ color: isActive ? 'var(--theme-to)' : '#94a3b8' }} />
-                          ) : (
-                            <FaTerminal style={{ color: isActive ? 'var(--theme-from)' : '#94a3b8' }} />
-                          )}
-                        </div>
-                        <div className="text-left">
-                          <h4 
-                            className={`text-xs font-bold leading-tight transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent' : 'text-slate-300'}`}
-                            style={isActive ? {
-                              backgroundImage: 'linear-gradient(to right, var(--theme-from), var(--theme-to))',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            } : {}}
-                          >
-                            {job.company}
-                          </h4>
-                          <p className="text-[9px] text-slate-500 font-mono mt-0.5">{job.period}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Left Column: Sidebar Job Switcher (Desktop Only) */}
-              <div className="hidden lg:block lg:col-span-4 space-y-4">
-                <div className="border-b border-white/10 pb-3 mb-2 flex items-center justify-between">
-                  <span className="text-[10px] font-mono text-slate-500 font-bold block tracking-widest uppercase">
-                    // Career Mission Logs
-                  </span>
-                  <span className="text-[9px] font-mono font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                    DECRYPTED
-                  </span>
-                </div>
-
-                <div className="flex flex-col gap-3">
-                  {experience.map((job, idx) => {
-                    const isActive = activeIndex === idx;
-                    return (
-                      <div
-                        key={job.company}
-                        onClick={() => setActiveIndex(idx)}
-                        className={`dossier-sidebar-item ${isActive ? 'active' : ''}`}
-                        style={{ borderColor: isActive ? 'color-mix(in srgb, var(--theme-to) 25%, transparent)' : '' }}
-                      >
-                        <div className="sidebar-scanline" />
-                        
-                        <div className="flex items-center justify-between">
-                          <h4 
-                            className={`font-display font-bold text-sm transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent' : 'text-slate-300'}`}
-                            style={isActive ? {
-                              backgroundImage: 'linear-gradient(to right, var(--theme-from), var(--theme-to))',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            } : {}}
-                          >
-                            {job.company}
-                          </h4>
-                          {isActive && (
-                            <div className="active-pulse-dot" style={{ backgroundColor: 'var(--theme-to)', boxShadow: `0 0 10px var(--theme-to)` }} />
-                          )}
-                        </div>
-                        
-                        <p className="text-xs text-slate-400 font-medium mt-1">
-                          {job.role}
-                        </p>
-                        
-                        <div className="flex items-center justify-between mt-3 text-[10px] font-mono text-slate-500">
-                          <span>{job.period}</span>
-                          <span style={{ color: job.status === 'ACTIVE' ? 'var(--theme-to)' : 'var(--theme-muted)' }}>
-                            {job.status}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Right Column: Mission dossier details sheet */}
-              <div className="lg:col-span-8">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeIndex}
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="show"
-                    exit="hidden"
-                    className="space-y-6"
-                  >
-                    {/* Header: Company Badge, Title, Period, and Beacon */}
-                    <motion.div variants={itemVariants} className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 border-b border-white/10 pb-4">
-                      <div className="flex items-center gap-4">
-                        
-                        {/* Orbiting Ring Badge */}
-                        <div className="futuristic-company-badge">
-                          <div className="badge-orbit-ring" style={{ borderColor: 'color-mix(in srgb, var(--theme-to) 19%, transparent)' }}>
-                            <div className="badge-orbit-node" />
-                          </div>
-                          <div className="badge-icon-core text-white">
-                            {activeJob.badgeIcon === 'rocket' ? (
-                              <FaRocket className="text-xl text-theme-to" style={{ color: 'var(--theme-to)', filter: 'drop-shadow(0 0 5px var(--theme-to))' }} />
-                            ) : (
-                              <FaTerminal className="text-xl text-theme-from" style={{ color: 'var(--theme-from)', filter: 'drop-shadow(0 0 5px var(--theme-from))' }} />
-                            )}
-                          </div>
-                        </div>
-
-                        <div>
-                          <h3 
-                            className="font-display font-extrabold text-lg md:text-xl tracking-tight leading-none bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent"
-                            style={{
-                              backgroundImage: 'linear-gradient(to right, var(--theme-from), var(--theme-to))',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            }}
-                          >
-                            {activeJob.company}
-                          </h3>
-                          <p className="text-slate-400 text-xs font-semibold mt-1">
-                            {activeJob.role} <span className="text-slate-500 font-mono font-medium ml-1.5">• {activeJob.period}</span>
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 self-start sm:self-center">
-                        <div className="active-pulse-beacon">
-                          {activeJob.status === 'ACTIVE' ? (
-                            <>
-                              <div className="beacon-dot" style={{ backgroundColor: 'var(--theme-to)', boxShadow: '0 0 10px var(--theme-to)' }} />
-                              <span className="text-[10px] font-mono font-bold tracking-wider text-theme-to" style={{ color: 'var(--theme-to)' }}>
-                                MISSION ACTIVE
-                              </span>
-                            </>
-                          ) : (
-                            <>
-                              <div className="beacon-dot" style={{ backgroundColor: 'var(--theme-muted)', boxShadow: 'none' }} />
-                              <span className="text-[10px] font-mono font-bold tracking-wider text-slate-500">
-                                COMPLETED
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-
-                    {/* Responsibilities list with left accent and checks */}
-                    <motion.div variants={itemVariants} className="space-y-3">
-                      <span className="text-[10px] font-mono text-slate-500 font-bold block tracking-wider uppercase">
-                        // Mission Objectives
-                      </span>
-                      <div className="space-y-2.5">
-                        {activeJob.points.map((p, idx) => (
-                          <div 
-                            key={idx} 
-                            className="objective-item-row flex items-start gap-4 p-2.5 rounded-xl bg-white/[0.01] hover:bg-white/[0.03] border border-transparent hover:border-white/5 transition-all duration-300 relative pl-5 overflow-hidden"
-                          >
-                            <div className="objective-left-accent" style={{ background: 'linear-gradient(to bottom, var(--theme-from), var(--theme-to))' }} />
-                            
-                            <div className="objectives-bullet-glow mt-0.5 shrink-0" style={{
-                              color: 'var(--theme-to)',
-                              borderColor: 'color-mix(in srgb, var(--theme-to) 21%, transparent)',
-                              backgroundColor: 'color-mix(in srgb, var(--theme-to) 6%, transparent)'
-                            }}>
-                              ✓
-                            </div>
-                            <span className="text-slate-300 text-sm leading-relaxed font-sans">{p}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-
-                    {/* Categorized Tech Inventory */}
-                    <motion.div variants={itemVariants} className="space-y-3">
-                      <span className="text-[10px] font-mono text-slate-500 font-bold block tracking-wider uppercase">
-                        // Technology Inventory
-                      </span>
-                      <div className="grid sm:grid-cols-3 gap-4">
-                        {Object.entries(activeJob.techCategories).map(([categoryName, tags]) => (
-                          <div key={categoryName} className="tech-category-panel">
-                            <h5 className="text-white text-xs font-bold tracking-wide mb-2.5 border-b border-white/5 pb-1.5">
-                              {categoryName}
-                            </h5>
-                            <div className="flex flex-wrap gap-1.5">
-                              {tags.map((t) => {
-                                const tagMeta = getTagIcon(t);
-                                const Icon = tagMeta.icon;
-                                const isReact = t.toLowerCase().includes('react');
-                                return (
-                                  <div
-                                    key={t}
-                                    className={`tech-dossier-pill ${isReact ? 'react' : ''}`}
-                                    style={{
-                                      '--pill-color': tagMeta.color,
-                                      '--pill-color-shadow': `${tagMeta.color}35`
-                                    }}
-                                  >
-                                    <Icon className="tech-dossier-icon" />
-                                    <span>{t}</span>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-
-                    {/* Statistics widgets */}
-                    <motion.div variants={itemVariants} className="space-y-3">
-                      <span className="text-[10px] font-mono text-slate-500 font-bold block tracking-wider uppercase">
-                        // Decrypted Metrics
-                      </span>
-                      <div className="grid grid-cols-3 gap-3">
-                        {activeJob.stats.map((s, idx) => (
-                          <div 
-                            key={idx} 
-                            className="stat-widget-glass"
-                            style={{ borderColor: activeJob.status === 'ACTIVE' ? 'color-mix(in srgb, var(--theme-to) 12.5%, transparent)' : '' }}
-                          >
-                            <div className="flex justify-center">
-                              {(() => {
-                                const Icon = getStatIcon(s.label);
-                                return <Icon className="stat-widget-icon" style={{ color: 'var(--theme-to)' }} />;
-                              })()}
-                            </div>
-                            
-                            <h4 className="text-white font-display font-extrabold text-base sm:text-xl mt-1 tracking-tight">
-                              <StatCounter value={s.value} />
-                            </h4>
-                            <p className="text-[9px] text-slate-500 font-mono tracking-tighter uppercase mt-0.5">
-                              {s.label}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-
-                    {/* CTA Cockpit Actions */}
-                    <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-3 border-t border-white/5">
-                      <a href={activeJob.cta.projectsLink} className="cta-cockpit-primary">
-                        <span>View Projects</span>
-                        <FaArrowRight className="text-[10px]" />
-                      </a>
-                      <a href="/resume/My-Resume.pdf" className="cta-cockpit-secondary" download>
-                        <FaDownload className="text-xs" />
-                        <span>Download Resume</span>
-                      </a>
-                    </motion.div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
+        {/* Pinned Card Stack Stage */}
+        <div ref={pinWrapperRef} className="relative w-full max-w-5xl mx-auto pt-2">
+          {/* Quick-Jump Card Stack Navigation Pills */}
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6 px-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+                STACK DECK
+              </span>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-theme-to">
+                0{activeTab + 1} / 02
+              </span>
             </div>
-          </motion.div>
 
+            <div className="flex items-center gap-2">
+              {experience.map((job, idx) => {
+                const isActive = activeTab === idx;
+                return (
+                  <button
+                    key={job.company}
+                    type="button"
+                    onClick={() => goToCard(idx)}
+                    className={`stack-switcher-pill ${isActive ? 'active' : ''}`}
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full"
+                      style={{ backgroundColor: isActive ? 'var(--theme-to)' : '#64748b' }}
+                    />
+                    <span>MISSION // 0{idx + 1}</span>
+                    <span className="text-white/30">•</span>
+                    <span className={isActive ? 'text-white' : 'text-slate-400'}>{job.company}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Stacking Cards Deck Area */}
+          <div className="relative w-full [perspective:1400px]">
+            {/* Card 0: iB Arts (relative, base of the stack) */}
+            <article
+              ref={card0Ref}
+              className={`experience-stack-card theme-${theme} relative z-10 w-full`}
+            >
+              <CardContent job={experience[0]} idx={0} theme={theme} isLatest={true} />
+            </article>
+
+            {/* Card 1: SB Infowaves (absolute inset-0, stacks directly over Card 0) */}
+            <article
+              ref={card1Ref}
+              className={`experience-stack-card theme-${theme} absolute top-0 left-0 w-full z-20`}
+            >
+              <CardContent job={experience[1]} idx={1} theme={theme} isLatest={false} />
+            </article>
+          </div>
         </div>
       </div>
     </section>

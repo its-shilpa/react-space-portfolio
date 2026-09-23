@@ -53,7 +53,7 @@ export default function ThemeSwitcher() {
             </div>
 
             {/* Themes Grid */}
-            <div className="grid grid-cols-2 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
+            <div className="grid grid-cols-2 gap-2.5 max-h-[300px] overflow-y-auto hide-scrollbar pr-1">
               {configs.map((cfg) => {
                 const isActive = theme === cfg.id;
                 return (

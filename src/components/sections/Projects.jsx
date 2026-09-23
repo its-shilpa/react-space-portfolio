@@ -1,7 +1,11 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaGithub, FaExternalLinkAlt, FaChevronLeft, FaChevronRight, FaArrowRight } from 'react-icons/fa';
 import { projects } from '../../data/projects';
 import SectionHeading from '../ui/SectionHeading';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const filters = ["All", "JS Project", "WordPress Project", "WooCommerce Project"];
 
@@ -38,6 +42,76 @@ export default function Projects() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [next, prev]);
+
+  const sectionRef = useRef(null);
+  const filtersRef = useRef(null);
+  const stageRef = useRef(null);
+  const progressRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      if (filtersRef.current) {
+        gsap.fromTo(
+          filtersRef.current.children,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.08,
+            duration: 0.6,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: filtersRef.current,
+              start: 'top 85%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+
+      if (stageRef.current) {
+        gsap.fromTo(
+          stageRef.current,
+          { opacity: 0, scale: 0.85, y: 75 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: stageRef.current,
+              start: 'top 80%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+
+      if (progressRef.current) {
+        gsap.fromTo(
+          progressRef.current,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: progressRef.current,
+              start: 'top 95%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   const offsetOf = (i) => {
     let d = i - index;
@@ -91,7 +165,7 @@ export default function Projects() {
   if (!count) return null;
 
   return (
-    <section id="projects" className="py-14 md:py-20 relative overflow-hidden">
+    <section id="projects" ref={sectionRef} className="portfolio-section relative overflow-hidden">
       <div className="portfolio-container relative">
         <SectionHeading
           eyebrow="My Work"
@@ -100,7 +174,7 @@ export default function Projects() {
         />
 
         {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 md:mb-14 px-2" data-aos="fade-up">
+        <div ref={filtersRef} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 md:mb-14 px-2">
           {filters.map((f) => (
             <button
               key={f}
@@ -117,14 +191,13 @@ export default function Projects() {
         </div>
 
         {/* Stage */}
-        <div className="relative">
+        <div ref={stageRef} className="relative">
           {/* ambient glows */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] max-w-[560px] h-[85vw] max-h-[560px] rounded-full bg-nebula-purple/15 blur-[120px]" />
           <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[55vw] max-w-[320px] h-[55vw] max-h-[320px] rounded-full bg-nebula-blue/20 blur-[100px]" />
 
           <div
             className="relative h-[430px] sm:h-[470px] md:h-[510px] lg:h-[550px] [perspective:2000px] [transform-style:preserve-3d] overflow-visible mb-6"
-            data-aos="fade-up"
           >
             {visible.map((p, i) => {
               const offset = offsetOf(i);
@@ -305,7 +378,7 @@ export default function Projects() {
 
         {/* Progress / index caption */}
         {count > 1 && (
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-16 md:mt-20 px-4 text-center" data-aos="fade-up">
+          <div ref={progressRef} className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-16 md:mt-20 px-4 text-center">
             <span className="text-xs font-mono text-nebula-blue border border-nebula-blue/30 bg-nebula-blue/10 rounded px-2 py-0.5">
               {String(index + 1).padStart(2, '0')}
             </span>

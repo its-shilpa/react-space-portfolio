@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaCode, FaReact, FaWordpress, FaLaptopCode, FaPaintBrush, FaServer, FaArrowRight } from 'react-icons/fa';
 import { services } from '../../data/services';
 import SectionHeading from '../ui/SectionHeading';
 import { useTheme } from '../../hooks/ThemeContext';
 import '../css/services.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Import background images
 import frontendDevBg from '../../assets/services/frontend_dev.webp';
@@ -229,25 +233,63 @@ function CardParticles({ theme }) {
 export default function Services() {
   const { theme } = useTheme();
   const [activeCard, setActiveCard] = useState(null);
+  const sectionRef = useRef(null);
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      if (gridRef.current) {
+        gsap.fromTo(
+          gridRef.current.children,
+          {
+            opacity: 0,
+            y: 50,
+            rotateX: 10,
+            scale: 0.92,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 0.85,
+            stagger: 0.12,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 85%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="services" className="py-8 md:py-10 lg:py-12">
-      <div className="portfolio-container">
+    <section id="services" ref={sectionRef} className="portfolio-section relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/3 right-10 w-80 h-80 rounded-full bg-nebula-blue/5 blur-[120px] pointer-events-none" />
+
+      <div className="portfolio-container relative z-10">
         <SectionHeading
           eyebrow="What I Offer"
           title="Services I Offer"
           subtitle="Comprehensive frontend solutions to bring your digital vision to life with high quality."
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s, i) => {
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 [perspective:1200px]">
+          {services.map((s) => {
             const Icon = iconMap[s.icon] || FaCode;
             const bgImage = bgMap[s.bgImage];
             const isActive = activeCard === s.title;
             return (
               <div
                 key={s.title}
-                data-aos="fade-up"
-                data-aos-delay={i * 100}
                 className="service-card-wrapper"
               >
                 <div

@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaExternalLinkAlt, FaAward, FaReact, FaTrophy, FaPalette } from 'react-icons/fa';
 import { achievements } from '../../data/achievements';
 import SectionHeading from '../ui/SectionHeading';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const getIcon = (iconName) => {
   switch (iconName) {
@@ -18,9 +22,46 @@ const getIcon = (iconName) => {
 
 export default function Achievements() {
   const [flippedIdx, setFlippedIdx] = useState(null);
+  const sectionRef = useRef(null);
+  const cardsGridRef = useRef(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      if (cardsGridRef.current) {
+        gsap.fromTo(
+          cardsGridRef.current.children,
+          {
+            opacity: 0,
+            y: 50,
+            scale: 0.92,
+            rotateX: 10,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            rotateX: 0,
+            duration: 0.85,
+            stagger: 0.14,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: cardsGridRef.current,
+              start: 'top 85%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
+      }
+    }, el);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section id="achievements" className="py-8 md:py-10 lg:py-12 relative overflow-hidden">
+    <section id="achievements" ref={sectionRef} className="portfolio-section relative overflow-hidden">
       {/* Decorative background nebula glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-nebula-purple/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -31,12 +72,10 @@ export default function Achievements() {
           subtitle="A collection of certificates, hackathons, and recognitions earned along the way."
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div ref={cardsGridRef} className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
           {achievements.map((ach, idx) => (
             <div
               key={idx}
-              data-aos="fade-up"
-              data-aos-delay={idx * 100}
               onClick={() => {
                 if (window.innerWidth < 1024) {
                   setFlippedIdx(flippedIdx === idx ? null : idx);
