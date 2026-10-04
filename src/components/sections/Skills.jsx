@@ -30,7 +30,7 @@ export default function Skills() {
             scrollTrigger: {
               trigger: orbitWrapperRef.current,
               start: 'top 85%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );

@@ -31,7 +31,7 @@ export default function Contact() {
             scrollTrigger: {
               trigger: leftColRef.current,
               start: 'top 85%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );
@@ -40,17 +40,17 @@ export default function Contact() {
       if (rightColRef.current) {
         gsap.fromTo(
           rightColRef.current,
-          { opacity: 0, y: 70, scale: 0.92 },
+          { opacity: 0, y: 50, scale: 0.94 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
             duration: 0.95,
-            ease: 'back.out(1.2)',
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: rightColRef.current,
               start: 'top 85%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );

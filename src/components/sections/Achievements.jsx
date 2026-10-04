@@ -50,7 +50,7 @@ export default function Achievements() {
             scrollTrigger: {
               trigger: cardsGridRef.current,
               start: 'top 85%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );

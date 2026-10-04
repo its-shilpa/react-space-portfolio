@@ -87,18 +87,18 @@ export default function About() {
       if (leftColRef.current) {
         gsap.fromTo(
           leftColRef.current.children,
-          { opacity: 0, x: -50, y: 20 },
+          { opacity: 0, x: -30, y: 15 },
           {
             opacity: 1,
             x: 0,
             y: 0,
             duration: 0.85,
-            stagger: 0.14,
+            stagger: 0.12,
             ease: "power3.out",
             scrollTrigger: {
               trigger: leftColRef.current,
               start: "top 85%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
             },
           }
         );
@@ -108,19 +108,18 @@ export default function About() {
       if (rightColRef.current) {
         gsap.fromTo(
           rightColRef.current.children,
-          { opacity: 0, y: 55, scale: 0.9, rotateX: 12 },
+          { opacity: 0, y: 40, scale: 0.94 },
           {
             opacity: 1,
             y: 0,
             scale: 1,
-            rotateX: 0,
             duration: 0.85,
-            stagger: 0.12,
+            stagger: 0.1,
             ease: "power2.out",
             scrollTrigger: {
               trigger: rightColRef.current,
               start: "top 85%",
-              toggleActions: "play reverse play reverse",
+              toggleActions: "play none none none",
             },
           }
         );
@@ -143,20 +142,20 @@ export default function About() {
           subtitle="Discover who I am, my core mission, and the professional milestones I have reached."
         />
         <div className="grid md:grid-cols-2 gap-10 md:gap-14 items-center">
-          <div ref={leftColRef} className="space-y-6">
-            <h3 className="text-2xl sm:text-3xl font-display font-bold text-white leading-snug">
+          <div ref={leftColRef} className="space-y-5">
+            <h3 className="text-xl xs:text-2xl sm:text-3xl font-display font-bold text-white leading-snug">
               I'm <span className="bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent">Shilpa Mukherjee</span>, a Creative Frontend Developer based in India.
             </h3>
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
+            <p className="text-slate-300 leading-relaxed text-xs sm:text-base">
               I specialize in creating highly interactive, modern, and accessible web experiences. With over 2 years of hands-on experience, I enjoy turning complicated problems into simple, beautiful, and intuitive designs.
             </p>
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
+            <p className="text-slate-300 leading-relaxed text-xs sm:text-base">
               My expertise covers the React ecosystem, responsive frontend styling, component architecture, and integration of interactive tools like GSAP. Whether building a custom WordPress theme or a heavy React application, I prioritize clean code, performance, and pixel-perfect responsiveness.
             </p>
-            <div className="pt-2 flex flex-wrap gap-4">
+            <div className="pt-2 flex flex-col xs:flex-row gap-3">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-theme-from to-theme-to text-space-950 font-bold text-sm hover:scale-105 shadow-lg shadow-theme-to/20 transition-all duration-300 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-theme-from to-theme-to text-space-950 font-bold text-xs sm:text-sm hover:scale-105 shadow-lg shadow-theme-to/20 transition-all duration-300 cursor-pointer w-full xs:w-auto text-center"
               >
                 <span>Get In Touch</span>
                 <FaArrowRight className="text-xs" />
@@ -164,14 +163,14 @@ export default function About() {
               <a
                 href="/resume/My-Resume.pdf"
                 download
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white font-medium text-sm hover:bg-white/5 transition-all duration-300"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-white/20 text-white font-medium text-xs sm:text-sm hover:bg-white/5 transition-all duration-300 w-full xs:w-auto text-center"
               >
                 Download Resume
               </a>
             </div>
           </div>
 
-          <div ref={rightColRef} className="grid grid-cols-2 gap-4 [perspective:1000px]">
+          <div ref={rightColRef} className="grid grid-cols-2 gap-3 sm:gap-4 [perspective:1000px]">
             {stats.map((stat, i) => (
               <StatCard key={i} icon={stat.icon} value={stat.value} label={stat.label} />
             ))}

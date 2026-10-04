@@ -56,7 +56,7 @@ export default function Projects() {
       if (filtersRef.current) {
         gsap.fromTo(
           filtersRef.current.children,
-          { opacity: 0, y: 30 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
@@ -66,7 +66,7 @@ export default function Projects() {
             scrollTrigger: {
               trigger: filtersRef.current,
               start: 'top 85%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );
@@ -75,17 +75,17 @@ export default function Projects() {
       if (stageRef.current) {
         gsap.fromTo(
           stageRef.current,
-          { opacity: 0, scale: 0.85, y: 75 },
+          { opacity: 0, scale: 0.92, y: 45 },
           {
             opacity: 1,
             scale: 1,
             y: 0,
-            duration: 1,
+            duration: 0.9,
             ease: 'power3.out',
             scrollTrigger: {
               trigger: stageRef.current,
-              start: 'top 80%',
-              toggleActions: 'play reverse play reverse',
+              start: 'top 85%',
+              toggleActions: 'play none none none',
             },
           }
         );
@@ -94,7 +94,7 @@ export default function Projects() {
       if (progressRef.current) {
         gsap.fromTo(
           progressRef.current,
-          { opacity: 0, y: 25 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
@@ -103,7 +103,7 @@ export default function Projects() {
             scrollTrigger: {
               trigger: progressRef.current,
               start: 'top 95%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
             },
           }
         );
@@ -141,14 +141,14 @@ export default function Projects() {
       tx = 0;
       tz = 0;
       ry = 0;
-      scale = 1.05;
+      scale = isMobile ? 1.0 : 1.04;
     } else {
       // Curve spread spacing for side cards
-      const spacing = isMobile ? 54 : 68;
-      tx = dir * spacing * (abs === 1 ? 1 : 1.6);
-      tz = isMobile ? -80 * abs : -150 * abs;
-      ry = -28 * dir; // Tilted inwards
-      scale = isMobile ? 0.74 - (abs - 1) * 0.15 : 0.8 - (abs - 1) * 0.12;
+      const spacing = isMobile ? 42 : 68;
+      tx = dir * spacing * (abs === 1 ? 1 : 1.5);
+      tz = isMobile ? -60 * abs : -150 * abs;
+      ry = isMobile ? -18 * dir : -28 * dir; // Tilted inwards
+      scale = isMobile ? 0.72 - (abs - 1) * 0.12 : 0.8 - (abs - 1) * 0.12;
     }
 
     const opacity = offset === 0 ? 1 : (abs === 1 ? 0.65 : 0.25);
@@ -174,7 +174,7 @@ export default function Projects() {
         />
 
         {/* Filters */}
-        <div ref={filtersRef} className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 md:mb-14 px-2">
+        <div ref={filtersRef} className="flex flex-row sm:flex-wrap items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar max-w-full mb-8 sm:mb-14 px-2 py-1">
           {filters.map((f) => (
             <button
               key={f}
