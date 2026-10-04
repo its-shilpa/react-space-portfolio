@@ -23,7 +23,7 @@ const getTagIcon = (tag) => {
   if (t.includes('wordpress') || t.includes('divi') || t.includes('elementor')) return { icon: FaWordpress, color: '#21759b' };
   if (t.includes('woocommerce')) return { icon: FaShoppingBag, color: '#96588a' };
   if (t === 'html') return { icon: FaHtml5, color: '#e34f26' };
-  if (t === 'css' || t.includes('sass') || t.includes('tailwind')) return { icon: FaCss3Alt, color: '#38bdf8' };
+  if (t.includes('css') || t.includes('sass') || t.includes('tailwind')) return { icon: FaCss3Alt, color: '#38bdf8' };
   if (t.includes('payment') || t.includes('credit')) return { icon: FaCreditCard, color: '#10b981' };
   return { icon: FaCode, color: '#94a3b8' };
 };
@@ -233,6 +233,40 @@ function CardContent({ job, idx, theme, isLatest }) {
   return (
     <>
       <ThemeBackground theme={theme} />
+
+      {/* Stacked Notification Top Header Bar (Visible when stacked behind) */}
+      <div className="stack-notification-header">
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <div
+            className="stack-status-indicator"
+            style={{
+              backgroundColor: isLatest ? 'var(--theme-to)' : 'var(--theme-muted, #64748b)',
+              color: isLatest ? 'var(--theme-to)' : '#64748b',
+            }}
+          />
+          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200 uppercase">
+            MISSION // 0{idx + 1}
+          </span>
+          <span className="text-slate-600 text-xs">•</span>
+          <span className="text-xs sm:text-sm font-extrabold text-white tracking-tight">
+            {job.company}
+          </span>
+          <span className="text-[11px] sm:text-xs text-slate-400 font-medium hidden sm:inline">
+            — {job.role}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          {isLatest && (
+            <span className="text-[8px] sm:text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              ACTIVE
+            </span>
+          )}
+          <span className="text-[10px] sm:text-xs font-mono text-slate-400">
+            {job.period}
+          </span>
+        </div>
+      </div>
+
       <div className="relative z-10 p-3.5 xs:p-4 sm:p-6 md:p-7 space-y-3 sm:space-y-4 md:space-y-5 overflow-visible">
         {/* Card Header */}
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 sm:gap-4 pb-3 sm:pb-5 border-b border-white/10">
@@ -261,7 +295,7 @@ function CardContent({ job, idx, theme, isLatest }) {
 
             <div>
               <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
-                <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">
+                <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase">
                   MISSION // 0{idx + 1}
                 </span>
                 {isLatest && (
@@ -434,177 +468,78 @@ function CardContent({ job, idx, theme, isLatest }) {
 export default function Experience() {
   const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState(0);
-  const sectionRef = useRef(null);
-  const pinWrapperRef = useRef(null);
-  const card0Ref = useRef(null);
-  const card1Ref = useRef(null);
-  const tlRef = useRef(null);
+  const cardRefs = useRef([]);
 
   useEffect(() => {
-    const card0 = card0Ref.current;
-    const card1 = card1Ref.current;
-    const pinEl = pinWrapperRef.current;
-    if (!card0 || !card1 || !pinEl) return;
+    const cardElements = cardRefs.current.filter(Boolean);
+    if (!cardElements.length) return;
 
-    const mm = gsap.matchMedia();
+    const ctx = gsap.context(() => {
+      // Configure GPU scroll animations for stacked cards
+      cardElements.forEach((card, idx) => {
+        if (idx === cardElements.length - 1) return;
+        const nextCard = cardElements[idx + 1];
+        if (!nextCard) return;
 
-    // Mobile (< 768px)
-    mm.add('(max-width: 767px)', () => {
-      gsap.set(card0, {
-        transformOrigin: 'center top',
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        willChange: 'transform, opacity',
-      });
-
-      gsap.set(card1, {
-        transformOrigin: 'center top',
-        yPercent: 102,
-        rotateX: 4,
-        scale: 0.96,
-        opacity: 1,
-        willChange: 'transform, opacity',
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinEl,
-          start: 'top 75px',
-          end: '+=500',
-          pin: true,
-          pinSpacing: true,
-          scrub: true,
-          anticipatePin: 0,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const activeIdx = self.progress > 0.45 ? 1 : 0;
-            setActiveTab(activeIdx);
-          },
-        },
-      });
-
-      tl.to(
-        card0,
-        {
-          scale: 0.95,
-          y: -14,
-          opacity: 0.55,
-          boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
-          ease: 'none',
-          duration: 1,
-        },
-        0
-      );
-
-      tl.to(
-        card1,
-        {
-          yPercent: 0,
-          rotateX: 0,
-          scale: 1,
-          opacity: 1,
-          boxShadow: '0 30px 85px rgba(0, 0, 0, 0.9)',
-          ease: 'none',
-          duration: 1,
-        },
-        0
-      );
-
-      tlRef.current = tl;
-    });
-
-    // Desktop (>= 768px)
-    mm.add('(min-width: 768px)', () => {
-      gsap.set(card0, {
-        transformOrigin: 'center top',
-        y: 0,
-        scale: 1,
-        opacity: 1,
-        willChange: 'transform, opacity',
-      });
-
-      gsap.set(card1, {
-        transformOrigin: 'center top',
-        yPercent: 120,
-        rotateX: 10,
-        scale: 0.96,
-        opacity: 1,
-        willChange: 'transform, opacity',
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinEl,
-          start: 'top 10%',
-          end: '+=1100',
-          pin: true,
-          pinSpacing: true,
-          scrub: 0.4,
-          anticipatePin: 1,
-          fastScrollEnd: true,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const activeIdx = self.progress > 0.45 ? 1 : 0;
-            setActiveTab(activeIdx);
-          },
-        },
-      });
-
-      tl.to(
-        card0,
-        {
+        // Card stacking transform as the next card scrolls over it
+        gsap.to(card, {
           scale: 0.94,
-          y: -28,
-          opacity: 0.55,
-          boxShadow: '0 45px 100px rgba(0, 0, 0, 0.95)',
+          y: -12,
+          filter: 'brightness(0.7)',
+          opacity: 0.85,
           ease: 'none',
-          duration: 1,
-        },
-        0
-      );
+          scrollTrigger: {
+            trigger: nextCard,
+            start: 'top 85%',
+            end: 'top 120px',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
 
-      tl.to(
-        card1,
-        {
-          yPercent: 0,
-          rotateX: 0,
-          scale: 1,
-          opacity: 1,
-          boxShadow: '0 30px 85px rgba(0, 0, 0, 0.9)',
-          ease: 'none',
-          duration: 1,
-        },
-        0
-      );
-
-      tlRef.current = tl;
+      // Active tab detection based on scroll position
+      cardElements.forEach((card, idx) => {
+        ScrollTrigger.create({
+          trigger: card,
+          start: 'top 50%',
+          end: 'bottom 50%',
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveTab(idx);
+            }
+          },
+        });
+      });
     });
 
-    return () => mm.revert();
+    return () => ctx.revert();
   }, []);
 
   const goToCard = (index) => {
     setActiveTab(index);
-    const tl = tlRef.current;
-    if (tl && tl.scrollTrigger) {
-      const start = tl.scrollTrigger.start;
-      const end = tl.scrollTrigger.end;
-      const targetScroll = index === 0 ? start + 5 : end - 5;
-      if (window.lenis) {
-        window.lenis.scrollTo(targetScroll);
-      } else {
-        window.scrollTo({
-          top: targetScroll,
-          behavior: 'smooth',
-        });
-      }
+    const targetEl = cardRefs.current[index];
+    if (!targetEl) return;
+
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const offset = isMobile ? 68 + index * 24 : 85 + index * 32;
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = targetEl.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset - 10;
+
+    if (window.lenis) {
+      window.lenis.scrollTo(offsetPosition, { duration: 1.2 });
+    } else {
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      });
     }
   };
 
   return (
-    <section id="experience" ref={sectionRef} className="portfolio-section relative">
+    <section id="experience" className="portfolio-section relative">
       {/* Background ambient nebula glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85vw] h-[85vw] max-w-[650px] max-h-[650px] bg-theme-to/5 rounded-full blur-[140px] pointer-events-none z-0" />
       <div className="absolute bottom-1/4 right-1/4 w-[60vw] h-[60vw] max-w-[450px] max-h-[450px] bg-theme-from/5 rounded-full blur-[130px] pointer-events-none z-0" />
@@ -613,19 +548,19 @@ export default function Experience() {
         <SectionHeading
           eyebrow="Career Timeline"
           title="Work Experience"
-          subtitle="Explore my professional missions in a true 3D stacked deck. Scroll down to watch the cards stack over each other."
+          subtitle="Explore my professional missions in a dynamic notification stack. Scroll down to watch cards stack smoothly over each other."
         />
 
-        {/* Pinned Card Stack Stage */}
-        <div ref={pinWrapperRef} className="relative w-full max-w-5xl mx-auto pt-2">
+        {/* Stack Stage */}
+        <div className="relative w-full max-w-5xl mx-auto pt-2">
           {/* Quick-Jump Card Stack Navigation Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-6 px-1">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sticky top-[70px] sm:top-[75px] z-30 py-2.5 backdrop-blur-md bg-slate-950/60 rounded-full border border-white/10 px-4 shadow-xl">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono font-bold tracking-widest text-slate-500 uppercase">
-                STACK DECK
+              <span className="text-[11px] font-mono font-bold tracking-widest text-slate-400 uppercase">
+                NOTIFICATION STACK
               </span>
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-theme-to">
-                0{activeTab + 1} / 02
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-theme-to">
+                0{activeTab + 1} / 0{experience.length}
               </span>
             </div>
 
@@ -640,37 +575,33 @@ export default function Experience() {
                     className={`stack-switcher-pill ${isActive ? 'active' : ''}`}
                   >
                     <span
-                      className="w-2 h-2 rounded-full"
+                      className="w-2 h-2 rounded-full transition-colors duration-300"
                       style={{ backgroundColor: isActive ? 'var(--theme-to)' : '#64748b' }}
                     />
                     <span>MISSION // 0{idx + 1}</span>
                     <span className="text-white/30">•</span>
-                    <span className={isActive ? 'text-white' : 'text-slate-400'}>{job.company}</span>
+                    <span className={isActive ? 'text-white font-bold' : 'text-slate-400'}>{job.company}</span>
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Stacking Cards Deck Area */}
-          <div className="relative w-full [perspective:1400px]">
-            {/* Card 0: iB Arts (relative, base of the stack) */}
-            <article
-              ref={card0Ref}
-              className={`experience-stack-card theme-${theme} relative z-10 w-full`}
-              style={{ pointerEvents: activeTab === 0 ? 'auto' : 'none' }}
-            >
-              <CardContent job={experience[0]} idx={0} theme={theme} isLatest={true} />
-            </article>
-
-            {/* Card 1: SB Infowaves (absolute inset-0, stacks directly over Card 0) */}
-            <article
-              ref={card1Ref}
-              className={`experience-stack-card theme-${theme} absolute top-0 left-0 w-full z-20`}
-              style={{ pointerEvents: activeTab === 1 ? 'auto' : 'none' }}
-            >
-              <CardContent job={experience[1]} idx={1} theme={theme} isLatest={false} />
-            </article>
+          {/* Stacking Cards Deck Container */}
+          <div className="experience-stack-container">
+            {experience.map((job, idx) => (
+              <article
+                key={job.company}
+                ref={(el) => (cardRefs.current[idx] = el)}
+                className={`experience-stack-card theme-${theme}`}
+                style={{
+                  '--stack-idx': idx,
+                  zIndex: (idx + 1) * 10,
+                }}
+              >
+                <CardContent job={job} idx={idx} theme={theme} isLatest={idx === 0} />
+              </article>
+            ))}
           </div>
         </div>
       </div>

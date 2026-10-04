@@ -9,30 +9,56 @@
 .experience-stack-container {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
   position: relative;
   width: 100%;
+  padding-bottom: 2rem;
+}
+
+/* Notification Header on Card (Matching stacked tab screenshot style) */
+.stack-notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.stack-status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
 }
 
 /* Individual Stacked Card */
 .experience-stack-card {
+  position: sticky;
+  top: calc(85px + var(--stack-idx, 0) * 32px);
   width: 100%;
   border-radius: 24px;
   isolation: isolate;
   background:
     radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--theme-to) 9%, transparent), transparent 60%),
     radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--theme-from) 6%, transparent), transparent 60%),
-    linear-gradient(165deg, color-mix(in srgb, var(--space-900) 88%, transparent) 0%, color-mix(in srgb, var(--space-950) 96%, transparent) 100%);
+    linear-gradient(165deg, color-mix(in srgb, var(--space-900) 92%, transparent) 0%, color-mix(in srgb, var(--space-950) 98%, transparent) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8),
-              inset 0 1px 0 rgba(255, 255, 255, 0.08),
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 -6px 20px -2px rgba(0, 0, 0, 0.5),
+              0 25px 60px -15px rgba(0, 0, 0, 0.85),
+              inset 0 1px 0 rgba(255, 255, 255, 0.14),
               inset 0 0 25px rgba(255, 255, 255, 0.02);
   overflow: hidden;
   transform-origin: center top;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   touch-action: pan-y;
+  margin-bottom: 2.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
 }
@@ -458,10 +484,17 @@
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .experience-stack-card {
+    top: calc(68px + var(--stack-idx, 0) * 24px);
     border-radius: 16px;
     touch-action: pan-y;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    margin-bottom: 2rem;
+  }
+  .stack-notification-header {
+    padding: 8px 12px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
   }
   .futuristic-company-badge {
     width: 46px;
