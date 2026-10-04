@@ -38,7 +38,7 @@
 /* Individual Stacked Card */
 .experience-stack-card {
   position: sticky;
-  top: calc(85px + var(--stack-idx, 0) * 32px);
+  top: calc(135px + var(--stack-idx, 0) * 32px);
   width: 100%;
   border-radius: 24px;
   isolation: isolate;
@@ -46,8 +46,8 @@
     radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--theme-to) 9%, transparent), transparent 60%),
     radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--theme-from) 6%, transparent), transparent 60%),
     linear-gradient(165deg, color-mix(in srgb, var(--space-900) 92%, transparent) 0%, color-mix(in srgb, var(--space-950) 98%, transparent) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 -6px 20px -2px rgba(0, 0, 0, 0.5),
               0 25px 60px -15px rgba(0, 0, 0, 0.85),
@@ -55,7 +55,10 @@
               inset 0 0 25px rgba(255, 255, 255, 0.02);
   overflow: hidden;
   transform-origin: center top;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
   touch-action: pan-y;
   margin-bottom: 2.5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -484,26 +487,30 @@
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .experience-stack-card {
-    top: calc(68px + var(--stack-idx, 0) * 24px);
+    top: calc(105px + var(--stack-idx, 0) * 22px);
     border-radius: 16px;
     touch-action: pan-y;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    margin-bottom: 2rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    margin-bottom: 1.5rem;
   }
   .stack-notification-header {
-    padding: 8px 12px;
+    padding: 6px 12px;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
   }
+  .stack-switcher-pill {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
   .futuristic-company-badge {
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
   }
   .badge-icon-core {
-    width: 32px;
-    height: 32px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
   }
   .badge-orbit-ring {
     inset: -3px;
@@ -513,13 +520,14 @@
     border-radius: 12px;
   }
   .stat-widget-glass {
-    padding: 8px 4px;
-    border-radius: 12px;
+    padding: 6px 4px;
+    border-radius: 10px;
   }
   .cta-cockpit-primary,
   .cta-cockpit-secondary {
     padding: 8px 14px;
     font-size: 11px;
+    width: 100%;
     justify-content: center;
   }
 }

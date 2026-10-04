@@ -75,7 +75,7 @@ function StatCounter({ value }) {
 // Particle Background component
 function ThemeBackground({ theme }) {
   const particles = useMemo(() => {
-    return Array.from({ length: 12 }).map((_, i) => ({
+    return Array.from({ length: 10 }).map((_, i) => ({
       id: i,
       left: `${4 + Math.random() * 92}%`,
       top: `${4 + Math.random() * 92}%`,
@@ -236,32 +236,32 @@ function CardContent({ job, idx, theme, isLatest }) {
 
       {/* Stacked Notification Top Header Bar (Visible when stacked behind) */}
       <div className="stack-notification-header">
-        <div className="flex items-center gap-2 sm:gap-2.5">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
           <div
-            className="stack-status-indicator"
+            className="stack-status-indicator flex-shrink-0"
             style={{
               backgroundColor: isLatest ? 'var(--theme-to)' : 'var(--theme-muted, #64748b)',
               color: isLatest ? 'var(--theme-to)' : '#64748b',
             }}
           />
-          <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-slate-200 uppercase">
+          <span className="text-[9px] sm:text-xs font-mono font-bold tracking-wider text-slate-300 uppercase flex-shrink-0">
             MISSION // 0{idx + 1}
           </span>
-          <span className="text-slate-600 text-xs">•</span>
-          <span className="text-xs sm:text-sm font-extrabold text-white tracking-tight">
+          <span className="text-slate-600 text-xs hidden xs:inline">•</span>
+          <span className="text-[11px] sm:text-sm font-extrabold text-white tracking-tight truncate">
             {job.company}
           </span>
-          <span className="text-[11px] sm:text-xs text-slate-400 font-medium hidden sm:inline">
+          <span className="text-[10px] sm:text-xs text-slate-400 font-medium hidden md:inline truncate">
             — {job.role}
           </span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           {isLatest && (
-            <span className="text-[8px] sm:text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span className="text-[8px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
               ACTIVE
             </span>
           )}
-          <span className="text-[10px] sm:text-xs font-mono text-slate-400">
+          <span className="text-[9px] sm:text-xs font-mono text-slate-400">
             {job.period}
           </span>
         </div>
@@ -269,8 +269,8 @@ function CardContent({ job, idx, theme, isLatest }) {
 
       <div className="relative z-10 p-3.5 xs:p-4 sm:p-6 md:p-7 space-y-3 sm:space-y-4 md:space-y-5 overflow-visible">
         {/* Card Header */}
-        <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 sm:gap-4 pb-3 sm:pb-5 border-b border-white/10">
-          <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 sm:gap-4 pb-3 sm:pb-5 border-b border-white/10">
+          <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
             <div className="futuristic-company-badge">
               <div
                 className="badge-orbit-ring"
@@ -281,20 +281,20 @@ function CardContent({ job, idx, theme, isLatest }) {
               <div className="badge-icon-core text-white">
                 {job.badgeIcon === 'rocket' ? (
                   <FaRocket
-                    className="text-lg sm:text-xl text-theme-to"
+                    className="text-base sm:text-xl text-theme-to"
                     style={{ color: 'var(--theme-to)', filter: 'drop-shadow(0 0 6px var(--theme-to))' }}
                   />
                 ) : (
                   <FaTerminal
-                    className="text-lg sm:text-xl text-theme-from"
+                    className="text-base sm:text-xl text-theme-from"
                     style={{ color: 'var(--theme-from)', filter: 'drop-shadow(0 0 6px var(--theme-from))' }}
                   />
                 )}
               </div>
             </div>
 
-            <div>
-              <div className="flex items-center gap-2 mb-0.5 sm:mb-1">
+            <div className="min-w-0 flex-1">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-0.5">
                 <span className="text-[9px] sm:text-[10px] font-mono font-bold tracking-widest text-slate-400 uppercase">
                   MISSION // 0{idx + 1}
                 </span>
@@ -304,15 +304,15 @@ function CardContent({ job, idx, theme, isLatest }) {
                   </span>
                 )}
               </div>
-              <h3 className="font-display text-lg xs:text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
+              <h3 className="font-display text-base xs:text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight text-white leading-tight">
                 {job.role}
               </h3>
-              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-0.5 flex items-center gap-2">
+              <p className="text-xs sm:text-sm font-semibold text-slate-300 mt-0.5 flex flex-wrap items-center gap-1.5 sm:gap-2">
                 <span className="bg-gradient-to-r from-theme-from to-theme-to bg-clip-text text-transparent font-bold">
                   {job.company}
                 </span>
-                <span className="text-slate-600">•</span>
-                <span className="text-[11px] sm:text-xs text-slate-400 font-mono flex items-center gap-1">
+                <span className="text-slate-600 hidden xs:inline">•</span>
+                <span className="text-[10px] sm:text-xs text-slate-400 font-mono flex items-center gap-1">
                   <FaCalendarAlt className="text-[9px] text-slate-500" />
                   {job.period}
                 </span>
@@ -320,7 +320,7 @@ function CardContent({ job, idx, theme, isLatest }) {
             </div>
           </div>
 
-          <div className="self-start sm:self-center">
+          <div className="self-start sm:self-center shrink-0">
             <div className="active-pulse-beacon">
               {job.status === 'ACTIVE' ? (
                 <>
@@ -328,14 +328,14 @@ function CardContent({ job, idx, theme, isLatest }) {
                     className="beacon-dot"
                     style={{ backgroundColor: 'var(--theme-to)', boxShadow: '0 0 10px var(--theme-to)' }}
                   />
-                  <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider" style={{ color: 'var(--theme-to)' }}>
+                  <span className="text-[9px] sm:text-[11px] font-mono font-bold tracking-wider" style={{ color: 'var(--theme-to)' }}>
                     MISSION ACTIVE
                   </span>
                 </>
               ) : (
                 <>
                   <div className="beacon-dot" style={{ backgroundColor: 'var(--theme-muted)' }} />
-                  <span className="text-[10px] sm:text-[11px] font-mono font-bold tracking-wider text-slate-400">
+                  <span className="text-[9px] sm:text-[11px] font-mono font-bold tracking-wider text-slate-400">
                     ACCOMPLISHED
                   </span>
                 </>
@@ -364,7 +364,7 @@ function CardContent({ job, idx, theme, isLatest }) {
             {job.points.map((point, pIdx) => (
               <div
                 key={pIdx}
-                className="objective-item-row flex items-start gap-2.5 p-2 sm:p-2.5 md:p-3 rounded-xl bg-white/[0.02] border border-white/5 relative overflow-hidden"
+                className="objective-item-row flex items-start gap-2 p-2 sm:p-2.5 md:p-3 rounded-xl bg-white/[0.02] border border-white/5 relative overflow-hidden"
               >
                 <div
                   className="objectives-bullet-glow mt-0.5 shrink-0"
@@ -389,10 +389,10 @@ function CardContent({ job, idx, theme, isLatest }) {
           <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 font-bold block tracking-wider uppercase">
             // Technology Deck
           </span>
-          <div className="grid grid-cols-1 xs:grid-cols-3 gap-1.5 sm:gap-2.5">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-1.5 sm:gap-2.5">
             {Object.entries(job.techCategories).map(([categoryName, tags]) => (
               <div key={categoryName} className="tech-category-panel">
-                <h5 className="text-[10px] sm:text-[11px] font-mono font-bold text-slate-300 tracking-wider mb-1.5 border-b border-white/5 pb-1 uppercase">
+                <h5 className="text-[9px] sm:text-[11px] font-mono font-bold text-slate-300 tracking-wider mb-1.5 border-b border-white/5 pb-1 uppercase">
                   {categoryName}
                 </h5>
                 <div className="flex flex-wrap gap-1 sm:gap-1.5">
@@ -432,10 +432,10 @@ function CardContent({ job, idx, theme, isLatest }) {
                   <div className="flex justify-center">
                     <Icon className="stat-widget-icon" style={{ color: 'var(--theme-to)' }} />
                   </div>
-                  <h4 className="text-white font-display font-extrabold text-sm xs:text-base sm:text-xl md:text-2xl mt-0.5 tracking-tight">
+                  <h4 className="text-white font-display font-extrabold text-xs xs:text-sm sm:text-xl md:text-2xl mt-0.5 tracking-tight">
                     <StatCounter value={s.value} />
                   </h4>
-                  <p className="text-[8px] sm:text-[9px] md:text-[10px] text-slate-400 font-mono tracking-wider uppercase mt-0.5">
+                  <p className="text-[7.5px] xs:text-[8.5px] sm:text-[10px] text-slate-400 font-mono tracking-wider uppercase mt-0.5">
                     {s.label}
                   </p>
                 </div>
@@ -445,13 +445,13 @@ function CardContent({ job, idx, theme, isLatest }) {
         </div>
 
         {/* Card Action Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-2 sm:pt-3 border-t border-white/5">
-          <div className="flex flex-wrap gap-2.5 sm:gap-3 w-full sm:w-auto">
-            <a href={job.cta.projectsLink} className="cta-cockpit-primary">
+        <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-between gap-2.5 pt-2 sm:pt-3 border-t border-white/5">
+          <div className="flex flex-col xs:flex-row gap-2 sm:gap-3 w-full xs:w-auto">
+            <a href={job.cta.projectsLink} className="cta-cockpit-primary w-full xs:w-auto text-center justify-center">
               <span>View Projects</span>
               <FaArrowRight className="text-[10px]" />
             </a>
-            <a href="/resume/My-Resume.pdf" className="cta-cockpit-secondary" download>
+            <a href="/resume/My-Resume.pdf" className="cta-cockpit-secondary w-full xs:w-auto text-center justify-center" download>
               <FaDownload className="text-xs" />
               <span>Download Resume</span>
             </a>
@@ -475,7 +475,7 @@ export default function Experience() {
     if (!cardElements.length) return;
 
     const ctx = gsap.context(() => {
-      // Configure GPU scroll animations for stacked cards
+      // Configure GPU scroll animations for stacked cards (NO filter: brightness to avoid mobile repaints)
       cardElements.forEach((card, idx) => {
         if (idx === cardElements.length - 1) return;
         const nextCard = cardElements[idx + 1];
@@ -484,14 +484,13 @@ export default function Experience() {
         // Card stacking transform as the next card scrolls over it
         gsap.to(card, {
           scale: 0.94,
-          y: -12,
-          filter: 'brightness(0.7)',
-          opacity: 0.85,
+          y: -10,
+          opacity: 0.75,
           ease: 'none',
           scrollTrigger: {
             trigger: nextCard,
             start: 'top 85%',
-            end: 'top 120px',
+            end: 'top 130px',
             scrub: true,
             invalidateOnRefresh: true,
           },
@@ -522,14 +521,14 @@ export default function Experience() {
     if (!targetEl) return;
 
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const offset = isMobile ? 68 + index * 24 : 85 + index * 32;
+    const offset = isMobile ? 105 + index * 22 : 135 + index * 32;
     const bodyRect = document.body.getBoundingClientRect().top;
     const elementRect = targetEl.getBoundingClientRect().top;
     const elementPosition = elementRect - bodyRect;
     const offsetPosition = elementPosition - offset - 10;
 
     if (window.lenis) {
-      window.lenis.scrollTo(offsetPosition, { duration: 1.2 });
+      window.lenis.scrollTo(offsetPosition, { duration: 1.0 });
     } else {
       window.scrollTo({
         top: offsetPosition,
@@ -553,18 +552,18 @@ export default function Experience() {
 
         {/* Stack Stage */}
         <div className="relative w-full max-w-5xl mx-auto pt-2">
-          {/* Quick-Jump Card Stack Navigation Pills */}
-          <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sticky top-[70px] sm:top-[75px] z-30 py-2.5 backdrop-blur-md bg-slate-950/60 rounded-full border border-white/10 px-4 shadow-xl">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono font-bold tracking-widest text-slate-400 uppercase">
-                NOTIFICATION STACK
+          {/* Responsive Quick-Jump Card Stack Navigation Pills */}
+          <div className="sticky top-[60px] sm:top-[75px] z-30 mb-6 py-2 px-3 sm:px-4 backdrop-blur-xl bg-slate-950/80 rounded-2xl sm:rounded-full border border-white/10 shadow-2xl flex flex-row items-center justify-between gap-2 overflow-x-auto max-w-full">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <span className="text-[9px] sm:text-[11px] font-mono font-bold tracking-wider text-slate-300 uppercase">
+                STACK
               </span>
-              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-theme-to">
+              <span className="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded-full bg-white/10 border border-white/15 text-theme-to">
                 0{activeTab + 1} / 0{experience.length}
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               {experience.map((job, idx) => {
                 const isActive = activeTab === idx;
                 return (
@@ -575,12 +574,15 @@ export default function Experience() {
                     className={`stack-switcher-pill ${isActive ? 'active' : ''}`}
                   >
                     <span
-                      className="w-2 h-2 rounded-full transition-colors duration-300"
+                      className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-colors duration-300"
                       style={{ backgroundColor: isActive ? 'var(--theme-to)' : '#64748b' }}
                     />
-                    <span>MISSION // 0{idx + 1}</span>
-                    <span className="text-white/30">•</span>
-                    <span className={isActive ? 'text-white font-bold' : 'text-slate-400'}>{job.company}</span>
+                    <span className="hidden sm:inline">MISSION // 0{idx + 1}</span>
+                    <span className="sm:hidden font-mono text-[10px]">0{idx + 1}</span>
+                    <span className="text-white/30 hidden sm:inline">•</span>
+                    <span className={isActive ? 'text-white font-bold' : 'text-slate-400'}>
+                      {job.company}
+                    </span>
                   </button>
                 );
               })}
