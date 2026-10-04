@@ -76,6 +76,7 @@ function drawThemeParticles(ctx, themeId, accentColor, baseColor, tick) {
     });
     return;
   }
+  
 
   // Sakura Theme: drifting pink petals
   if (themeId === 'sakura') {
